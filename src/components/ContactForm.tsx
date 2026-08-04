@@ -34,15 +34,23 @@ export function ContactForm() {
     ) =>
       setForm((f) => ({ ...f, [key]: e.target.value }));
 
-  async function onSubmit(e: React.FormEvent) {
+  async function onSubmit(e: React.FormEvent): Promise<void> {
     e.preventDefault();
     if (pending) return;
 
-    if (form.name.trim().length < 2) return toast.error("Merci d'indiquer votre nom.");
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim()))
-      return toast.error("Merci d'indiquer un email valide.");
-    if (form.phone.trim().length < 6)
-      return toast.error("Merci d'indiquer un numéro de téléphone.");
+    if (form.name.trim().length < 2) {
+      toast.error("Merci d'indiquer votre nom.");
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) {
+      toast.error("Merci d'indiquer un email valide.");
+      return;
+    }
+    if (form.phone.trim().length < 6) {
+      toast.error("Merci d'indiquer un numéro de téléphone.");
+      return;
+    }
+
 
     setPending(true);
     try {
