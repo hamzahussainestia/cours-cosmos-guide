@@ -268,9 +268,25 @@ function Index() {
               <p className="mt-4 text-xs tracking-[0.3em] text-gold uppercase">
                 Scannez-moi
               </p>
+              <p className="mt-6 text-sm text-muted-foreground">
+                Ou en rejoignant le serveur Discord :
+              </p>
+              <a
+                href="https://discord.gg/U5w5qYZ4RZ"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-3 inline-block rounded-full border border-gold/50 px-6 py-3 text-sm tracking-wide text-gold-soft transition hover:bg-gold/10"
+              >
+                Rejoindre le Discord
+              </a>
             </div>
           </div>
+
+          <div className="mx-auto mt-10 max-w-5xl">
+            <ContactForm />
+          </div>
         </section>
+
       </main>
 
       <footer className="border-t border-gold/20 px-5 py-10 text-center sm:px-8">
