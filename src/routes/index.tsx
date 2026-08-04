@@ -288,10 +288,6 @@ function Index() {
               </a>
             </div>
           </div>
-
-          <div className="mx-auto mt-10 max-w-5xl">
-            <ContactForm />
-          </div>
         </section>
 
       </main>
