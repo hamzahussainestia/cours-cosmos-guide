@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import logoAsset from "@/assets/coursinus-logo.png.asset.json";
 import qrAsset from "@/assets/coursinus-qr.png.asset.json";
+import { ContactForm } from "@/components/ContactForm";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
