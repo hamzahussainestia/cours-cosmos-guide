@@ -233,7 +233,12 @@ function Index() {
 
         {/* Contact */}
         <section id="contact" className="px-5 py-20 sm:px-8">
-          <div className="card-lux mx-auto grid max-w-5xl gap-10 rounded-3xl p-8 sm:p-14 md:grid-cols-[1.2fr_auto] md:items-center">
+          <div className="mx-auto max-w-5xl">
+            <ContactForm />
+          </div>
+
+          <div className="card-lux mx-auto mt-10 grid max-w-5xl gap-10 rounded-3xl p-8 sm:p-14 md:grid-cols-[1.2fr_auto] md:items-center">
+
             <div>
               <p className="text-xs tracking-[0.35em] text-gold uppercase">
                 Rejoindre l'écurie
@@ -282,10 +287,6 @@ function Index() {
                 Rejoindre le Discord
               </a>
             </div>
-          </div>
-
-          <div className="mx-auto mt-10 max-w-5xl">
-            <ContactForm />
           </div>
         </section>
 
