@@ -77,15 +77,19 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Coursinus — Soutien scolaire scientifique d'excellence" },
+      { title: "Coursinus — Vise l'excellence | Soutien scolaire scientifique" },
       {
         name: "description",
         content:
-          "Coursinus : soutien scolaire et accompagnement académique personnalisé du collège à la prépa. Professeurs agrégés et normaliens.",
+          "Cours particuliers du collège à la prépa : maths, physique-chimie, SI. Tarifs clairs dès 20€/h, professeurs agrégés et normaliens, suivi individuel.",
       },
       { name: "author", content: "Coursinus" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:title", content: "Coursinus — Vise l'excellence | Soutien scolaire scientifique" },
+      { name: "twitter:title", content: "Coursinus — Vise l'excellence | Soutien scolaire scientifique" },
+      { property: "og:description", content: "Cours particuliers du collège à la prépa : maths, physique-chimie, SI. Tarifs clairs dès 20€/h, professeurs agrégés et normaliens, suivi individuel." },
+      { name: "twitter:description", content: "Cours particuliers du collège à la prépa : maths, physique-chimie, SI. Tarifs clairs dès 20€/h, professeurs agrégés et normaliens, suivi individuel." },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

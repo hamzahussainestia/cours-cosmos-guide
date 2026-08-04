@@ -13,12 +13,12 @@ export const Route = createFileRoute("/")({
       },
       {
         property: "og:title",
-        content: "Coursinus — Vise l'excellence",
+        content: "Coursinus — Vise l'excellence | Soutien scolaire scientifique",
       },
       {
         property: "og:description",
         content:
-          "L'écurie d'excellence scientifique : soutien scolaire et accompagnement académique personnalisé, du collège à la prépa.",
+          "Cours particuliers du collège à la prépa : maths, physique-chimie, SI. Tarifs clairs dès 20€/h, professeurs agrégés et normaliens, suivi individuel.",
       },
     ],
   }),
