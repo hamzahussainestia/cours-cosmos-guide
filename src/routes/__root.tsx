@@ -92,6 +92,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:title", content: "Coursinus — Vise l'excellence | Soutien scolaire scientifique" },
       { property: "og:description", content: "Cours particuliers du collège à la prépa : maths, physique-chimie, SI. Tarifs clairs dès 20€/h, professeurs agrégés et normaliens, suivi individuel." },
       { name: "twitter:description", content: "Cours particuliers du collège à la prépa : maths, physique-chimie, SI. Tarifs clairs dès 20€/h, professeurs agrégés et normaliens, suivi individuel." },
+      { property: "og:image", content: "https://cours-cosmos-guide.lovable.app/coursinus-logo.png" },
+      { property: "og:url", content: "https://cours-cosmos-guide.lovable.app" },
+      { name: "twitter:image", content: "https://cours-cosmos-guide.lovable.app/coursinus-logo.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
@@ -117,7 +120,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="fr">
       <head>
         <HeadContent />
       </head>
