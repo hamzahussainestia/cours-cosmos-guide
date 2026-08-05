@@ -231,37 +231,6 @@ function Index() {
           </div>
         </section>
 
-        {/* Équipe */}
-        <section id="equipe" className="px-5 py-20 sm:px-8">
-          <div className="mx-auto max-w-6xl">
-            <div className="text-center">
-              <p className="text-xs tracking-[0.35em] text-gold uppercase">Notre équipe</p>
-              <h2 className="mt-3 font-display text-4xl sm:text-5xl">Des étudiants des grandes écoles</h2>
-              <div className="rule-gold mx-auto mt-6 w-40" />
-            </div>
-
-            <div className="mt-8 mx-auto max-w-3xl text-center text-sm text-muted-foreground">
-              <p>
-                Nous sommes composés d'étudiants issus de grandes écoles d'ingénieur
-                et de commerce. Pour nous, c'est le meilleur moyen pour que les
-                élèves apprennent : pédagogie de terrain, accompagnement adapté
-                et enthousiasme au service de la réussite.
-              </p>
-              <p className="mt-4">
-                Les professeurs sont choisis selon des critères stricts :
-                compétences académiques, expérience pédagogique et qualité humaine.
-              </p>
-
-              <div className="mt-8 flex flex-wrap justify-center items-center gap-6">
-                <img src="/polytechnique.svg" alt="Logo École Polytechnique" className="h-12 w-auto object-contain"/>
-                <img src="/centralesupelec.svg" alt="Logo CentraleSupélec" className="h-12 w-auto object-contain"/>
-                <img src="/insa.svg" alt="Logo INSA" className="h-12 w-auto object-contain"/>
-                <img src="/mines.svg" alt="Logo École des Mines" className="h-12 w-auto object-contain"/>
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* Contact */}
         <section id="contact" className="px-5 py-20 sm:px-8">
           <div className="mx-auto max-w-5xl">
