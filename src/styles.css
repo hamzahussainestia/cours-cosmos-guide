@@ -223,3 +223,44 @@ html {
   }
 }
 
+.school-logo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem 1.5rem;
+  align-items: center;
+  justify-items: center;
+}
+
+@media (min-width: 640px) {
+  .school-logo-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+.school-logo-cell {
+  display: flex;
+  width: 100%;
+  max-width: 9rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 0.5rem;
+  opacity: 0.88;
+  transition: opacity 0.35s ease;
+}
+
+.school-logo-cell:hover {
+  opacity: 1;
+}
+
+.school-logo-mark {
+  height: 2.75rem;
+  width: 100%;
+  max-width: 7.5rem;
+  object-fit: contain;
+  opacity: 0.92;
+}
+
+#lovable-badge {
+  display: none !important;
+}
+

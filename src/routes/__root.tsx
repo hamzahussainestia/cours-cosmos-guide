@@ -11,6 +11,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { SITE_URL } from "@/data/home-content";
 import { Toaster } from "@/components/ui/sonner";
 
 
@@ -92,9 +93,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:title", content: "Coursinus — Vise l'excellence | Soutien scolaire scientifique" },
       { property: "og:description", content: "Cours particuliers du collège à la prépa : maths, physique-chimie, SI. Tarifs clairs dès 20€/h, professeurs agrégés et normaliens, suivi individuel." },
       { name: "twitter:description", content: "Cours particuliers du collège à la prépa : maths, physique-chimie, SI. Tarifs clairs dès 20€/h, professeurs agrégés et normaliens, suivi individuel." },
-      { property: "og:image", content: "https://cours-cosmos-guide.lovable.app/coursinus-logo.png" },
-      { property: "og:url", content: "https://cours-cosmos-guide.lovable.app" },
-      { name: "twitter:image", content: "https://cours-cosmos-guide.lovable.app/coursinus-logo.png" },
+      { property: "og:image", content: `${SITE_URL}/coursinus-logo.png` },
+      { property: "og:url", content: SITE_URL },
+      { name: "twitter:image", content: `${SITE_URL}/coursinus-logo.png` },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

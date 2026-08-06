@@ -12,7 +12,7 @@ import {
 
 export const CONTACT_EMAIL = "coursinus.aide@gmail.com";
 export const DISCORD_URL = "https://discord.gg/U5w5qYZ4RZ";
-export const SITE_URL = "https://cours-cosmos-guide.lovable.app";
+export const SITE_URL = "https://coursinus.fr";
 
 export const navLinks = [
   { label: "Offres", href: "#offres" },
@@ -87,22 +87,36 @@ export const subjects = [
   },
 ] as const;
 
-export const teachers = [
+export const teamCards = [
   {
-    role: "Professeur agrégé",
-    specialty: "Mathématiques",
-    detail: "15 ans d'expérience en lycée et prépa. Spécialiste de la préparation aux concours CPGE.",
+    title: "Élite scientifique",
+    text: "Sélectionnés sur critères d'excellence et de pédagogie, nos têtes chercheuses sont issues des plus prestigieuses écoles d'ingénieurs (Polytechnique, CentraleSupélec, Mines ParisTech, etc.).",
+    numeral: "I",
   },
   {
-    role: "Normalien",
-    specialty: "Physique-Chimie",
-    detail: "Ancien élève de l'ENS, expert en préparation au bac et aux khôlles de prépa scientifique.",
+    title: "Esprit d'excellence",
+    text: "Profils brillants formés aux meilleures écoles de commerce (HEC Paris, ESSEC, ESCP), alliant stratégie, rigueur et esprit d'analyse.",
+    numeral: "II",
   },
   {
-    role: "Ingénieur & enseignant",
-    specialty: "Sciences de l'Ingénieur",
-    detail: "Double compétence industrie et pédagogie. Accompagnement projets, SI et Parcoursup.",
+    title: "Complémentarité unique",
+    text: "Une équipe soudée qui partage des valeurs d'engagement et une méthodologie d'accompagnement scolaire d'élite, pour une réussite maximale.",
+    numeral: "III",
   },
+] as const;
+
+/** Ingénieur et commerce entrelacés pour une grille équilibrée */
+export const schoolLogos = [
+  { name: "École Polytechnique", logo: "/schools/polytechnique.svg" },
+  { name: "HEC Paris", logo: "/schools/hec.svg" },
+  { name: "CentraleSupélec", logo: "/schools/centralesupelec.svg" },
+  { name: "ESSEC", logo: "/schools/essec.svg" },
+  { name: "Mines ParisTech", logo: "/schools/mines-paris.svg" },
+  { name: "ESCP Business School", logo: "/schools/escp.svg" },
+  { name: "ENSTA Paris", logo: "/schools/ensta.svg" },
+  { name: "EDHEC", logo: "/schools/edhec.svg" },
+  { name: "Ponts ParisTech", logo: "/schools/ponts.svg" },
+  { name: "emlyon business school", logo: "/schools/emlyon.svg" },
 ] as const;
 
 export const testimonials = [
@@ -160,7 +174,7 @@ export const faqItems = [
   {
     question: "Comment sont sélectionnés vos professeurs ?",
     answer:
-      "Chaque enseignant est recruté pour son excellence académique (agrégés, normaliens, ingénieurs) et sa capacité à transmettre une méthode de travail rigoureuse et bienveillante.",
+      "Nos enseignants sont des étudiants en grandes écoles d'ingénieur ou de commerce, recrutés pour leur excellence académique et leur capacité à transmettre une méthode rigoureuse et bienveillante.",
   },
   {
     question: "Recevez-vous bien les demandes du formulaire ?",
@@ -235,7 +249,7 @@ export const offers: Offer[] = [
 export const reasons = [
   {
     title: "Professeurs d'exception",
-    text: "Des enseignants sélectionnés avec exigence : agrégés, normaliens et experts de leur discipline.",
+    text: "Des étudiants en grandes écoles d'ingénieur et de commerce, sélectionnés pour leur excellence académique et leur pédagogie.",
     numeral: "I",
   },
   {

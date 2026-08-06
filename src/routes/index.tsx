@@ -21,8 +21,9 @@ import {
   SITE_URL,
   stats,
   steps,
+  schoolLogos,
   subjects,
-  teachers,
+  teamCards,
   testimonials,
 } from "@/data/home-content";
 
@@ -278,20 +279,49 @@ function Index() {
             <ScrollReveal>
               <SectionHeading eyebrow="Nos enseignants" title="Une équipe d'exception" />
             </ScrollReveal>
+
             <div className="mt-14 grid gap-8 md:grid-cols-3">
-              {teachers.map((t, i) => (
-                <ScrollReveal key={t.specialty} delay={i * 90}>
-                  <div className="card-lux rounded-2xl p-8">
-                    <p className="text-xs tracking-[0.25em] text-gold uppercase">{t.role}</p>
-                    <h3 className="mt-3 font-display text-2xl text-gold-soft">
-                      {t.specialty}
+              {teamCards.map((card, i) => (
+                <ScrollReveal key={card.title} delay={i * 90}>
+                  <div className="card-lux h-full rounded-2xl p-8 text-center">
+                    <span className="font-display text-4xl text-gold-gradient">
+                      {card.numeral}
+                    </span>
+                    <h3 className="mt-4 font-display text-xl tracking-[0.12em] text-gold-soft uppercase sm:text-2xl">
+                      {card.title}
                     </h3>
                     <div className="rule-gold my-5" />
-                    <p className="text-sm leading-relaxed text-muted-foreground">{t.detail}</p>
+                    <p className="text-sm leading-relaxed text-muted-foreground">
+                      {card.text}
+                    </p>
                   </div>
                 </ScrollReveal>
               ))}
             </div>
+
+            <ScrollReveal delay={120}>
+              <div className="mt-16 border-t border-gold/15 pt-14">
+                <p className="text-center text-xs tracking-[0.35em] text-gold uppercase">
+                  Nos écoles de référence
+                </p>
+                <div className="school-logo-grid mx-auto mt-10 max-w-4xl">
+                  {schoolLogos.map((school) => (
+                    <div
+                      key={school.name}
+                      className="school-logo-cell"
+                      title={school.name}
+                    >
+                      <img
+                        src={school.logo}
+                        alt={school.name}
+                        className="school-logo-mark"
+                        loading="lazy"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </ScrollReveal>
           </div>
         </section>
 

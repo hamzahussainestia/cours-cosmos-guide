@@ -41,16 +41,11 @@ function MentionsLegalesPage() {
       <section>
         <h2 className="font-display text-xl text-gold-soft">Hébergement</h2>
         <p className="mt-3">
-          Le site est hébergé par Lovable (Lovable Labs Inc.), accessible via la plateforme
-          Lovable.dev. Pour toute question relative à l&apos;hébergement, consultez les
-          informations disponibles sur{" "}
-          <a
-            href="https://lovable.dev"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-gold-soft hover:underline"
-          >
-            lovable.dev
+          Le site <strong>{SITE_URL}</strong> est hébergé par un prestataire professionnel
+          conforme à la réglementation en vigueur. Pour toute question relative à
+          l&apos;hébergement, contactez-nous à{" "}
+          <a href={`mailto:${CONTACT_EMAIL}`} className="text-gold-soft hover:underline">
+            {CONTACT_EMAIL}
           </a>
           .
         </p>
