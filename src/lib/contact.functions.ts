@@ -59,7 +59,7 @@ function buildRawEmail(data: {
 }
 
 export const submitContactRequest = createServerFn({ method: "POST" })
-  .inputValidator((data: ContactInput) => contactSchema.parse(data))
+  .validator((data: ContactInput) => contactSchema.parse(data))
   .handler(async ({ data }) => {
     if (data.website) {
       return { ok: true as const, emailed: false as const };
