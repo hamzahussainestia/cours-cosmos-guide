@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { Menu, X } from "lucide-react";
 
 import { navLinks } from "@/data/home-content";
@@ -13,9 +14,9 @@ export function RentreeBanner() {
         {" — "}
         Réservez votre créneau pour la rentrée 2026
         {" · "}
-        <a href="#contact" className="underline underline-offset-4 hover:text-gold">
-          Contactez-nous
-        </a>
+        <Link to="/reservation" className="underline underline-offset-4 hover:text-gold">
+          Réserver un cours
+        </Link>
       </p>
     </div>
   );
@@ -72,6 +73,12 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <Link
+            to="/reservation"
+            className="hidden shrink-0 rounded-full bg-primary px-4 py-2 text-xs tracking-[0.2em] text-primary-foreground uppercase transition hover:brightness-110 sm:inline-block sm:text-sm"
+          >
+            Réserver
+          </Link>
           <a
             href="#contact"
             className="hidden shrink-0 rounded-full border border-gold/50 px-4 py-2 text-xs tracking-[0.2em] text-gold-soft uppercase transition hover:bg-gold/10 sm:inline-block sm:text-sm"
@@ -107,6 +114,15 @@ export function SiteHeader() {
                 </a>
               </li>
             ))}
+            <li>
+              <Link
+                to="/reservation"
+                className="block rounded-xl bg-primary/15 px-4 py-3 text-sm font-medium tracking-wide text-gold-soft transition hover:bg-primary/25"
+                onClick={() => setMenuOpen(false)}
+              >
+                Réserver un cours
+              </Link>
+            </li>
           </ul>
         </nav>
       )}

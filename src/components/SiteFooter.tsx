@@ -27,6 +27,11 @@ export function SiteFooter() {
           <p className="text-xs tracking-[0.25em] text-gold uppercase">Contact</p>
           <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
             <li>
+              <Link to="/reservation" className="transition hover:text-gold-soft">
+                Réserver un cours en ligne
+              </Link>
+            </li>
+            <li>
               <a
                 href={`mailto:${CONTACT_EMAIL}`}
                 className="inline-flex items-center justify-center gap-2 transition hover:text-gold-soft md:justify-start"
