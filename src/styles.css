@@ -62,60 +62,59 @@
 }
 
 @theme {
-  --font-display: "Cormorant Garamond", serif;
-  --font-sans: "Karla", system-ui, sans-serif;
+  --font-display: "Bricolage Grotesque", system-ui, sans-serif;
+  --font-sans: "Public Sans", system-ui, sans-serif;
+  /* Réservé au logotype « Coursinus » (en-tête et pied de page). */
+  --font-script: "Parisienne", "Segoe Script", cursive;
 }
 
 :root {
-  --radius: 0.75rem;
-  --background: oklch(0.19 0.045 265);
-  --foreground: oklch(0.95 0.012 90);
-  --card: oklch(0.235 0.045 265);
-  --card-foreground: oklch(0.95 0.012 90);
-  --popover: oklch(0.235 0.045 265);
-  --popover-foreground: oklch(0.95 0.012 90);
-  --primary: oklch(0.79 0.1 85);
-  --primary-foreground: oklch(0.17 0.04 265);
-  --secondary: oklch(0.28 0.045 265);
-  --secondary-foreground: oklch(0.95 0.012 90);
-  --muted: oklch(0.28 0.04 265);
-  --muted-foreground: oklch(0.76 0.025 90);
-  --accent: oklch(0.88 0.07 90);
-  --accent-foreground: oklch(0.17 0.04 265);
+  --radius: 0.9rem;
+  --background: oklch(0.18 0.075 264);
+  --foreground: oklch(0.95 0.015 90);
+  --card: oklch(0.225 0.07 264);
+  --card-foreground: oklch(0.95 0.015 90);
+  --popover: oklch(0.225 0.07 264);
+  --popover-foreground: oklch(0.95 0.015 90);
+  --primary: oklch(0.8 0.12 86);
+  --primary-foreground: oklch(0.16 0.06 264);
+  --secondary: oklch(0.27 0.065 264);
+  --secondary-foreground: oklch(0.95 0.015 90);
+  --muted: oklch(0.27 0.06 264);
+  --muted-foreground: oklch(0.74 0.025 90);
+  --accent: oklch(0.85 0.08 88);
+  --accent-foreground: oklch(0.16 0.06 264);
   --destructive: oklch(0.6 0.2 27);
   --destructive-foreground: oklch(0.98 0 0);
-  --border: oklch(0.79 0.1 85 / 25%);
-  --input: oklch(0.79 0.1 85 / 25%);
-  --ring: oklch(0.79 0.1 85);
-  --gold: oklch(0.79 0.1 85);
-  --gold-soft: oklch(0.9 0.06 92);
+  --border: oklch(0.8 0.12 86 / 22%);
+  --input: oklch(0.8 0.12 86 / 22%);
+  --ring: oklch(0.8 0.12 86);
+  --gold: oklch(0.8 0.12 86);
+  --gold-soft: oklch(0.88 0.07 88);
   --gradient-gold: linear-gradient(
     120deg,
-    oklch(0.72 0.09 72),
-    oklch(0.93 0.07 95),
-    oklch(0.78 0.1 82)
+    oklch(0.72 0.1 80),
+    oklch(0.9 0.08 90),
+    oklch(0.78 0.12 84)
   );
-  --gradient-night: radial-gradient(
-      ellipse at 15% -10%,
-      oklch(0.3 0.07 265) 0%,
-      transparent 60%
-    ),
-    radial-gradient(ellipse at 90% 0%, oklch(0.27 0.06 280) 0%, transparent 55%);
-  --shadow-gold: 0 24px 60px -28px oklch(0.79 0.1 85 / 55%);
-  --shadow-deep: 0 30px 80px -40px oklch(0.05 0.03 265 / 90%);
-  --chart-1: oklch(0.79 0.1 85);
+  --gradient-night:
+    radial-gradient(ellipse at 18% -10%, oklch(0.27 0.09 264) 0%, transparent 60%),
+    radial-gradient(ellipse at 88% 0%, oklch(0.25 0.08 268) 0%, transparent 55%);
+  --shadow-gold: 0 24px 55px -26px oklch(0.8 0.12 86 / 45%);
+  --shadow-deep: 0 28px 70px -38px oklch(0.05 0.05 264 / 85%);
+  --chart-1: oklch(0.8 0.12 86);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.235 0.045 265);
-  --sidebar-foreground: oklch(0.95 0.012 90);
-  --sidebar-primary: oklch(0.79 0.1 85);
-  --sidebar-primary-foreground: oklch(0.17 0.04 265);
-  --sidebar-accent: oklch(0.28 0.045 265);
-  --sidebar-accent-foreground: oklch(0.95 0.012 90);
-  --sidebar-border: oklch(0.79 0.1 85 / 25%);
-  --sidebar-ring: oklch(0.79 0.1 85);
+  --sidebar: oklch(0.225 0.07 264);
+  --sidebar-foreground: oklch(0.95 0.015 90);
+  --sidebar-primary: oklch(0.8 0.12 86);
+  --sidebar-primary-foreground: oklch(0.16 0.06 264);
+  --sidebar-accent: oklch(0.27 0.065 264);
+  --sidebar-accent-foreground: oklch(0.95 0.015 90);
+  --sidebar-border: oklch(0.8 0.12 86 / 22%);
+  --sidebar-ring: oklch(0.8 0.12 86);
 }
 
 @theme inline {
@@ -152,12 +151,7 @@
 
 @utility rule-gold {
   height: 1px;
-  background-image: linear-gradient(
-    to right,
-    transparent,
-    var(--gold),
-    transparent
-  );
+  background-image: linear-gradient(to right, transparent, var(--gold), transparent);
 }
 
 @utility card-lux {
@@ -260,7 +254,296 @@ html {
   opacity: 0.92;
 }
 
+/*
+ * Mention typographique d'une école : initiales en display doré, nom en
+ * petites capitales espacées. Toutes les écoles reçoivent exactement le même
+ * traitement — c'est ce qui distingue une citation composée par Coursinus
+ * d'une reproduction de logotypes.
+ */
+.school-mark {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0 0.25rem;
+  opacity: 0.75;
+  transition: opacity 0.35s ease;
+}
+
+.school-mark:hover {
+  opacity: 1;
+}
+
+.school-mark__initials {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: var(--gold);
+}
+
+.school-mark__name {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--muted-foreground);
+}
+
+/* Bandeau de logos d'écoles qui défile en continu. */
+.logo-marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+
+.logo-marquee__track {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  gap: 3.5rem;
+  animation: logo-scroll 34s linear infinite;
+}
+
+.logo-marquee:hover .logo-marquee__track {
+  animation-play-state: paused;
+}
+
+@keyframes logo-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-marquee__track {
+    animation: none;
+  }
+}
+
 #lovable-badge {
   display: none !important;
 }
 
+.chip-outline {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 2px solid var(--gold);
+  color: var(--gold-soft);
+  padding: 0.55rem 1.1rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.hero-title {
+  font-size: clamp(2.5rem, 5vw + 1rem, 5.5rem);
+  line-height: 0.98;
+  letter-spacing: -0.01em;
+}
+
+.stat-card-float {
+  position: relative;
+  height: 21rem;
+}
+
+.stat-card-float__primary,
+.stat-card-float__secondary {
+  position: absolute;
+  border-radius: 1.25rem;
+  padding: 1.75rem;
+}
+
+.stat-card-float__primary {
+  top: 0;
+  left: 5%;
+  width: 68%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--foreground);
+  transform: rotate(-3deg);
+  box-shadow: var(--shadow-deep);
+}
+
+.stat-card-float__secondary {
+  bottom: 0;
+  right: 2%;
+  width: 56%;
+  background: var(--gold);
+  color: var(--primary-foreground);
+  transform: rotate(4deg);
+  box-shadow: var(--shadow-gold);
+}
+
+@media (max-width: 640px) {
+  .stat-card-float {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .stat-card-float__primary,
+  .stat-card-float__secondary {
+    position: static;
+    width: 100%;
+    transform: none;
+  }
+}
+
+.offer-band {
+  background: var(--card);
+}
+
+.offer-ghost-numeral {
+  position: absolute;
+  top: -0.9rem;
+  right: -0.5rem;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 9rem;
+  line-height: 1;
+  color: color-mix(in oklab, var(--foreground) 8%, var(--card));
+  pointer-events: none;
+  user-select: none;
+}
+
+@media (max-width: 640px) {
+  .offer-ghost-numeral {
+    font-size: 6rem;
+  }
+}
+
+/*
+ * Bouton "pressable" façon Duolingo : une bordure basse pleine simule une
+ * carte en relief ; au clic, le bouton s'enfonce dedans (translateY +
+ * la bordure disparaît). Réservé aux CTA pleins (bg-primary / bg-gold).
+ */
+@utility btn-press {
+  position: relative;
+  transform: translateY(0);
+  box-shadow: 0 4px 0 0 color-mix(in oklab, var(--gold) 55%, black 30%);
+  transition:
+    transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.12s ease,
+    filter 0.15s ease;
+
+  &:hover {
+    filter: brightness(1.05);
+  }
+
+  &:active {
+    transform: translateY(4px);
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--gold) 55%, black 30%);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: filter 0.15s ease;
+    box-shadow: none;
+
+    &:active {
+      transform: none;
+    }
+  }
+}
+
+/* Version plus légère pour les cartes cliquables (pas de bordure pleine). */
+@utility tap-scale {
+  transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  &:active {
+    transform: scale(0.97);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    &:active {
+      transform: none;
+    }
+  }
+}
+
+/*
+ * Dérive lente du filigrane de formules. Quatre trajectoires différentes,
+ * jouées en aller-retour (alternate) pour qu'il n'y ait jamais de saut ;
+ * la durée et le décalage sont répartis par le composant.
+ */
+.drift {
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-timing-function: ease-in-out;
+}
+
+.drift-a {
+  animation-name: drift-a;
+}
+.drift-b {
+  animation-name: drift-b;
+}
+.drift-c {
+  animation-name: drift-c;
+}
+.drift-d {
+  animation-name: drift-d;
+}
+
+@keyframes drift-a {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(20px, -26px, 0);
+  }
+}
+
+@keyframes drift-b {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-18px, -16px, 0);
+  }
+}
+
+@keyframes drift-c {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(12px, 24px, 0);
+  }
+}
+
+@keyframes drift-d {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-14px, 20px, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drift {
+    animation: none;
+  }
+}
+
+@keyframes count-pop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

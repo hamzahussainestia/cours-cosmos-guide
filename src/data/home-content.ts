@@ -8,20 +8,29 @@ import {
   Microscope,
   School,
   Trophy,
+  UserCheck,
+  Wallet,
 } from "lucide-react";
 
 export const CONTACT_EMAIL = "coursinus.aide@gmail.com";
-export const DISCORD_URL = "https://discord.gg/U5w5qYZ4RZ";
+export const DISCORD_URL = "https://discord.gg/Ac6mNCmKV6";
 export const SITE_URL = "https://coursinus.fr";
+
+/**
+ * Liens des pages "Rendez-vous" (Appointment schedules) Google Calendar.
+ * À créer manuellement dans Google Calendar (compte coursinus.aide@gmail.com)
+ * puis à coller ici — rien d'autre à changer côté code une fois les liens en place.
+ */
+export const BOOKING_URL_STUDENT = "https://calendar.app.google/UjakuYfQQAustjir5";
+export const BOOKING_URL_TEACHER = "https://calendar.app.google/X2rw5DBBZv7L7nY77";
 
 export const navLinks = [
   { label: "Offres", href: "#offres" },
   { label: "Méthode", href: "#methode" },
   { label: "Matières", href: "#matieres" },
-  { label: "Équipe", href: "#equipe" },
   { label: "Avis", href: "#temoignages" },
   { label: "FAQ", href: "#faq" },
-  { label: "Contact", href: "#contact" },
+  { label: "Réserver", href: "#rdv" },
 ] as const;
 
 export const stats = [
@@ -62,7 +71,7 @@ export const subjects = [
   },
   {
     name: "Physique-Chimie",
-    levels: "Lycée → Prépa",
+    levels: "Collège → Prépa",
     icon: FlaskConical,
   },
   {
@@ -105,18 +114,27 @@ export const teamCards = [
   },
 ] as const;
 
-/** Ingénieur et commerce entrelacés pour une grille équilibrée */
-export const schoolLogos = [
-  { name: "École Polytechnique", logo: "/schools/polytechnique.svg" },
-  { name: "HEC Paris", logo: "/schools/hec.svg" },
-  { name: "CentraleSupélec", logo: "/schools/centralesupelec.svg" },
-  { name: "ESSEC", logo: "/schools/essec.svg" },
-  { name: "Mines ParisTech", logo: "/schools/mines-paris.svg" },
-  { name: "ESCP Business School", logo: "/schools/escp.svg" },
-  { name: "ENSTA Paris", logo: "/schools/ensta.svg" },
-  { name: "EDHEC", logo: "/schools/edhec.svg" },
-  { name: "Ponts ParisTech", logo: "/schools/ponts.svg" },
-  { name: "emlyon business school", logo: "/schools/emlyon.svg" },
+/**
+ * Écoles d'origine de nos professeurs — ingénieur et commerce entrelacés pour
+ * un défilement équilibré.
+ *
+ * Ce sont volontairement des mentions typographiques, composées dans la police
+ * et les couleurs de Coursinus : ce ne sont PAS les logos des écoles. Citer une
+ * école pour décrire le parcours d'un professeur est un fait ; reproduire son
+ * logo sur un site commercial laisserait entendre un partenariat officiel et
+ * relèverait de sa charte de marque.
+ */
+export const schools = [
+  { name: "École Polytechnique", mark: "X", sub: "Polytechnique" },
+  { name: "HEC Paris", mark: "HEC", sub: "Paris" },
+  { name: "CentraleSupélec", mark: "CS", sub: "CentraleSupélec" },
+  { name: "ESSEC Business School", mark: "ESSEC", sub: "Business School" },
+  { name: "Mines Paris", mark: "Mines", sub: "Paris" },
+  { name: "ESCP Business School", mark: "ESCP", sub: "Business School" },
+  { name: "ENSTA Paris", mark: "ENSTA", sub: "Paris" },
+  { name: "EDHEC Business School", mark: "EDHEC", sub: "Business School" },
+  { name: "Ponts ParisTech", mark: "Ponts", sub: "ParisTech" },
+  { name: "emlyon business school", mark: "EM", sub: "Lyon" },
 ] as const;
 
 export const testimonials = [
@@ -246,20 +264,20 @@ export const offers: Offer[] = [
   },
 ];
 
-export const reasons = [
-  {
-    title: "Professeurs d'exception",
-    text: "Des étudiants en grandes écoles d'ingénieur et de commerce, sélectionnés pour leur excellence académique et leur pédagogie.",
-    numeral: "I",
-  },
+export const teacherReason = {
+  title: "Professeurs d'exception",
+  text: "Des étudiants en grandes écoles d'ingénieur et de commerce, sélectionnés pour leur excellence académique et leur pédagogie.",
+};
+
+export const reasons: { title: string; text: string; icon: LucideIcon }[] = [
   {
     title: "Suivi individuel transparent",
     text: "Un accompagnement sur mesure, avec un point de progression clair et régulier pour l'élève et sa famille.",
-    numeral: "II",
+    icon: UserCheck,
   },
   {
     title: "Flexibilité & tarifs clairs",
     text: "Des horaires adaptés à votre rythme et une tarification annoncée à l'heure, sans frais cachés.",
-    numeral: "III",
+    icon: Wallet,
   },
-] as const;
+];

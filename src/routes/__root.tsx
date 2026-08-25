@@ -14,7 +14,6 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SITE_URL } from "@/data/home-content";
 import { Toaster } from "@/components/ui/sonner";
 
-
 function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -89,10 +88,24 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "author", content: "Coursinus" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { property: "og:title", content: "Coursinus — Vise l'excellence | Soutien scolaire scientifique" },
-      { name: "twitter:title", content: "Coursinus — Vise l'excellence | Soutien scolaire scientifique" },
-      { property: "og:description", content: "Cours particuliers du collège à la prépa : maths, physique-chimie, SI. Tarifs clairs dès 20€/h, professeurs agrégés et normaliens, suivi individuel." },
-      { name: "twitter:description", content: "Cours particuliers du collège à la prépa : maths, physique-chimie, SI. Tarifs clairs dès 20€/h, professeurs agrégés et normaliens, suivi individuel." },
+      {
+        property: "og:title",
+        content: "Coursinus — Vise l'excellence | Soutien scolaire scientifique",
+      },
+      {
+        name: "twitter:title",
+        content: "Coursinus — Vise l'excellence | Soutien scolaire scientifique",
+      },
+      {
+        property: "og:description",
+        content:
+          "Cours particuliers du collège à la prépa : maths, physique-chimie, SI. Tarifs clairs dès 20€/h, professeurs agrégés et normaliens, suivi individuel.",
+      },
+      {
+        name: "twitter:description",
+        content:
+          "Cours particuliers du collège à la prépa : maths, physique-chimie, SI. Tarifs clairs dès 20€/h, professeurs agrégés et normaliens, suivi individuel.",
+      },
       { property: "og:image", content: `${SITE_URL}/coursinus-logo.png` },
       { property: "og:url", content: SITE_URL },
       { name: "twitter:image", content: `${SITE_URL}/coursinus-logo.png` },
@@ -107,7 +120,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Karla:wght@300;400;500;600&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Parisienne&family=Public+Sans:wght@400;500;600;700&display=swap",
       },
       { rel: "icon", type: "image/png", href: "/favicon.png" },
     ],
@@ -144,4 +157,3 @@ function RootComponent() {
     </QueryClientProvider>
   );
 }
-

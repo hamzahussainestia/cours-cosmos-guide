@@ -8,7 +8,14 @@
     "binding": "ASSETS",
     "directory": ".output/public"
   },
+  "routes": [
+    { "pattern": "coursinus.fr", "custom_domain": true },
+    { "pattern": "www.coursinus.fr", "custom_domain": true }
+  ],
   "no_bundle": true,
+  "vars": {
+    "SUPABASE_URL": "https://agxphfofxejtuuyrxmnh.supabase.co"
+  },
   "observability": {
     "enabled": true
   },

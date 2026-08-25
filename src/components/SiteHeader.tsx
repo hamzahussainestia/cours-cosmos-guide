@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { ArrowRight, Menu, X } from "lucide-react";
 
 import { navLinks } from "@/data/home-content";
 
@@ -7,16 +7,27 @@ const LOGO_URL = "/coursinus-logo.png";
 
 export function RentreeBanner() {
   return (
-    <div className="border-b border-gold/20 bg-primary/15 px-5 py-2.5 text-center sm:px-8">
-      <p className="text-xs tracking-[0.15em] text-gold-soft sm:text-sm">
-        <span className="font-medium text-gold">Places limitées</span>
-        {" — "}
-        Réservez votre créneau pour la rentrée 2026
-        {" · "}
-        <a href="#contact" className="underline underline-offset-4 hover:text-gold">
-          Contactez-nous
+    <div className="bg-gradient-to-r from-primary/5 via-primary/20 to-primary/5 px-5 py-2 sm:px-8">
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-3 gap-y-1 text-xs sm:text-sm">
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-gold px-2.5 py-1 text-[10px] font-bold tracking-[0.12em] text-primary-foreground uppercase">
+          <span className="relative flex h-1.5 w-1.5" aria-hidden>
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary-foreground opacity-60 motion-reduce:animate-none" />
+            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary-foreground" />
+          </span>
+          Rentrée 2026
+        </span>
+        <span className="text-gold-soft">Places limitées — réservez votre créneau</span>
+        <a
+          href="#rdv"
+          className="group inline-flex items-center gap-1 font-medium text-gold underline-offset-4 hover:underline"
+        >
+          Prendre rendez-vous
+          <ArrowRight
+            className="h-3 w-3 transition-transform group-hover:translate-x-0.5"
+            aria-hidden
+          />
         </a>
-      </p>
+      </div>
     </div>
   );
 }
@@ -47,15 +58,22 @@ export function SiteHeader() {
           : "bg-transparent"
       }`}
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-8">
-        <a href="#" className="flex min-w-0 items-center gap-3">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3 sm:px-8">
+        <a href="#" className="flex min-w-0 items-center gap-1">
+          {/*
+            Le PNG du logo comporte de larges marges transparentes (le motif
+            n'occupe qu'environ un tiers de l'image) : on l'affiche donc dans
+            une boîte volontairement grande, puis on rattrape ces marges avec
+            des marges négatives. Le motif paraît deux fois plus gros sans que
+            la barre gagne en hauteur.
+          */}
           <img
             src={LOGO_URL}
             alt="Logo Coursinus"
-            className="h-10 w-10 shrink-0 object-contain sm:h-11 sm:w-11"
+            className="-mx-5 -my-6 h-24 w-24 shrink-0 object-contain sm:-mx-6 sm:-my-7 sm:h-28 sm:w-28"
           />
-          <span className="truncate font-display text-xl tracking-[0.35em] text-gold sm:text-2xl">
-            COURSINUS
+          <span className="font-script text-3xl leading-[1.4] whitespace-nowrap text-gold sm:text-4xl">
+            Coursinus
           </span>
         </a>
 
@@ -73,10 +91,10 @@ export function SiteHeader() {
 
         <div className="flex items-center gap-2">
           <a
-            href="#contact"
-            className="hidden shrink-0 rounded-full border border-gold/50 px-4 py-2 text-xs tracking-[0.2em] text-gold-soft uppercase transition hover:bg-gold/10 sm:inline-block sm:text-sm"
+            href="#rdv"
+            className="btn-press hidden shrink-0 rounded-full bg-primary px-4 py-2 text-xs font-medium tracking-[0.1em] text-primary-foreground uppercase sm:inline-block sm:text-sm"
           >
-            Contact
+            Réserver un RDV
           </a>
           <button
             type="button"
