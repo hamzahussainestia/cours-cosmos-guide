@@ -57,62 +57,37 @@ export const submitBookingRequest = createServerFn({ method: "POST" })
       return { ok: true as const, emailed: false as const };
     }
 
-    try {
-      const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-      const { error } = await supabaseAdmin.from("contact_requests").insert({
-        role: data.role,
-        contact_method: data.contactMethod,
-        name: data.name,
-        email: data.email,
-        phone: data.phone,
-        level: data.level ?? null,
-        subject: data.subject || null,
-        school: data.school || null,
-        message: data.message || null,
-      });
-      if (error) {
-        console.error("contact_requests insert failed:", error.message);
-      }
-    } catch (err) {
-      // Storage is best-effort: the lead still reaches the team by email below
-      // even if Supabase is unreachable or unconfigured for this deployment.
-      console.error("contact_requests storage unavailable:", err);
-    }
-
-    let emailed = false;
+    // L'email EST le seul enregistrement de la demande : il n'y a pas de
+    // copie en base. Toute défaillance doit donc remonter au visiteur pour
+    // qu'il puisse réessayer, plutôt que de lui afficher une confirmation
+    // pour une demande que personne ne recevra.
     const resendKey = process.env["RESEND_API_KEY"];
-
-    if (resendKey) {
-      try {
-        const { subject, text } = buildEmailContent(data);
-        const response = await fetch("https://api.resend.com/emails", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${resendKey}`,
-          },
-          body: JSON.stringify({
-            from: "Coursinus <contact@coursinus.fr>",
-            to: [RECIPIENT],
-            reply_to: data.email,
-            subject,
-            text,
-          }),
-        });
-        if (!response.ok) {
-          const errorBody = await response.text();
-          console.error(`Resend send failed [${response.status}]: ${errorBody}`);
-        } else {
-          emailed = true;
-          const successBody = await response.text();
-          console.log(`Resend send succeeded: ${successBody}`);
-        }
-      } catch (err) {
-        console.error("Resend send threw:", err);
-      }
-    } else {
-      console.error("RESEND_API_KEY missing; email not sent.");
+    if (!resendKey) {
+      console.error("RESEND_API_KEY missing; booking request cannot be delivered.");
+      throw new Error("Le service d'envoi est indisponible.");
     }
 
-    return { ok: true as const, emailed };
+    const { subject, text } = buildEmailContent(data);
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${resendKey}`,
+      },
+      body: JSON.stringify({
+        from: "Coursinus <contact@coursinus.fr>",
+        to: [RECIPIENT],
+        reply_to: data.email,
+        subject,
+        text,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorBody = await response.text();
+      console.error(`Resend send failed [${response.status}]: ${errorBody}`);
+      throw new Error("L'envoi de la demande a échoué.");
+    }
+
+    return { ok: true as const, emailed: true as const };
   });

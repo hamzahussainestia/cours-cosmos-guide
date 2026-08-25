@@ -10,43 +10,31 @@ export type Database = {
     Tables: {
       contact_requests: {
         Row: {
-          contact_method: string;
           created_at: string;
           email: string;
           id: string;
-          level: string | null;
+          level: string;
           message: string | null;
           name: string;
           phone: string;
-          role: string;
-          school: string | null;
-          subject: string | null;
         };
         Insert: {
-          contact_method?: string;
           created_at?: string;
           email: string;
           id?: string;
-          level?: string | null;
+          level: string;
           message?: string | null;
           name: string;
           phone: string;
-          role?: string;
-          school?: string | null;
-          subject?: string | null;
         };
         Update: {
-          contact_method?: string;
           created_at?: string;
           email?: string;
           id?: string;
-          level?: string | null;
+          level?: string;
           message?: string | null;
           name?: string;
           phone?: string;
-          role?: string;
-          school?: string | null;
-          subject?: string | null;
         };
         Relationships: [];
       };
