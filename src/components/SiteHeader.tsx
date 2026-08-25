@@ -14,9 +14,9 @@ export function RentreeBanner() {
         {" — "}
         Réservez votre créneau pour la rentrée 2026
         {" · "}
-        <a href="#contact" className="underline underline-offset-4 hover:text-gold">
-          Contactez-nous
-        </a>
+        <Link to="/reservation" className="underline underline-offset-4 hover:text-gold">
+          Réserver un cours
+        </Link>
       </p>
     </div>
   );
