@@ -73,6 +73,12 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <Link
+            to="/reservation"
+            className="hidden shrink-0 rounded-full bg-primary px-4 py-2 text-xs tracking-[0.2em] text-primary-foreground uppercase transition hover:brightness-110 sm:inline-block sm:text-sm"
+          >
+            Réserver
+          </Link>
           <a
             href="#contact"
             className="hidden shrink-0 rounded-full border border-gold/50 px-4 py-2 text-xs tracking-[0.2em] text-gold-soft uppercase transition hover:bg-gold/10 sm:inline-block sm:text-sm"
