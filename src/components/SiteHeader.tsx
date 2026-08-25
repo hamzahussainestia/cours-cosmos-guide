@@ -114,6 +114,15 @@ export function SiteHeader() {
                 </a>
               </li>
             ))}
+            <li>
+              <Link
+                to="/reservation"
+                className="block rounded-xl bg-primary/15 px-4 py-3 text-sm font-medium tracking-wide text-gold-soft transition hover:bg-primary/25"
+                onClick={() => setMenuOpen(false)}
+              >
+                Réserver un cours
+              </Link>
+            </li>
           </ul>
         </nav>
       )}
