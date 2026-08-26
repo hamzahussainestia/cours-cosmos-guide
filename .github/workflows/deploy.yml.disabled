@@ -1,0 +1,42 @@
+# DESACTIVE — ce workflow ne fonctionnait pas.
+#
+# Il publiait ./dist sur GitHub Pages, alors que le build TanStack Start produit
+# .output et que le site est servi par Cloudflare Workers (voir wrangler.jsonc :
+# custom_domain coursinus.fr et www.coursinus.fr).
+#
+# Deploiement reel aujourd'hui : `npm run deploy` (build + wrangler deploy).
+#
+# Renomme en .disabled : GitHub n'execute que les fichiers .yml de ce dossier.
+# Pour remettre un deploiement automatique, ecrire un workflow Cloudflare avec
+# un secret CLOUDFLARE_API_TOKEN plutot que de reactiver celui-ci tel quel.
+#
+# name: Deploy to GitHub Pages
+#
+# on:
+#   push:
+#     branches: [ main ]
+#
+# jobs:
+#   build-and-deploy:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+#
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: 20
+#           cache: 'npm'
+#
+#       - name: Install dependencies
+#         run: npm install
+#
+#       - name: Build
+#         run: npm run build
+#
+#       - name: Deploy to GitHub Pages
+#         uses: peaceiris/actions-gh-pages@v4
+#         with:
+#           github_token: ${{ secrets.GITHUB_TOKEN }}
+#           publish_dir: ./dist
