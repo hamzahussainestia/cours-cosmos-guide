@@ -220,6 +220,8 @@ export type Offer = {
   level: string;
   range: string;
   price: string;
+  pack: string;
+  packFull: string;
   featured?: boolean;
   icon: LucideIcon;
   points: string[];
@@ -230,6 +232,8 @@ export const offers: Offer[] = [
     level: "Collège",
     range: "6ème à la 3ème",
     price: "28",
+    pack: "269",
+    packFull: "280",
     icon: School,
     points: [
       "Renforcement solide des bases",
@@ -241,6 +245,8 @@ export const offers: Offer[] = [
     level: "Lycée",
     range: "2nde à la Terminale",
     price: "35",
+    pack: "335",
+    packFull: "350",
     featured: true,
     icon: GraduationCap,
     points: [
@@ -254,6 +260,8 @@ export const offers: Offer[] = [
     level: "Prépa",
     range: "MPSI, PCSI, TSI, ATS, ECE, ECG",
     price: "45",
+    pack: "432",
+    packFull: "450",
     icon: Trophy,
     points: [
       "Préparation aux exigences des concours",

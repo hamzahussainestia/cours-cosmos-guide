@@ -212,6 +212,11 @@ function Index() {
                           </span>
                           <span className="text-xs text-primary-foreground/80">/heure</span>
                         </div>
+                        <p className="relative mt-3 text-xs text-muted-foreground">
+                          Pack 10 heures{" "}
+                          <span className="text-gold-soft">{o.pack} €</span>{" "}
+                          <span className="line-through opacity-60">{o.packFull} €</span>
+                        </p>
                         <ul className="relative mt-7 flex flex-1 flex-col gap-4 text-sm leading-relaxed text-muted-foreground">
                           {o.points.map((p) => (
                             <li key={p} className="flex gap-3">
