@@ -1,0 +1,16 @@
+# Normalise les fins de ligne : LF dans le dépôt et dans le répertoire de travail.
+# Évite que Windows fasse apparaître tous les fichiers comme modifiés.
+* text=auto eol=lf
+
+# Fichiers binaires : jamais de conversion.
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.ico   binary
+*.webp  binary
+*.pdf   binary
+*.mp4   binary
+*.woff  binary
+*.woff2 binary
+*.ttf   binary
