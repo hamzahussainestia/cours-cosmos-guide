@@ -162,7 +162,7 @@ export const faqItems = [
   {
     question: "Quels sont vos tarifs ?",
     answer:
-      "Collège : 20 €/h · Lycée : 25 €/h · Prépa : 35 €/h. Les tarifs sont affichés clairement sur le site, sans frais cachés. Un devis personnalisé peut être établi lors du premier échange.",
+      "Collège : 28 €/h · Lycée : 35 €/h · Prépa : 45 €/h. Les tarifs sont affichés clairement sur le site, sans frais cachés. Des packs de 10 heures à tarif réduit sont disponibles, et un devis personnalisé peut être établi lors du premier échange.",
   },
   {
     question: "Les cours sont-ils en présentiel ou en visio ?",
@@ -229,7 +229,7 @@ export const offers: Offer[] = [
   {
     level: "Collège",
     range: "6ème à la 3ème",
-    price: "20",
+    price: "28",
     icon: School,
     points: [
       "Renforcement solide des bases",
@@ -240,7 +240,7 @@ export const offers: Offer[] = [
   {
     level: "Lycée",
     range: "2nde à la Terminale",
-    price: "25",
+    price: "35",
     featured: true,
     icon: GraduationCap,
     points: [
@@ -253,7 +253,7 @@ export const offers: Offer[] = [
   {
     level: "Prépa",
     range: "MPSI, PCSI, TSI, ATS, ECE, ECG",
-    price: "35",
+    price: "45",
     icon: Trophy,
     points: [
       "Préparation aux exigences des concours",

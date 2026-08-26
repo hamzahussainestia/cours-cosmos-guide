@@ -83,7 +83,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "Cours particuliers du collège à la prépa : maths, physique-chimie, SI. Tarifs clairs dès 20€/h, professeurs agrégés et normaliens, suivi individuel.",
+          "Cours particuliers du collège à la prépa : maths, physique-chimie, SI. Tarifs clairs dès 28€/h, professeurs agrégés et normaliens, suivi individuel.",
       },
       { name: "author", content: "Coursinus" },
       { property: "og:type", content: "website" },
@@ -99,12 +99,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         property: "og:description",
         content:
-          "Cours particuliers du collège à la prépa : maths, physique-chimie, SI. Tarifs clairs dès 20€/h, professeurs agrégés et normaliens, suivi individuel.",
+          "Cours particuliers du collège à la prépa : maths, physique-chimie, SI. Tarifs clairs dès 28€/h, professeurs agrégés et normaliens, suivi individuel.",
       },
       {
         name: "twitter:description",
         content:
-          "Cours particuliers du collège à la prépa : maths, physique-chimie, SI. Tarifs clairs dès 20€/h, professeurs agrégés et normaliens, suivi individuel.",
+          "Cours particuliers du collège à la prépa : maths, physique-chimie, SI. Tarifs clairs dès 28€/h, professeurs agrégés et normaliens, suivi individuel.",
       },
       { property: "og:image", content: `${SITE_URL}/og-image.png` },
       { property: "og:image:width", content: "1200" },
