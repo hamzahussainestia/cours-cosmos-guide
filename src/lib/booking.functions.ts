@@ -50,6 +50,46 @@ function buildEmailContent(data: z.infer<typeof bookingSchema>): {
   return { subject, text: lines.join("\n") };
 }
 
+/**
+ * Copie la demande dans la feuille de suivi Google Sheets.
+ *
+ * Volontairement silencieuse : une feuille indisponible, un quota atteint ou
+ * un déploiement Apps Script renommé ne doivent JAMAIS faire échouer une
+ * demande côté visiteur. L'email reste la source de vérité ; la feuille n'est
+ * qu'une commodité de suivi.
+ */
+async function recordInSheet(data: z.infer<typeof bookingSchema>): Promise<void> {
+  const url = process.env["SHEETS_WEBHOOK_URL"];
+  const token = process.env["SHEETS_WEBHOOK_TOKEN"];
+  if (!url || !token) return;
+
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      signal: AbortSignal.timeout(5000),
+      body: JSON.stringify({
+        token,
+        receivedAt: new Date().toISOString(),
+        role: data.role === "prof" ? "Candidature prof" : "Élève / Parent",
+        contactMethod: data.contactMethod === "telephone" ? "Téléphone" : "Visio",
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        level: data.level ?? "",
+        subject: data.subject ?? "",
+        school: data.school ?? "",
+        message: data.message ?? "",
+      }),
+    });
+    if (!response.ok) {
+      console.error(`Sheets webhook failed [${response.status}]: ${await response.text()}`);
+    }
+  } catch (error) {
+    console.error("Sheets webhook unreachable:", error);
+  }
+}
+
 export const submitBookingRequest = createServerFn({ method: "POST" })
   .validator((data: BookingInput) => bookingSchema.parse(data))
   .handler(async ({ data }) => {
@@ -88,6 +128,9 @@ export const submitBookingRequest = createServerFn({ method: "POST" })
       console.error(`Resend send failed [${response.status}]: ${errorBody}`);
       throw new Error("L'envoi de la demande a échoué.");
     }
+
+    // En aval de l'email, et sans propagation d'erreur (voir recordInSheet).
+    await recordInSheet(data);
 
     return { ok: true as const, emailed: true as const };
   });
