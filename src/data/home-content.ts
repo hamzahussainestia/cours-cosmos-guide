@@ -28,6 +28,7 @@ export const navLinks = [
   { label: "Offres", href: "#offres" },
   { label: "Méthode", href: "#methode" },
   { label: "Matières", href: "#matieres" },
+  { label: "Guide Parcoursup", href: "/guide-parcoursup" },
   { label: "Avis", href: "#temoignages" },
   { label: "FAQ", href: "#faq" },
   { label: "Réserver", href: "#rdv" },

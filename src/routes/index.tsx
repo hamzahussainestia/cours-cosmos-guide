@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { CalendarClock, Mail, MapPin, Monitor, Quote } from "lucide-react";
 
 import { BookingFlow } from "@/components/BookingFlow";
@@ -177,6 +177,44 @@ function Index() {
           </div>
         </section>
 
+        {/* Guide Parcoursup */}
+        <section id="guide" className="px-5 py-16 sm:px-8">
+          <div className="mx-auto max-w-5xl">
+            <ScrollReveal>
+              <div className="grid gap-8 rounded-2xl border border-border/60 bg-card/40 p-7 sm:p-10 lg:grid-cols-[1.5fr_1fr] lg:items-center">
+                <div>
+                  <p className="text-xs font-semibold tracking-[0.18em] text-gold-soft uppercase">
+                    Guide gratuit &middot; 12 pages
+                  </p>
+                  <h2 className="mt-3 font-display text-3xl text-gold sm:text-4xl">
+                    Parcoursup sans se planter
+                  </h2>
+                  <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
+                    Comment répartir ses dix vœux, les sous-vœux que presque personne
+                    n&apos;utilise, ce que les commissions lisent vraiment dans une lettre de
+                    motivation, et la seule erreur irréversible de la phase d&apos;admission.
+                  </p>
+                  <p className="mt-3 text-sm text-muted-foreground">
+                    Écrit par Hamza, prépa TSI puis école d&apos;ingénieur.{" "}
+                    <span className="text-gold-soft">Accepté partout où il avait demandé.</span>
+                  </p>
+                </div>
+                <div>
+                  <Link
+                    to="/guide-parcoursup"
+                    className="inline-flex w-full items-center justify-center rounded-md bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
+                  >
+                    Recevoir le guide
+                  </Link>
+                  <p className="mt-3 text-center text-xs text-muted-foreground">
+                    Gratuit. Ton adresse, et c&apos;est à toi.
+                  </p>
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+
         {/* Offres */}
         <section id="offres" className="offer-band px-5 py-20 sm:px-8">
           <div className="mx-auto max-w-6xl">
@@ -213,8 +251,7 @@ function Index() {
                           <span className="text-xs text-primary-foreground/80">/heure</span>
                         </div>
                         <p className="relative mt-3 text-xs text-muted-foreground">
-                          Pack 10 heures{" "}
-                          <span className="text-gold-soft">{o.pack} €</span>{" "}
+                          Pack 10 heures <span className="text-gold-soft">{o.pack} €</span>{" "}
                           <span className="line-through opacity-60">{o.packFull} €</span>
                         </p>
                         <ul className="relative mt-7 flex flex-1 flex-col gap-4 text-sm leading-relaxed text-muted-foreground">

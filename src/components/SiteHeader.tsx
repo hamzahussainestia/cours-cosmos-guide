@@ -1,9 +1,43 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
+import { Link } from "@tanstack/react-router";
 import { ArrowRight, Menu, X } from "lucide-react";
 
 import { navLinks } from "@/data/home-content";
 
 const LOGO_URL = "/coursinus-logo.png";
+
+/**
+ * Un lien de navigation : ancre de la page d'accueil, ou route a part entiere.
+ *
+ * Les navLinks ont longtemps ete uniquement des ancres ("#offres"). Depuis
+ * l'ajout du guide Parcoursup, l'un d'eux vise une vraie route. Un <a> ferait
+ * recharger toute l'application ; <Link> navigue cote client, comme le fait
+ * deja SiteFooter pour les pages legales.
+ */
+function NavLink({
+  href,
+  className,
+  onClick,
+  children,
+}: {
+  href: string;
+  className?: string;
+  onClick?: () => void;
+  children: ReactNode;
+}) {
+  if (href.startsWith("/")) {
+    return (
+      <Link to={href} className={className} onClick={onClick}>
+        {children}
+      </Link>
+    );
+  }
+  return (
+    <a href={href} className={className} onClick={onClick}>
+      {children}
+    </a>
+  );
+}
 
 export function RentreeBanner() {
   return (
@@ -77,15 +111,15 @@ export function SiteHeader() {
           </span>
         </a>
 
-        <nav className="hidden items-center gap-1 lg:flex" aria-label="Navigation principale">
+        <nav className="hidden items-center gap-1 xl:flex" aria-label="Navigation principale">
           {navLinks.map((link) => (
-            <a
+            <NavLink
               key={link.href}
               href={link.href}
               className="rounded-full px-3 py-2 text-xs tracking-[0.12em] text-muted-foreground uppercase transition hover:bg-gold/10 hover:text-gold-soft"
             >
               {link.label}
-            </a>
+            </NavLink>
           ))}
         </nav>
 
@@ -98,7 +132,7 @@ export function SiteHeader() {
           </a>
           <button
             type="button"
-            className="rounded-full border border-gold/30 p-2 text-gold lg:hidden"
+            className="rounded-full border border-gold/30 p-2 text-gold xl:hidden"
             aria-expanded={menuOpen}
             aria-label={menuOpen ? "Fermer le menu" : "Ouvrir le menu"}
             onClick={() => setMenuOpen((o) => !o)}
@@ -110,19 +144,19 @@ export function SiteHeader() {
 
       {menuOpen && (
         <nav
-          className="border-t border-gold/20 bg-background/95 px-5 py-4 backdrop-blur-md lg:hidden"
+          className="border-t border-gold/20 bg-background/95 px-5 py-4 backdrop-blur-md xl:hidden"
           aria-label="Navigation mobile"
         >
           <ul className="flex flex-col gap-1">
             {navLinks.map((link) => (
               <li key={link.href}>
-                <a
+                <NavLink
                   href={link.href}
                   className="block rounded-xl px-4 py-3 text-sm tracking-wide text-muted-foreground transition hover:bg-gold/10 hover:text-gold-soft"
                   onClick={() => setMenuOpen(false)}
                 >
                   {link.label}
-                </a>
+                </NavLink>
               </li>
             ))}
           </ul>
