@@ -206,17 +206,15 @@
     .reveal {
       animation: reveal-in linear both;
       animation-timeline: view();
-      /* La cascade decale la plage dans le scroll plutot que le temps :
+      /* La cascade decale le depart dans le scroll plutot que dans le temps :
          animation-delay n'a pas de sens sur une timeline de vue.
-         Les deux bornes sont dans la meme phase (cover) et se decalent du
-         meme pas (7 % par rang) : la fenetre garde une longueur constante
-         de 32 %. Melanger entry et cover ferait varier les longueurs de
-         phase et le rang ralentirait l'animation au lieu de la retarder.
-         Contrainte : la borne de fin vaut 40 % + rang * 7 %, elle doit
-         rester sous 100 % (rang 7 maximum aujourd'hui, soit 89 %), sinon
-         l'animation ne s'acheve jamais. */
-      animation-range: cover calc(8% + var(--reveal-index, 0) * 7%) cover
-        calc(40% + var(--reveal-index, 0) * 7%);
+         Phase `entry` et non `cover` : `entry` atteint 100 % des qu'un
+         element est entierement entre dans l'ecran, donc tout ce qui est
+         deja visible au chargement est a l'etat final. Avec `cover`, le
+         hero restait transparent au premier affichage. La borne de fin est
+         fixe a 100 % pour qu'aucun rang, si eleve soit-il, ne puisse
+         rester fige a mi-animation. */
+      animation-range: entry calc(var(--reveal-index, 0) * 6%) entry 100%;
     }
   }
 }
