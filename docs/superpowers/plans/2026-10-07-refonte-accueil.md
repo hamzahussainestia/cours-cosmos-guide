@@ -98,6 +98,9 @@ Créer `scripts/measure-responsive.js` :
  * Mesure la page d'accueil pour la refonte 2026-10.
  * À coller dans la console du navigateur, sur la page à mesurer.
  *
+ * Le script est asynchrone : collé tel quel, il renvoie une Promise.
+ * L'attendre avec `await (...)` ou `.then(console.log)`.
+ *
  * Le script parcourt la page entière avant de mesurer, de manière que les
  * animations pilotées par le scroll aient le temps de se jouer.
  *
@@ -112,16 +115,17 @@ Créer `scripts/measure-responsive.js` :
   const vh = window.innerHeight;
 
   // Parcourir la page : descendre jusqu'en bas par paliers, puis remonter.
+  // Forcer behavior: "instant" pour contourner scroll-behavior: smooth du site.
   const hauteurPage = document.body.scrollHeight;
   const nombrePaliers = Math.ceil(hauteurPage / vh);
 
   for (let i = 0; i < nombrePaliers; i++) {
-    window.scrollTo(0, i * vh);
+    window.scrollTo({ top: i * vh, behavior: "instant" });
     await new Promise((resolve) => setTimeout(resolve, 100));
   }
 
   // Remonter en haut et attendre avant de mesurer.
-  window.scrollTo(0, 0);
+  window.scrollTo({ top: 0, behavior: "instant" });
   await new Promise((resolve) => setTimeout(resolve, 300));
 
   const debordement = [];
@@ -150,29 +154,29 @@ Créer `scripts/measure-responsive.js` :
     if (b.height < 44) ciblesSous44px.push(el.textContent.trim().slice(0, 30) || el.tagName);
   });
 
-  const contenuInvisible = [];
+  const contenuInvisible = new Set();
   document.querySelectorAll("main section").forEach((s) => {
     const texte = s.innerText.trim();
     if (!texte) return;
     const op = parseFloat(getComputedStyle(s).opacity);
     if (op < 0.05) {
-      contenuInvisible.push(s.id || texte.slice(0, 30));
+      contenuInvisible.add(s.id || texte.slice(0, 30));
       return;
     }
     // Attraper les éléments de classe .reveal ou .parallax cachés par animation.
     s.querySelectorAll(".reveal, .parallax").forEach((el) => {
       if (!el.innerText.trim()) return;
       if (parseFloat(getComputedStyle(el).opacity) < 0.05) {
-        contenuInvisible.push(el.innerText.trim().slice(0, 30));
+        contenuInvisible.add(el.innerText.trim().slice(0, 30));
       }
     });
-    // Attraper aussi les autres éléments porteurs de texte qui seraient invisibles.
-    s.querySelectorAll("[class]").forEach((el) => {
+    // Attraper aussi tous les autres éléments porteurs de texte invisibles.
+    s.querySelectorAll("*").forEach((el) => {
       if (el.closest(".reveal, .parallax")) return; // Déjà couvert ci-dessus.
       if (!el.innerText.trim()) return;
       const elOp = parseFloat(getComputedStyle(el).opacity);
       if (elOp < 0.05) {
-        contenuInvisible.push(el.innerText.trim().slice(0, 30));
+        contenuInvisible.add(el.innerText.trim().slice(0, 30));
       }
     });
   });
@@ -191,8 +195,8 @@ Créer `scripts/measure-responsive.js` :
     textesSous12px: [...textesSous12px],
     ciblesSous44px: ciblesSous44px.slice(0, 5),
     ciblesSous44pxCount: ciblesSous44px.length,
-    contenuInvisible: contenuInvisible.slice(0, 5),
-    contenuInvisibleCount: contenuInvisible.length,
+    contenuInvisible: [...contenuInvisible].slice(0, 5),
+    contenuInvisibleCount: contenuInvisible.size,
     sections,
   };
 })();
@@ -200,7 +204,7 @@ Créer `scripts/measure-responsive.js` :
 
 - [ ] **Step 2 : Relever la référence sur le site en production**
 
-Ouvrir https://coursinus.fr, régler la fenêtre sur 375 x 812, coller le script, noter le résultat.
+Ouvrir https://coursinus.fr, régler la fenêtre sur 375 x 812, coller le script dans la console et l'attendre : `await (...)` ou `.then(console.log)`. Le script parcourt la page avant de mesurer ; c'est normal qu'il mette une ou deux secondes.
 
 Attendu : `ecrans` autour de 14,7, `contenuInvisible` vide, `debordement` vide.
 
