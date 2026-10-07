@@ -98,20 +98,38 @@ Créer `scripts/measure-responsive.js` :
  * Mesure la page d'accueil pour la refonte 2026-10.
  * À coller dans la console du navigateur, sur la page à mesurer.
  *
+ * Le script parcourt la page entière avant de mesurer, de manière que les
+ * animations pilotées par le scroll aient le temps de se jouer.
+ *
  * Le contrôle le plus important est `contenuInvisible` : il attrape le cas
- * où une animation masque du contenu sans jamais le révéler. C'est le seul
- * défaut de cette refonte qui casserait le site au lieu de l'enlaidir.
+ * où une animation masque du contenu sans jamais le révéler. Ce contrôle ne
+ * fait autorité que dans les modes dégradés (prefers-reduced-motion activé,
+ * ou bloc @supports désactivé en devtools) : c'est là que tout DOIT être
+ * visible sans exception.
  */
-(() => {
+(async () => {
   const vw = window.innerWidth;
   const vh = window.innerHeight;
+
+  // Parcourir la page : descendre jusqu'en bas par paliers, puis remonter.
+  const hauteurPage = document.body.scrollHeight;
+  const nombrePaliers = Math.ceil(hauteurPage / vh);
+
+  for (let i = 0; i < nombrePaliers; i++) {
+    window.scrollTo(0, i * vh);
+    await new Promise((resolve) => setTimeout(resolve, 100));
+  }
+
+  // Remonter en haut et attendre avant de mesurer.
+  window.scrollTo(0, 0);
+  await new Promise((resolve) => setTimeout(resolve, 300));
 
   const debordement = [];
   document.querySelectorAll("main *").forEach((el) => {
     const b = el.getBoundingClientRect();
     if (b.width > 0 && (b.right > vw + 1 || b.left < -1)) {
       // Les pistes de défilement continu débordent par construction.
-      if (el.closest(".logo-marquee, [data-marquee]")) return;
+      if (el.closest(".logo-marquee")) return;
       debordement.push(`${el.tagName}.${(el.className + "").slice(0, 40)}`);
     }
   });
@@ -141,9 +159,19 @@ Créer `scripts/measure-responsive.js` :
       contenuInvisible.push(s.id || texte.slice(0, 30));
       return;
     }
+    // Attraper les éléments de classe .reveal ou .parallax cachés par animation.
     s.querySelectorAll(".reveal, .parallax").forEach((el) => {
       if (!el.innerText.trim()) return;
       if (parseFloat(getComputedStyle(el).opacity) < 0.05) {
+        contenuInvisible.push(el.innerText.trim().slice(0, 30));
+      }
+    });
+    // Attraper aussi les autres éléments porteurs de texte qui seraient invisibles.
+    s.querySelectorAll("[class]").forEach((el) => {
+      if (el.closest(".reveal, .parallax")) return; // Déjà couvert ci-dessus.
+      if (!el.innerText.trim()) return;
+      const elOp = parseFloat(getComputedStyle(el).opacity);
+      if (elOp < 0.05) {
         contenuInvisible.push(el.innerText.trim().slice(0, 30));
       }
     });
@@ -159,9 +187,12 @@ Créer `scripts/measure-responsive.js` :
     hauteurPx: document.body.scrollHeight,
     ecrans: +(document.body.scrollHeight / vh).toFixed(1),
     debordement: debordement.slice(0, 5),
+    debordementCount: debordement.length,
     textesSous12px: [...textesSous12px],
     ciblesSous44px: ciblesSous44px.slice(0, 5),
+    ciblesSous44pxCount: ciblesSous44px.length,
     contenuInvisible: contenuInvisible.slice(0, 5),
+    contenuInvisibleCount: contenuInvisible.length,
     sections,
   };
 })();
