@@ -3,7 +3,7 @@
  * À coller dans la console du navigateur, sur la page à mesurer.
  *
  * Le script est asynchrone : collé tel quel, il renvoie une Promise.
- * L'attendre avec `await (...) ` ou `.then(console.log)`.
+ * L'attendre avec `await (...)` ou `.then(console.log)`.
  *
  * Le script parcourt la page entière avant de mesurer, de manière que les
  * animations pilotées par le scroll aient le temps de se jouer.
@@ -30,7 +30,7 @@
 
   // Remonter en haut et attendre avant de mesurer.
   window.scrollTo({ top: 0, behavior: "instant" });
-  await new Promise((resolve) => setTimeout(resolve, 300));
+  await new Promise((resolve) => setTimeout(resolve, 1200));
 
   const debordement = [];
   document.querySelectorAll("main *").forEach((el) => {
@@ -58,32 +58,54 @@
     if (b.height < 44) ciblesSous44px.push(el.textContent.trim().slice(0, 30) || el.tagName);
   });
 
-  const contenuInvisible = new Set();
+  const contenuInvisibleElements = new Set();
   document.querySelectorAll("main section").forEach((s) => {
     const texte = s.innerText.trim();
     if (!texte) return;
     const op = parseFloat(getComputedStyle(s).opacity);
     if (op < 0.05) {
-      contenuInvisible.add(s.id || texte.slice(0, 30));
+      contenuInvisibleElements.add(s);
       return;
     }
     // Attraper les éléments de classe .reveal ou .parallax cachés par animation.
     s.querySelectorAll(".reveal, .parallax").forEach((el) => {
-      if (!el.innerText.trim()) return;
-      if (parseFloat(getComputedStyle(el).opacity) < 0.05) {
-        contenuInvisible.add(el.innerText.trim().slice(0, 30));
+      if (!(el instanceof HTMLElement)) return;
+      const elOp = parseFloat(getComputedStyle(el).opacity);
+      if (elOp < 0.05) {
+        const innerTexte = el.innerText?.trim();
+        if (innerTexte) {
+          contenuInvisibleElements.add(el);
+        }
       }
     });
     // Attraper aussi tous les autres éléments porteurs de texte invisibles.
     s.querySelectorAll("*").forEach((el) => {
+      if (!(el instanceof HTMLElement)) return;
       if (el.closest(".reveal, .parallax")) return; // Déjà couvert ci-dessus.
-      if (!el.innerText.trim()) return;
       const elOp = parseFloat(getComputedStyle(el).opacity);
       if (elOp < 0.05) {
-        contenuInvisible.add(el.innerText.trim().slice(0, 30));
+        const innerTexte = el.innerText?.trim();
+        if (innerTexte) {
+          contenuInvisibleElements.add(el);
+        }
       }
     });
   });
+
+  // Écarter les éléments dont un ancêtre figure déjà dans l'ensemble.
+  const contenuInvisibleFiltered = [...contenuInvisibleElements].filter((el) => {
+    for (const ancestor of contenuInvisibleElements) {
+      if (ancestor !== el && ancestor.contains(el)) {
+        return false; // Cet élément a un ancêtre invisible, l'écarter.
+      }
+    }
+    return true;
+  });
+
+  // Créer les libellés pour l'échantillon.
+  const contenuInvisible = contenuInvisibleFiltered.map(
+    (el) => el.id || el.innerText.trim().slice(0, 30)
+  );
 
   const sections = [...document.querySelectorAll("main > section")].map((s) => ({
     titre: s.querySelector("h2")?.textContent?.trim() || s.id || "(hero)",
@@ -99,8 +121,8 @@
     textesSous12px: [...textesSous12px],
     ciblesSous44px: ciblesSous44px.slice(0, 5),
     ciblesSous44pxCount: ciblesSous44px.length,
-    contenuInvisible: [...contenuInvisible].slice(0, 5),
-    contenuInvisibleCount: contenuInvisible.size,
+    contenuInvisible: contenuInvisible.slice(0, 5),
+    contenuInvisibleCount: contenuInvisibleFiltered.length,
     sections,
   };
 })();
