@@ -16,18 +16,18 @@ Mesure faite sur https://coursinus.fr à 375 x 812 px, le 2026-10-07 :
 - Aucun débordement horizontal, cibles tactiles correctes (2 sur 18 sous 44 px)
 - **La page fait 11 923 px, soit 14,7 écrans de haut sur un téléphone**
 
-| Section | Écrans sur mobile |
-|---|---|
-| Offres & Tarifs | 2,5 |
-| Réservez votre créneau | 2,0 |
-| Témoignages | 1,6 |
-| Hero | 1,4 |
-| Pourquoi nous choisir | 1,4 |
-| Comment ça marche | 1,2 |
-| Matières & filières | 1,1 |
-| FAQ | 1,1 |
-| Guide Parcoursup | 0,7 |
-| Chiffres clés | 0,4 |
+| Section                | Écrans sur mobile |
+| ---------------------- | ----------------- |
+| Offres & Tarifs        | 2,5               |
+| Réservez votre créneau | 2,0               |
+| Témoignages            | 1,6               |
+| Hero                   | 1,4               |
+| Pourquoi nous choisir  | 1,4               |
+| Comment ça marche      | 1,2               |
+| Matières & filières    | 1,1               |
+| FAQ                    | 1,1               |
+| Guide Parcoursup       | 0,7               |
+| Chiffres clés          | 0,4               |
 
 La somme des sections (13,4 écrans) est inférieure au total de la page : la
 différence tient au bandeau de rentrée, à l'en-tête et au pied de page.
@@ -76,12 +76,12 @@ site conçu d'un site accumulé.
 
 ### Les primitives
 
-| Composant | Rôle | JavaScript |
-|---|---|---|
-| `Reveal` | L'élément se construit à l'entrée (opacité, translation, échelle) | Aucun |
-| `Parallax` | L'élément se déplace à une vitesse différente du scroll | Aucun |
-| `DrawPath` | Un tracé SVG se dessine au fil du scroll | Aucun |
-| `CountUpStat` | Un nombre monte jusqu'à sa valeur | Oui (interpolation) |
+| Composant     | Rôle                                                              | JavaScript          |
+| ------------- | ----------------------------------------------------------------- | ------------------- |
+| `Reveal`      | L'élément se construit à l'entrée (opacité, translation, échelle) | Aucun               |
+| `Parallax`    | L'élément se déplace à une vitesse différente du scroll           | Aucun               |
+| `DrawPath`    | Un tracé SVG se dessine au fil du scroll                          | Aucun               |
+| `CountUpStat` | Un nombre monte jusqu'à sa valeur                                 | Oui (interpolation) |
 
 ### Technique
 
@@ -110,33 +110,33 @@ contenu n'est jamais masqué par défaut en attendant une animation.
 
 ### Composants touchés
 
-| Fichier | Action |
-|---|---|
-| `src/components/motion/Reveal.tsx` | Créé |
-| `src/components/motion/Parallax.tsx` | Créé |
-| `src/components/motion/DrawPath.tsx` | Créé |
-| `src/components/motion/Carousel.tsx` | Créé — enveloppe `embla`, actif sous `md` seulement |
-| `src/components/ScrollReveal.tsx` | Supprimé, remplacé par `Reveal` |
-| `src/components/WaveMark.tsx` | Supprimé, absorbé par `DrawPath` |
-| `src/components/MethodTimeline.tsx` | Réécrit en scène vitrine |
-| `src/components/FormulaBackdrop.tsx` | Conservé, passe à trois profondeurs de parallaxe |
-| `src/components/CountUpStat.tsx` | Conservé tel quel |
-| `src/styles.css` | Les classes d'animation à usage unique sont remplacées par le vocabulaire des primitives |
+| Fichier                              | Action                                                                                   |
+| ------------------------------------ | ---------------------------------------------------------------------------------------- |
+| `src/components/motion/Reveal.tsx`   | Créé                                                                                     |
+| `src/components/motion/Parallax.tsx` | Créé                                                                                     |
+| `src/components/motion/DrawPath.tsx` | Créé                                                                                     |
+| `src/components/motion/Carousel.tsx` | Créé — enveloppe `embla`, actif sous `md` seulement                                      |
+| `src/components/ScrollReveal.tsx`    | Supprimé, remplacé par `Reveal`                                                          |
+| `src/components/WaveMark.tsx`        | Supprimé, absorbé par `DrawPath`                                                         |
+| `src/components/MethodTimeline.tsx`  | Réécrit en scène vitrine                                                                 |
+| `src/components/FormulaBackdrop.tsx` | Conservé, passe à trois profondeurs de parallaxe                                         |
+| `src/components/CountUpStat.tsx`     | Conservé tel quel                                                                        |
+| `src/styles.css`                     | Les classes d'animation à usage unique sont remplacées par le vocabulaire des primitives |
 
 ## Traitement par section
 
-| Section | Dispositif graphique | Compression mobile |
-|---|---|---|
-| Hero | La vague du logo se trace sous le titre ; les mots montent en séquence ; les formules dérivent à trois profondeurs | Les deux cartes chiffrées deviennent une ligne compacte (1,4 → 1,1) |
-| Chiffres clés | Chaque nombre monte pendant qu'un arc se remplit autour de lui | Inchangé, déjà compact (0,4) |
-| Guide Parcoursup | Le document s'incline et se compose à l'entrée | Inchangé (0,7 → 0,6) |
-| Offres & Tarifs | Les trois cartes se distribuent ; le prix compte ; le chiffre en filigrane défile à contre-sens | **Carrousel tactile**, une offre visible, la suivante qui dépasse (2,5 → 0,9) |
-| Comment ça marche | **Scène vitrine** : le trait reliant les 4 étapes se dessine au scroll, chaque étape s'allume quand le trait l'atteint | Espacements resserrés (1,2 → 0,9) |
-| Réservez votre créneau | Habillage seulement, révélation simple | Modalités resserrées (2,0 → 1,6) |
-| Matières & filières | Pastilles en cascade, icônes tracées | Grille 2 colonnes (1,1 → 0,6) |
-| Pourquoi nous choisir | Le défilement des écoles accélère à l'entrée puis se stabilise | Espacements resserrés (1,4 → 0,9) |
-| Témoignages | Révélation en cascade | **Carrousel tactile** (1,6 → 0,7) |
-| FAQ | Questions en cascade | Inchangé (1,1 → 1,0) |
+| Section                | Dispositif graphique                                                                                                   | Compression mobile                                                            |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| Hero                   | La vague du logo se trace sous le titre ; les mots montent en séquence ; les formules dérivent à trois profondeurs     | Les deux cartes chiffrées deviennent une ligne compacte (1,4 → 1,1)           |
+| Chiffres clés          | Chaque nombre monte pendant qu'un arc se remplit autour de lui                                                         | Inchangé, déjà compact (0,4)                                                  |
+| Guide Parcoursup       | Le document s'incline et se compose à l'entrée                                                                         | Inchangé (0,7 → 0,6)                                                          |
+| Offres & Tarifs        | Les trois cartes se distribuent ; le prix compte ; le chiffre en filigrane défile à contre-sens                        | **Carrousel tactile**, une offre visible, la suivante qui dépasse (2,5 → 0,9) |
+| Comment ça marche      | **Scène vitrine** : le trait reliant les 4 étapes se dessine au scroll, chaque étape s'allume quand le trait l'atteint | Espacements resserrés (1,2 → 0,9)                                             |
+| Réservez votre créneau | Habillage seulement, révélation simple                                                                                 | Modalités resserrées (2,0 → 1,6)                                              |
+| Matières & filières    | Pastilles en cascade, icônes tracées                                                                                   | Grille 2 colonnes (1,1 → 0,6)                                                 |
+| Pourquoi nous choisir  | Le défilement des écoles accélère à l'entrée puis se stabilise                                                         | Espacements resserrés (1,4 → 0,9)                                             |
+| Témoignages            | Révélation en cascade                                                                                                  | **Carrousel tactile** (1,6 → 0,7)                                             |
+| FAQ                    | Questions en cascade                                                                                                   | Inchangé (1,1 → 1,0)                                                          |
 
 Les carrousels ne s'activent qu'en dessous du point de rupture `md`. Au-delà,
 les grilles actuelles restent en place : le problème est propre au mobile.
@@ -169,9 +169,9 @@ Le critère de réussite est chiffré : **8,7 écrans ou moins à 375 px**, cont
 
 ## Risques
 
-| Risque | Parade |
-|---|---|
-| `animation-timeline` non supporté sur d'anciens appareils | Bloc `@supports`, repli statique vérifié explicitement |
+| Risque                                                             | Parade                                                                                      |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------- |
+| `animation-timeline` non supporté sur d'anciens appareils          | Bloc `@supports`, repli statique vérifié explicitement                                      |
 | Un carrousel masque du contenu que les visiteurs ne découvrent pas | Débordement de la carte suivante et points de navigation, pour signaler qu'il y a une suite |
-| Régression du parcours de RDV, qui apporte les demandes réelles | Sa logique est hors périmètre ; seul l'habillage change |
-| Trop d'animation nuit à la crédibilité auprès des parents | Direction validée « généreux mais maîtrisé » ; tout est coupé par `prefers-reduced-motion` |
+| Régression du parcours de RDV, qui apporte les demandes réelles    | Sa logique est hors périmètre ; seul l'habillage change                                     |
+| Trop d'animation nuit à la crédibilité auprès des parents          | Direction validée « généreux mais maîtrisé » ; tout est coupé par `prefers-reduced-motion`  |

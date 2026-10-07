@@ -6,23 +6,23 @@
   "main": ".output/server/index.mjs",
   "assets": {
     "binding": "ASSETS",
-    "directory": ".output/public"
+    "directory": ".output/public",
   },
   "routes": [
     { "pattern": "coursinus.fr", "custom_domain": true },
-    { "pattern": "www.coursinus.fr", "custom_domain": true }
+    { "pattern": "www.coursinus.fr", "custom_domain": true },
   ],
   "no_bundle": true,
   "vars": {
-    "SUPABASE_URL": "https://agxphfofxejtuuyrxmnh.supabase.co"
+    "SUPABASE_URL": "https://agxphfofxejtuuyrxmnh.supabase.co",
   },
   "observability": {
-    "enabled": true
+    "enabled": true,
   },
   "rules": [
     {
       "type": "ESModule",
-      "globs": ["**/*.mjs", "**/*.js"]
-    }
-  ]
+      "globs": ["**/*.mjs", "**/*.js"],
+    },
+  ],
 }

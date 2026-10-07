@@ -3,12 +3,15 @@
 ## Ce qui est ajouté
 
 ### 1. Bloc Discord (section contact, sous le QR code)
+
 Une ligne « Ou en rejoignant le serveur Discord » avec un bouton doré vers
 https://discord.gg/U5w5qYZ4RZ (ouvre dans un nouvel onglet), dans le même style
 que le reste du site.
 
 ### 2. Formulaire de contact
+
 Nouvelle carte dans la section contact avec les champs :
+
 - Nom et prénom
 - Email
 - Téléphone
@@ -19,6 +22,7 @@ Validation côté client et serveur, message de confirmation après envoi, et
 protection anti-spam simple.
 
 ### 3. Réception des demandes
+
 Comme il n'y a pas encore de nom de domaine, l'envoi d'email « classique »
 depuis le site n'est pas possible pour l'instant. Le plan :
 

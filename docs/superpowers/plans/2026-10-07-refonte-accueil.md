@@ -36,44 +36,44 @@ C'est un contrôle scripté mais déclenché à la main, pas une suite automatis
 
 Mesurés sur https://coursinus.fr le 2026-10-07 à 375 x 812 px :
 
-| Indicateur | Référence | Cible |
-|---|---|---|
-| Hauteur de page | 11 923 px (14,7 écrans) | ≤ 7 100 px (8,7 écrans) |
-| Débordement horizontal | aucun | aucun |
-| Textes sous 12 px | 10 px et 12 px présents | aucun sous 12 px |
-| Cibles tactiles sous 44 px | 2 sur 18 | 0 |
+| Indicateur                 | Référence               | Cible                   |
+| -------------------------- | ----------------------- | ----------------------- |
+| Hauteur de page            | 11 923 px (14,7 écrans) | ≤ 7 100 px (8,7 écrans) |
+| Débordement horizontal     | aucun                   | aucun                   |
+| Textes sous 12 px          | 10 px et 12 px présents | aucun sous 12 px        |
+| Cibles tactiles sous 44 px | 2 sur 18                | 0                       |
 
 ## Structure des fichiers
 
-| Fichier | Responsabilité |
-|---|---|
-| `scripts/measure-responsive.js` | Script de mesure, collé dans la console du navigateur |
-| `src/components/motion/Reveal.tsx` | L'élément se construit à l'entrée dans l'écran |
+| Fichier                              | Responsabilité                                          |
+| ------------------------------------ | ------------------------------------------------------- |
+| `scripts/measure-responsive.js`      | Script de mesure, collé dans la console du navigateur   |
+| `src/components/motion/Reveal.tsx`   | L'élément se construit à l'entrée dans l'écran          |
 | `src/components/motion/Parallax.tsx` | L'élément se déplace à une vitesse différente du scroll |
-| `src/components/motion/DrawPath.tsx` | Un tracé SVG se dessine au fil du scroll |
-| `src/components/motion/wave-path.ts` | Le tracé de la vague du logo, partagé |
-| `src/components/SectionHeading.tsx` | Le titre de section, extrait de `ScrollReveal.tsx` |
-| `src/components/MobileCarousel.tsx` | Carrousel sous `md`, grille au-delà |
-| `src/components/ScrollReveal.tsx` | **Supprimé** en tâche 2 |
-| `src/components/WaveMark.tsx` | **Supprimé** en tâche 4 |
-| `src/components/MethodTimeline.tsx` | Réécrit en tâche 9 |
-| `src/styles.css` | Accueille la couche de mouvement ; nettoyé en tâche 13 |
-| `src/routes/index.tsx` | 492 lignes, dix sections modifiées une par une |
+| `src/components/motion/DrawPath.tsx` | Un tracé SVG se dessine au fil du scroll                |
+| `src/components/motion/wave-path.ts` | Le tracé de la vague du logo, partagé                   |
+| `src/components/SectionHeading.tsx`  | Le titre de section, extrait de `ScrollReveal.tsx`      |
+| `src/components/MobileCarousel.tsx`  | Carrousel sous `md`, grille au-delà                     |
+| `src/components/ScrollReveal.tsx`    | **Supprimé** en tâche 2                                 |
+| `src/components/WaveMark.tsx`        | **Supprimé** en tâche 4                                 |
+| `src/components/MethodTimeline.tsx`  | Réécrit en tâche 9                                      |
+| `src/styles.css`                     | Accueille la couche de mouvement ; nettoyé en tâche 13  |
+| `src/routes/index.tsx`               | 492 lignes, dix sections modifiées une par une          |
 
 Bornes actuelles des sections dans `src/routes/index.tsx` :
 
-| Section | Lignes |
-|---|---|
-| Hero | 87–160 |
-| Chiffres clés | 162–178 |
-| Guide Parcoursup | 180–216 |
-| Offres | 218–278 |
-| Comment ça marche | 280–290 |
-| Prise de RDV | 292–353 |
-| Matières | 355–382 |
+| Section               | Lignes  |
+| --------------------- | ------- |
+| Hero                  | 87–160  |
+| Chiffres clés         | 162–178 |
+| Guide Parcoursup      | 180–216 |
+| Offres                | 218–278 |
+| Comment ça marche     | 280–290 |
+| Prise de RDV          | 292–353 |
+| Matières              | 355–382 |
 | Pourquoi nous choisir | 384–438 |
-| Témoignages | 440–463 |
-| FAQ | 465–486 |
+| Témoignages           | 440–463 |
+| FAQ                   | 465–486 |
 
 Ces numéros se décalent dès la première tâche qui modifie le fichier. Repérer les sections par leur commentaire (`{/* Hero */}`), jamais par leur numéro de ligne.
 
@@ -82,9 +82,11 @@ Ces numéros se décalent dès la première tâche qui modifie le fichier. Repé
 ### Task 1 : Script de mesure et relevé de référence
 
 **Files:**
+
 - Create: `scripts/measure-responsive.js`
 
 **Interfaces:**
+
 - Produces: un script qui, collé dans la console, renvoie un objet JSON avec `hauteurPx`, `ecrans`, `debordement`, `textesSous12px`, `ciblesSous44px`, `contenuInvisible`. Toutes les tâches suivantes s'en servent comme critère de recette.
 
 - [ ] **Step 1 : Créer le script de mesure**
@@ -115,11 +117,13 @@ Créer `scripts/measure-responsive.js` :
   });
 
   const textesSous12px = new Set();
-  document.querySelectorAll("main p, main span, main li, main a, main h1, main h2, main h3").forEach((el) => {
-    if (!el.textContent.trim()) return;
-    const fs = parseFloat(getComputedStyle(el).fontSize);
-    if (fs < 12) textesSous12px.add(Math.round(fs * 10) / 10);
-  });
+  document
+    .querySelectorAll("main p, main span, main li, main a, main h1, main h2, main h3")
+    .forEach((el) => {
+      if (!el.textContent.trim()) return;
+      const fs = parseFloat(getComputedStyle(el).fontSize);
+      if (fs < 12) textesSous12px.add(Math.round(fs * 10) / 10);
+    });
 
   const ciblesSous44px = [];
   document.querySelectorAll("main a, main button").forEach((el) => {
@@ -189,6 +193,7 @@ Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>"
 Cette tâche remplace le système d'apparition actuel. C'est la plus risquée du plan : elle touche les 24 points d'appel de `ScrollReveal` dans `index.tsx`.
 
 **Files:**
+
 - Create: `src/components/motion/Reveal.tsx`
 - Create: `src/components/SectionHeading.tsx`
 - Modify: `src/styles.css`
@@ -196,6 +201,7 @@ Cette tâche remplace le système d'apparition actuel. C'est la plus risquée du
 - Delete: `src/components/ScrollReveal.tsx`
 
 **Interfaces:**
+
 - Produces: `<Reveal index?: number distance?: number className?: string as?: ElementType>` et `<SectionHeading eyebrow title id?>`. Toutes les sections les consomment.
 - Consumes: `cn` depuis `@/lib/utils`, `WaveMark` depuis `@/components/WaveMark` (remplacé en tâche 4).
 
@@ -294,6 +300,7 @@ Créer `src/components/SectionHeading.tsx` avec le composant `SectionHeading` re
 - [ ] **Step 4 : Migrer les points d'appel dans `index.tsx`**
 
 Dans `src/routes/index.tsx` :
+
 - Remplacer l'import `{ ScrollReveal, SectionHeading } from "@/components/ScrollReveal"` par deux imports : `{ Reveal } from "@/components/motion/Reveal"` et `{ SectionHeading } from "@/components/SectionHeading"`
 - Remplacer les 24 `<ScrollReveal>` par `<Reveal>`, et `</ScrollReveal>` par `</Reveal>`
 - Convertir chaque `delay={N}` en `index={N / 80}` arrondi à l'entier le plus proche (`delay={80}` devient `index={1}`, `delay={160}` devient `index={2}`). Supprimer l'attribut quand il valait 0.
@@ -345,10 +352,12 @@ Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>"
 ### Task 3 : Primitive `Parallax`
 
 **Files:**
+
 - Create: `src/components/motion/Parallax.tsx`
 - Modify: `src/styles.css`
 
 **Interfaces:**
+
 - Produces: `<Parallax shift?: number className?>`. Consommée par le Hero (tâche 6), les Offres (tâche 8) et le Guide (tâche 7).
 
 - [ ] **Step 1 : Créer la primitive**
@@ -432,6 +441,7 @@ Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>"
 ### Task 4 : Primitive `DrawPath`, en remplacement de `WaveMark`
 
 **Files:**
+
 - Create: `src/components/motion/DrawPath.tsx`
 - Create: `src/components/motion/wave-path.ts`
 - Modify: `src/styles.css`
@@ -439,6 +449,7 @@ Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>"
 - Delete: `src/components/WaveMark.tsx`
 
 **Interfaces:**
+
 - Produces: `<DrawPath d viewBox className? strokeWidth? stretch? draw?>` et la constante `WAVE_PATH` avec `WAVE_VIEWBOX`. Consommés par `SectionHeading` et par la scène de la tâche 9.
 
 - [ ] **Step 1 : Extraire le tracé de la vague**
@@ -561,12 +572,7 @@ import { WAVE_PATH, WAVE_VIEWBOX } from "@/components/motion/wave-path";
 et le `<WaveMark className="h-7 w-auto shrink-0 sm:h-8" draw />` par :
 
 ```tsx
-<DrawPath
-  d={WAVE_PATH}
-  viewBox={WAVE_VIEWBOX}
-  className="h-7 w-auto shrink-0 sm:h-8"
-  draw
-/>
+<DrawPath d={WAVE_PATH} viewBox={WAVE_VIEWBOX} className="h-7 w-auto shrink-0 sm:h-8" draw />
 ```
 
 - [ ] **Step 5 : Remplacer les usages restants et supprimer `WaveMark`**
@@ -605,9 +611,11 @@ Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>"
 ### Task 5 : Composant `MobileCarousel`
 
 **Files:**
+
 - Create: `src/components/MobileCarousel.tsx`
 
 **Interfaces:**
+
 - Consumes: `Carousel`, `CarouselContent`, `CarouselItem` depuis `@/components/ui/carousel`
 - Produces: `<MobileCarousel items={T[]} renderItem={(item, i) => ReactNode} gridClassName itemClassName label>`. Consommé par les Offres (tâche 8) et les Témoignages (tâche 12).
 
@@ -754,10 +762,12 @@ Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>"
 ### Task 6 : Section Hero
 
 **Files:**
+
 - Modify: `src/routes/index.tsx` (section `{/* Hero */}`)
 - Modify: `src/components/FormulaBackdrop.tsx`
 
 **Interfaces:**
+
 - Consumes: `Reveal`, `Parallax`, `DrawPath`, `WAVE_PATH`
 
 - [ ] **Step 1 : Étager les formules en profondeur**
@@ -798,6 +808,7 @@ Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>"
 ### Task 7 : Sections Chiffres clés et Guide Parcoursup
 
 **Files:**
+
 - Modify: `src/routes/index.tsx` (sections `{/* Chiffres clés */}` et `{/* Guide Parcoursup */}`)
 - Modify: `src/styles.css`
 
@@ -843,9 +854,11 @@ Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>"
 C'est la section la plus longue sur mobile : 2,5 écrans pour trois cartes empilées.
 
 **Files:**
+
 - Modify: `src/routes/index.tsx` (section `{/* Offres */}`)
 
 **Interfaces:**
+
 - Consumes: `MobileCarousel`, `Reveal`, `Parallax`
 
 - [ ] **Step 1 : Extraire la carte d'offre**
@@ -876,6 +889,7 @@ npx tsc --noEmit -p tsconfig.json && npm run lint && npm run build
 ```
 
 Mesurer à 375 px puis à 1280 px. Attendu :
+
 - 375 px : section Offres à **0,9 écran ou moins** (référence 2,5)
 - 1280 px : la grille trois colonnes est inchangée visuellement
 - `contenuInvisible` vide aux deux largeurs
@@ -900,10 +914,12 @@ Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>"
 ### Task 9 : Section Comment ça marche — la scène vitrine
 
 **Files:**
+
 - Modify: `src/components/MethodTimeline.tsx`
 - Modify: `src/styles.css`
 
 **Interfaces:**
+
 - Consumes: `DrawPath`, `steps` depuis `@/data/home-content`
 
 - [ ] **Step 1 : Réécrire la frise**
@@ -977,6 +993,7 @@ Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>"
 ### Task 10 : Section Prise de RDV — habillage seulement
 
 **Files:**
+
 - Modify: `src/routes/index.tsx` (section `{/* Prise de RDV */}`, hors `<BookingFlow />`)
 
 **Contrainte absolue :** `src/components/BookingFlow.tsx` n'est pas modifié. C'est le chemin qui apporte les demandes réelles.
@@ -1020,6 +1037,7 @@ Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>"
 ### Task 11 : Sections Matières et Pourquoi nous choisir
 
 **Files:**
+
 - Modify: `src/routes/index.tsx` (sections `{/* Matières */}` et `{/* Pourquoi nous choisir */}`)
 
 - [ ] **Step 1 : Passer les matières en grille deux colonnes sur mobile**
@@ -1059,9 +1077,11 @@ Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>"
 ### Task 12 : Sections Témoignages et FAQ
 
 **Files:**
+
 - Modify: `src/routes/index.tsx` (sections `{/* Témoignages */}` et `{/* FAQ */}`)
 
 **Interfaces:**
+
 - Consumes: `MobileCarousel`
 
 - [ ] **Step 1 : Extraire la carte de témoignage**
@@ -1110,6 +1130,7 @@ Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>"
 ### Task 13 : Nettoyage du CSS et recette finale
 
 **Files:**
+
 - Modify: `src/styles.css`
 
 - [ ] **Step 1 : Retirer les règles devenues mortes**
@@ -1129,6 +1150,7 @@ Supprimer uniquement les classes à **zéro usage**. Ne pas toucher à celles qu
 Lancer `npm run dev` et mesurer à 375, 768 puis 1280 px.
 
 Attendu à 375 px :
+
 - `ecrans` ≤ **8,7** (référence 14,7)
 - `debordement` vide
 - `textesSous12px` vide
@@ -1140,6 +1162,7 @@ Attendu à 768 et 1280 px : `debordement`, `contenuInvisible` et `ciblesSous44px
 - [ ] **Step 3 : Vérifier les deux replis**
 
 Dans les outils de développement :
+
 1. Émuler `prefers-reduced-motion: reduce`, recharger, mesurer. Attendu : `contenuInvisible` vide, page entièrement lisible.
 2. Dans l'inspecteur, désactiver la règle `@supports (animation-timeline: view())`, recharger, mesurer. Attendu : `contenuInvisible` vide, page entièrement lisible, sans animation.
 

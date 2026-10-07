@@ -6,13 +6,7 @@ import { SiteHeader, RentreeBanner } from "@/components/SiteHeader";
 
 const LOGO_URL = "/coursinus-logo.png";
 
-export function LegalPageLayout({
-  title,
-  children,
-}: {
-  title: string;
-  children: ReactNode;
-}) {
+export function LegalPageLayout({ title, children }: { title: string; children: ReactNode }) {
   return (
     <div className="min-h-screen">
       <RentreeBanner />
@@ -24,8 +18,8 @@ export function LegalPageLayout({
             to="/"
             className="inline-flex items-center gap-2 text-sm text-muted-foreground transition hover:text-gold-soft"
           >
-            <img src={LOGO_URL} alt="" className="h-6 w-6 opacity-70" aria-hidden />
-            ← Retour à l&apos;accueil
+            <img src={LOGO_URL} alt="" className="h-6 w-6 opacity-70" aria-hidden />← Retour à
+            l&apos;accueil
           </Link>
           <h1 className="mt-8 font-display text-4xl text-gold sm:text-5xl">{title}</h1>
           <div className="rule-gold my-8 w-32" />

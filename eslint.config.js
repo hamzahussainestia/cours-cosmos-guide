@@ -6,7 +6,17 @@ import reactRefresh from "eslint-plugin-react-refresh";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(
-  { ignores: ["dist", ".output", ".vinxi"] },
+  {
+    ignores: [
+      "dist",
+      ".output",
+      ".vinxi",
+      // Généré par Lovable et porteur de l'en-tête « automatically generated.
+      // Do not edit it directly. » : le signaler ne sert à rien, puisque le
+      // corriger serait écrasé à la prochaine génération.
+      "src/integrations/supabase",
+    ],
+  },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ["**/*.{ts,tsx}"],
@@ -32,6 +42,11 @@ export default tseslint.config(
           ],
         },
       ],
+      // Le site est en français, où l'espace insécable est la ponctuation
+      // correcte avant €, :, ;, ! et ? — « 269 € » ne doit jamais se couper
+      // entre le nombre et l'unité. La règle par défaut les signalait comme
+      // des caractères parasites.
+      "no-irregular-whitespace": ["error", { skipJSXText: true }],
       "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
       "@typescript-eslint/no-unused-vars": "off",
     },
