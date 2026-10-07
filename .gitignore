@@ -38,3 +38,6 @@ dist-ssr
 
 # Claude Code (config locale)
 .claude/
+
+# Espace de travail jetable de l'execution par sous-agents
+.superpowers/
