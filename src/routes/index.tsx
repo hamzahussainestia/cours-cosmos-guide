@@ -5,7 +5,8 @@ import { BookingFlow } from "@/components/BookingFlow";
 import { CountUpStat } from "@/components/CountUpStat";
 import { FormulaBackdrop } from "@/components/FormulaBackdrop";
 import { MethodTimeline } from "@/components/MethodTimeline";
-import { ScrollReveal, SectionHeading } from "@/components/ScrollReveal";
+import { Reveal } from "@/components/motion/Reveal";
+import { SectionHeading } from "@/components/SectionHeading";
 import { SiteFooter } from "@/components/SiteFooter";
 import { RentreeBanner, SiteHeader } from "@/components/SiteHeader";
 import { WaveMark } from "@/components/WaveMark";
@@ -88,7 +89,7 @@ function Index() {
         <section className="relative overflow-hidden px-5 pt-14 pb-16 sm:px-8 sm:pt-20">
           <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[1.3fr_0.9fr] lg:items-center">
             <div>
-              <ScrollReveal>
+              <Reveal>
                 <span className="chip-outline">COLLÈGE → PRÉPA</span>
                 <h1 className="hero-title mt-6 font-display">
                   Progresser vite.
@@ -109,8 +110,8 @@ function Index() {
                   — maths, physique-chimie, sciences de l&apos;ingénieur, avec des profs issus des
                   meilleures écoles.
                 </p>
-              </ScrollReveal>
-              <ScrollReveal delay={120}>
+              </Reveal>
+              <Reveal index={2}>
                 <div className="mt-9 flex flex-wrap gap-4">
                   <a
                     href="#rdv"
@@ -125,10 +126,10 @@ function Index() {
                     Nos tarifs
                   </a>
                 </div>
-              </ScrollReveal>
+              </Reveal>
             </div>
 
-            <ScrollReveal delay={160}>
+            <Reveal index={2}>
               <div className="stat-card-float">
                 <div className="stat-card-float__primary">
                   <p className="font-display text-5xl sm:text-6xl">
@@ -145,10 +146,10 @@ function Index() {
                   <p className="mt-2 text-sm font-medium opacity-85">{stats[1]?.label}</p>
                 </div>
               </div>
-            </ScrollReveal>
+            </Reveal>
           </div>
 
-          <ScrollReveal delay={200}>
+          <Reveal index={3}>
             <div className="mx-auto mt-16 flex max-w-6xl flex-wrap justify-center gap-3">
               {subjects.map((s) => (
                 <span key={s.name} className="chip-outline">
@@ -156,14 +157,14 @@ function Index() {
                 </span>
               ))}
             </div>
-          </ScrollReveal>
+          </Reveal>
         </section>
 
         {/* Chiffres clés */}
         <section className="bg-card/30 px-5 py-14 sm:px-8">
           <div className="mx-auto grid max-w-5xl grid-cols-2 gap-8 md:grid-cols-4">
             {stats.map((s, i) => (
-              <ScrollReveal key={s.label} delay={i * 80}>
+              <Reveal key={s.label} index={i}>
                 <div className="text-center">
                   <p className="font-display text-4xl text-gold-gradient sm:text-5xl">
                     <CountUpStat value={s.value} />
@@ -172,7 +173,7 @@ function Index() {
                     {s.label}
                   </p>
                 </div>
-              </ScrollReveal>
+              </Reveal>
             ))}
           </div>
         </section>
@@ -180,7 +181,7 @@ function Index() {
         {/* Guide Parcoursup */}
         <section id="guide" className="px-5 py-16 sm:px-8">
           <div className="mx-auto max-w-5xl">
-            <ScrollReveal>
+            <Reveal>
               <div className="grid gap-8 rounded-2xl border border-border/60 bg-card/40 p-7 sm:p-10 lg:grid-cols-[1.5fr_1fr] lg:items-center">
                 <div>
                   <p className="text-xs font-semibold tracking-[0.18em] text-gold-soft uppercase">
@@ -211,22 +212,22 @@ function Index() {
                   </p>
                 </div>
               </div>
-            </ScrollReveal>
+            </Reveal>
           </div>
         </section>
 
         {/* Offres */}
         <section id="offres" className="offer-band px-5 py-20 sm:px-8">
           <div className="mx-auto max-w-6xl">
-            <ScrollReveal>
+            <Reveal>
               <SectionHeading eyebrow="Nos formules" title="Offres & Tarifs" />
-            </ScrollReveal>
+            </Reveal>
 
             <div className="mt-14 grid gap-6 md:grid-cols-3">
               {offers.map((o, i) => {
                 const Icon = o.icon;
                 return (
-                  <ScrollReveal key={o.level} delay={i * 100}>
+                  <Reveal key={o.level} index={i}>
                     <article
                       className={`relative flex h-full flex-col rounded-2xl border border-gold/15 bg-white/[0.03] ${
                         o.featured ? "border-gold/60" : ""
@@ -270,7 +271,7 @@ function Index() {
                         </a>
                       </div>
                     </article>
-                  </ScrollReveal>
+                  </Reveal>
                 );
               })}
             </div>
@@ -280,9 +281,9 @@ function Index() {
         {/* Comment ça marche */}
         <section id="methode" className="px-5 py-20 sm:px-8">
           <div className="mx-auto max-w-6xl">
-            <ScrollReveal>
+            <Reveal>
               <SectionHeading eyebrow="Notre approche" title="Comment ça marche ?" />
-            </ScrollReveal>
+            </Reveal>
             <div className="mt-16">
               <MethodTimeline steps={steps} />
             </div>
@@ -292,11 +293,11 @@ function Index() {
         {/* Prise de RDV */}
         <section id="rdv" className="px-5 py-14 sm:px-8">
           <div className="mx-auto max-w-2xl">
-            <ScrollReveal>
+            <Reveal>
               <SectionHeading eyebrow="Prendre rendez-vous" title="Réservez votre créneau" />
-            </ScrollReveal>
+            </Reveal>
 
-            <ScrollReveal delay={60}>
+            <Reveal index={1}>
               <p className="mx-auto mt-6 max-w-xl text-center text-sm leading-relaxed text-muted-foreground">
                 Un premier échange{" "}
                 <span className="text-gold-soft">gratuit et sans engagement</span> d&apos;environ
@@ -304,9 +305,9 @@ function Index() {
                 et vous proposer un accompagnement adapté — par téléphone ou en visio, comme vous
                 préférez.
               </p>
-            </ScrollReveal>
+            </Reveal>
 
-            <ScrollReveal delay={80}>
+            <Reveal index={1}>
               <div className="mt-6 flex flex-wrap justify-center gap-3 text-sm">
                 <a
                   href={`mailto:${CONTACT_EMAIL}`}
@@ -324,18 +325,18 @@ function Index() {
                   Rejoindre le Discord
                 </a>
               </div>
-            </ScrollReveal>
+            </Reveal>
 
-            <ScrollReveal delay={120}>
+            <Reveal index={2}>
               <div className="mt-6">
                 <BookingFlow />
               </div>
-            </ScrollReveal>
+            </Reveal>
           </div>
 
           {/* Modalités pratiques : c'est au moment de réserver qu'on veut
               savoir si c'est en présentiel, en visio, et à quels horaires. */}
-          <ScrollReveal delay={160}>
+          <Reveal index={2}>
             <div className="mx-auto mt-14 grid max-w-4xl gap-8 border-t border-gold/10 pt-10 sm:grid-cols-3">
               {modalities.map((m, i) => (
                 <div key={m.title} className="text-center sm:text-left">
@@ -349,20 +350,20 @@ function Index() {
                 </div>
               ))}
             </div>
-          </ScrollReveal>
+          </Reveal>
         </section>
 
         {/* Matières */}
         <section id="matieres" className="px-5 py-20 sm:px-8">
           <div className="mx-auto max-w-3xl">
-            <ScrollReveal>
+            <Reveal>
               <SectionHeading eyebrow="Nos disciplines" title="Matières & filières" />
-            </ScrollReveal>
+            </Reveal>
             <div className="mt-14 grid gap-4 sm:grid-cols-2">
               {subjects.map((s, i) => {
                 const Icon = s.icon;
                 return (
-                  <ScrollReveal key={s.name} delay={i * 70}>
+                  <Reveal key={s.name} index={i}>
                     <div className="tap-scale flex items-center gap-4 rounded-2xl border-2 border-gold/20 bg-card px-5 py-4 shadow-[0_4px_0_0_color-mix(in_oklab,var(--gold)_45%,black_25%)]">
                       <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gold">
                         <Icon className="h-6 w-6 text-primary-foreground" aria-hidden />
@@ -374,7 +375,7 @@ function Index() {
                         </p>
                       </div>
                     </div>
-                  </ScrollReveal>
+                  </Reveal>
                 );
               })}
             </div>
@@ -384,11 +385,11 @@ function Index() {
         {/* Pourquoi nous choisir */}
         <section className="px-5 py-20 sm:px-8">
           <div className="mx-auto max-w-4xl">
-            <ScrollReveal>
+            <Reveal>
               <SectionHeading eyebrow="Notre exigence" title="Pourquoi nous choisir ?" />
-            </ScrollReveal>
+            </Reveal>
 
-            <ScrollReveal delay={80}>
+            <Reveal index={1}>
               <div className="mt-14 text-center">
                 <h3 className="font-display text-3xl text-gold-soft sm:text-4xl">
                   {teacherReason.title}
@@ -397,9 +398,9 @@ function Index() {
                   {teacherReason.text}
                 </p>
               </div>
-            </ScrollReveal>
+            </Reveal>
 
-            <ScrollReveal delay={120}>
+            <Reveal index={2}>
               <div className="logo-marquee mt-10 py-4">
                 <div className="logo-marquee__track">
                   {[...schools, ...schools].map((school, i) => (
@@ -416,13 +417,13 @@ function Index() {
                   ))}
                 </div>
               </div>
-            </ScrollReveal>
+            </Reveal>
 
             <div className="mt-14 grid gap-4 sm:grid-cols-2">
               {reasons.map((r, i) => {
                 const Icon = r.icon;
                 return (
-                  <ScrollReveal key={r.title} delay={i * 90}>
+                  <Reveal key={r.title} index={i}>
                     <div className="h-full rounded-2xl border-2 border-gold/20 bg-card px-6 py-6 shadow-[0_4px_0_0_color-mix(in_oklab,var(--gold)_45%,black_25%)]">
                       <span className="flex h-12 w-12 items-center justify-center rounded-full bg-gold">
                         <Icon className="h-6 w-6 text-primary-foreground" aria-hidden />
@@ -430,7 +431,7 @@ function Index() {
                       <h3 className="mt-4 font-display text-xl text-gold-soft">{r.title}</h3>
                       <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{r.text}</p>
                     </div>
-                  </ScrollReveal>
+                  </Reveal>
                 );
               })}
             </div>
@@ -440,12 +441,12 @@ function Index() {
         {/* Témoignages */}
         <section id="temoignages" className="px-5 py-20 sm:px-8">
           <div className="mx-auto max-w-6xl">
-            <ScrollReveal>
+            <Reveal>
               <SectionHeading eyebrow="Ils nous font confiance" title="Témoignages" />
-            </ScrollReveal>
+            </Reveal>
             <div className="mt-14 grid gap-8 md:grid-cols-3">
               {testimonials.map((t, i) => (
-                <ScrollReveal key={t.author} delay={i * 90}>
+                <Reveal key={t.author} index={i}>
                   <blockquote className="card-lux flex h-full flex-col rounded-2xl p-8">
                     <Quote className="h-8 w-8 text-gold/60" aria-hidden />
                     <p className="mt-4 flex-1 text-sm leading-relaxed text-muted-foreground italic">
@@ -456,7 +457,7 @@ function Index() {
                       <p className="text-xs text-muted-foreground">{t.context}</p>
                     </footer>
                   </blockquote>
-                </ScrollReveal>
+                </Reveal>
               ))}
             </div>
           </div>
@@ -465,10 +466,10 @@ function Index() {
         {/* FAQ */}
         <section id="faq" className="px-5 py-20 sm:px-8">
           <div className="mx-auto max-w-3xl">
-            <ScrollReveal>
+            <Reveal>
               <SectionHeading eyebrow="Questions fréquentes" title="FAQ" />
-            </ScrollReveal>
-            <ScrollReveal delay={100}>
+            </Reveal>
+            <Reveal index={1}>
               <Accordion type="single" collapsible className="mt-14">
                 {faqItems.map((item, i) => (
                   <AccordionItem key={item.question} value={`item-${i}`} className="border-gold/20">
@@ -481,7 +482,7 @@ function Index() {
                   </AccordionItem>
                 ))}
               </Accordion>
-            </ScrollReveal>
+            </Reveal>
           </div>
         </section>
       </main>

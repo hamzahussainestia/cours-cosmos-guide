@@ -104,7 +104,7 @@
 
   // Créer les libellés pour l'échantillon.
   const contenuInvisible = contenuInvisibleFiltered.map(
-    (el) => el.id || el.innerText.trim().slice(0, 30)
+    (el) => el.id || el.innerText.trim().slice(0, 30),
   );
 
   const sections = [...document.querySelectorAll("main > section")].map((s) => ({

@@ -178,17 +178,37 @@
   }
 }
 
-.reveal-on-scroll {
-  opacity: 0;
-  transform: translateY(2rem);
-  transition:
-    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+/* ---------------------------------------------------------------------
+   Couche de mouvement
+   ---------------------------------------------------------------------
+   Regle absolue : l'etat par defaut est VISIBLE. Les animations ne sont
+   ajoutees qu'a l'interieur du bloc @supports. Un navigateur qui ignore
+   animation-timeline affiche le site complet, simplement sans animation.
+   Poser opacity: 0 en dehors de ce bloc rendrait la page blanche.
+   --------------------------------------------------------------------- */
+
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    transform: translateY(var(--reveal-distance, 28px));
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
-.reveal-on-scroll-visible {
-  opacity: 1;
-  transform: translateY(0);
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal-in linear both;
+      animation-timeline: view();
+      /* La cascade decale la plage dans le scroll plutot que le temps :
+         animation-delay n'a pas de sens sur une timeline de vue. */
+      animation-range: entry calc(5% + var(--reveal-index, 0) * 5%) cover
+        calc(32% + var(--reveal-index, 0) * 5%);
+    }
+  }
 }
 
 .prose-legal h2 {
@@ -196,12 +216,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal-on-scroll {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-
   .card-lux:hover {
     transform: none;
   }

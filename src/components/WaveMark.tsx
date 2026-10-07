@@ -80,7 +80,7 @@ export function WaveMark({
             ? {
                 strokeDasharray: 1,
                 strokeDashoffset: drawn ? 0 : 1,
-                // Le bloc parent (ScrollReveal) fait son fondu en 0,7 s : on
+                // Le bloc parent (Reveal) fait son fondu en 0,7 s : on
                 // attend qu'il soit lisible avant de tracer, sinon la vague
                 // est déjà dessinée quand elle devient visible.
                 transition: "stroke-dashoffset 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.5s",
