@@ -86,7 +86,7 @@ function Index() {
 
       <main>
         {/* Hero */}
-        <section className="relative overflow-hidden px-5 pt-14 pb-16 sm:px-8 sm:pt-20">
+        <section className="relative overflow-clip px-5 pt-14 pb-16 sm:px-8 sm:pt-20">
           <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[1.3fr_0.9fr] lg:items-center">
             <div>
               <Reveal>
