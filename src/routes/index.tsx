@@ -121,7 +121,7 @@ function OfferCard({ offer: o }: { offer: Offer }) {
       }`}
     >
       {o.featured && (
-        <span className="absolute -top-3 left-1/2 z-10 -translate-x-1/2 rounded-full bg-gold px-4 py-1 text-[10px] tracking-[0.2em] text-primary-foreground uppercase">
+        <span className="absolute -top-3 left-1/2 z-10 -translate-x-1/2 rounded-full bg-gold px-4 py-1 text-xs tracking-[0.15em] text-primary-foreground uppercase">
           Le plus demandé
         </span>
       )}

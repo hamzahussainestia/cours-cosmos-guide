@@ -43,7 +43,7 @@ export function RentreeBanner() {
   return (
     <div className="bg-gradient-to-r from-primary/5 via-primary/20 to-primary/5 px-5 py-2 sm:px-8">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-3 gap-y-1 text-xs sm:text-sm">
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-gold px-2.5 py-1 text-[10px] font-bold tracking-[0.12em] text-primary-foreground uppercase">
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-gold px-2.5 py-1 text-xs font-bold tracking-[0.12em] text-primary-foreground uppercase">
           <span className="relative flex h-1.5 w-1.5" aria-hidden>
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary-foreground opacity-60 motion-reduce:animate-none" />
             <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary-foreground" />
