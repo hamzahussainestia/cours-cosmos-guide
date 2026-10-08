@@ -5,11 +5,12 @@ import { BookingFlow } from "@/components/BookingFlow";
 import { CountUpStat } from "@/components/CountUpStat";
 import { FormulaBackdrop } from "@/components/FormulaBackdrop";
 import { MethodTimeline } from "@/components/MethodTimeline";
+import { DrawPath } from "@/components/motion/DrawPath";
 import { Reveal } from "@/components/motion/Reveal";
+import { WAVE_PATH, WAVE_VIEWBOX } from "@/components/motion/wave-path";
 import { SectionHeading } from "@/components/SectionHeading";
 import { SiteFooter } from "@/components/SiteFooter";
 import { RentreeBanner, SiteHeader } from "@/components/SiteHeader";
-import { WaveMark } from "@/components/WaveMark";
 import {
   Accordion,
   AccordionContent,
@@ -97,7 +98,9 @@ function Index() {
                   Progresser{" "}
                   <span className="relative inline-block">
                     bien.
-                    <WaveMark
+                    <DrawPath
+                      d={WAVE_PATH}
+                      viewBox={WAVE_VIEWBOX}
                       className="absolute -bottom-3 left-0 h-5 w-full sm:h-6"
                       strokeWidth={3}
                       stretch

@@ -1,4 +1,5 @@
-import { WaveMark } from "@/components/WaveMark";
+import { DrawPath } from "@/components/motion/DrawPath";
+import { WAVE_PATH, WAVE_VIEWBOX } from "@/components/motion/wave-path";
 
 export function SectionHeading({
   eyebrow,
@@ -17,7 +18,12 @@ export function SectionHeading({
       </h2>
       <div className="mt-6 flex items-center justify-center" aria-hidden>
         <span className="h-px w-14 bg-gradient-to-r from-transparent to-gold/50 sm:w-20" />
-        <WaveMark className="h-7 w-auto shrink-0 sm:h-8" draw />
+        <DrawPath
+          d={WAVE_PATH}
+          viewBox={WAVE_VIEWBOX}
+          className="h-7 w-auto shrink-0 sm:h-8"
+          draw
+        />
         <span className="h-px w-14 bg-gradient-to-l from-transparent to-gold/50 sm:w-20" />
       </div>
     </div>

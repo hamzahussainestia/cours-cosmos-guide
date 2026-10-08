@@ -243,6 +243,31 @@
   }
 }
 
+@keyframes draw-in {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .draw-path {
+      /* Pose le pointille ICI et nulle part ailleurs : sans support, le
+         trace n'a pas de dasharray et s'affiche donc entier. Le raccourci
+         `animation` precede `animation-timeline` et `animation-range`.
+         Phase `entry` jusqu'a 100 % : un trace deja visible au chargement
+         est a l'etat final, alors que `cover` le laisserait inacheve. */
+      stroke-dasharray: 1;
+      animation: draw-in linear both;
+      animation-timeline: view();
+      animation-range: entry 10% entry 100%;
+    }
+  }
+}
+
 .prose-legal h2 {
   font-family: var(--font-display);
 }
