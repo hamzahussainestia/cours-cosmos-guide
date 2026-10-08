@@ -358,12 +358,12 @@ function Index() {
         </section>
 
         {/* Comment ça marche */}
-        <section id="methode" className="px-5 py-20 sm:px-8">
+        <section id="methode" className="px-5 py-10 sm:px-8 sm:py-20">
           <div className="mx-auto max-w-6xl">
             <Reveal>
               <SectionHeading eyebrow="Notre approche" title="Comment ça marche ?" />
             </Reveal>
-            <div className="mt-16">
+            <div className="mt-8 sm:mt-16">
               <MethodTimeline steps={steps} />
             </div>
           </div>

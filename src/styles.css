@@ -294,6 +294,32 @@
   }
 }
 
+@keyframes step-light {
+  from {
+    opacity: 0.35;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* Chaque etape s'allume quand elle entre a l'ecran, avec un depart
+       decale selon son rang (`--step-index`). L'opacite de depart est 0,35
+       et non 0 : l'etape reste lisible meme pendant l'animation. Phase
+       `entry` aux deux bornes et non `cover` : une etape deja visible au
+       chargement est a l'etat final. Le raccourci `animation` precede
+       `animation-timeline` et `animation-range`. */
+    .step-lit {
+      animation: step-light linear both;
+      animation-timeline: view();
+      animation-range: entry calc(var(--step-index, 0) * 12%) entry
+        calc(40% + var(--step-index, 0) * 12%);
+    }
+  }
+}
+
 .prose-legal h2 {
   font-family: var(--font-display);
 }
