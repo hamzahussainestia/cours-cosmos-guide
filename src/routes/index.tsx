@@ -97,6 +97,21 @@ export const Route = createFileRoute("/")({
  * celles du mobile, compactées pour que la carte tienne dans l'écran ; les
  * valeurs `md:` sont celles d'origine de la grille.
  */
+function TestimonialCard({ testimonial: t }: { testimonial: (typeof testimonials)[number] }) {
+  return (
+    <blockquote className="card-lux flex h-full flex-col rounded-2xl p-5 sm:p-8">
+      <Quote className="h-6 w-6 text-gold/60 sm:h-8 sm:w-8" aria-hidden />
+      <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground italic sm:mt-4">
+        « {t.quote} »
+      </p>
+      <footer className="mt-4 border-t border-gold/15 pt-3 sm:mt-6 sm:pt-4">
+        <p className="font-display text-lg text-gold-soft">{t.author}</p>
+        <p className="text-xs text-muted-foreground">{t.context}</p>
+      </footer>
+    </blockquote>
+  );
+}
+
 function OfferCard({ offer: o }: { offer: Offer }) {
   const Icon = o.icon;
   return (
@@ -537,40 +552,34 @@ function Index() {
         </section>
 
         {/* Témoignages */}
-        <section id="temoignages" className="px-5 py-20 sm:px-8">
+        <section id="temoignages" className="px-5 py-8 sm:px-8 sm:py-20">
           <div className="mx-auto max-w-6xl">
             <Reveal>
               <SectionHeading eyebrow="Ils nous font confiance" title="Témoignages" />
             </Reveal>
-            <div className="mt-14 grid gap-8 md:grid-cols-3">
-              {testimonials.map((t, i) => (
-                <Reveal key={t.author} index={i}>
-                  <blockquote className="card-lux flex h-full flex-col rounded-2xl p-8">
-                    <Quote className="h-8 w-8 text-gold/60" aria-hidden />
-                    <p className="mt-4 flex-1 text-sm leading-relaxed text-muted-foreground italic">
-                      « {t.quote} »
-                    </p>
-                    <footer className="mt-6 border-t border-gold/15 pt-4">
-                      <p className="font-display text-lg text-gold-soft">{t.author}</p>
-                      <p className="text-xs text-muted-foreground">{t.context}</p>
-                    </footer>
-                  </blockquote>
-                </Reveal>
-              ))}
-            </div>
+            {/* Le Reveal est AUTOUR du carrousel, jamais dans `renderItem` :
+                `ui/carousel.tsx` garde un `overflow-hidden` interne. */}
+            <Reveal className="mt-6 md:mt-14">
+              <MobileCarousel
+                items={testimonials}
+                label="Témoignages"
+                gridClassName="gap-6 md:grid-cols-3"
+                renderItem={(t) => <TestimonialCard testimonial={t} />}
+              />
+            </Reveal>
           </div>
         </section>
 
         {/* FAQ */}
-        <section id="faq" className="px-5 py-20 sm:px-8">
+        <section id="faq" className="px-5 py-8 sm:px-8 sm:py-20">
           <div className="mx-auto max-w-3xl">
             <Reveal>
               <SectionHeading eyebrow="Questions fréquentes" title="FAQ" />
             </Reveal>
-            <Reveal index={1}>
-              <Accordion type="single" collapsible className="mt-14">
-                {faqItems.map((item, i) => (
-                  <AccordionItem key={item.question} value={`item-${i}`} className="border-gold/20">
+            <Accordion type="single" collapsible className="mt-6 sm:mt-14">
+              {faqItems.map((item, i) => (
+                <Reveal key={item.question} index={i}>
+                  <AccordionItem value={`item-${i}`} className="border-gold/20">
                     <AccordionTrigger className="font-display text-base text-gold-soft hover:no-underline sm:text-lg">
                       {item.question}
                     </AccordionTrigger>
@@ -578,9 +587,9 @@ function Index() {
                       {item.answer}
                     </AccordionContent>
                   </AccordionItem>
-                ))}
-              </Accordion>
-            </Reveal>
+                </Reveal>
+              ))}
+            </Accordion>
           </div>
         </section>
       </main>
