@@ -5,6 +5,7 @@ import { BookingFlow } from "@/components/BookingFlow";
 import { CountUpStat } from "@/components/CountUpStat";
 import { FormulaBackdrop } from "@/components/FormulaBackdrop";
 import { MethodTimeline } from "@/components/MethodTimeline";
+import { MobileCarousel } from "@/components/MobileCarousel";
 import { DrawPath } from "@/components/motion/DrawPath";
 import { Parallax } from "@/components/motion/Parallax";
 import { Reveal } from "@/components/motion/Reveal";
@@ -23,6 +24,7 @@ import {
   DISCORD_URL,
   faqItems,
   modalities,
+  type Offer,
   offers,
   reasons,
   schools,
@@ -88,6 +90,78 @@ export const Route = createFileRoute("/")({
   }),
   component: Index,
 });
+
+/*
+ * Carte d'une offre. Extraite pour servir aux deux dispositions (carrousel
+ * sous `md`, grille au-delà) sans duplication. Les valeurs sans préfixe sont
+ * celles du mobile, compactées pour que la carte tienne dans l'écran ; les
+ * valeurs `md:` sont celles d'origine de la grille.
+ */
+function OfferCard({ offer: o }: { offer: Offer }) {
+  const Icon = o.icon;
+  return (
+    <article
+      className={`relative flex h-full flex-col rounded-2xl border border-gold/15 bg-white/[0.03] ${
+        o.featured ? "border-gold/60" : ""
+      }`}
+    >
+      {o.featured && (
+        <span className="absolute -top-3 left-1/2 z-10 -translate-x-1/2 rounded-full bg-gold px-4 py-1 text-[10px] tracking-[0.2em] text-primary-foreground uppercase">
+          Le plus demandé
+        </span>
+      )}
+      {/* `overflow-clip` et non `overflow-hidden` : `hidden` établit un
+          conteneur de défilement et détournerait l'animation du Parallax
+          qu'il contient. `clip` rogne de la même façon sans cet effet. */}
+      <div className="relative flex h-full flex-col overflow-clip rounded-2xl p-5 md:p-8">
+        {/* Le chiffre en filigrane traîne derrière le contenu (shift positif :
+            arrière-plan). Le Parallax couvre toute la carte pour que le
+            positionnement du chiffre reste relatif à elle : son transform en
+            fait le bloc conteneur du chiffre absolu. */}
+        <Parallax shift={30} className="pointer-events-none absolute inset-0">
+          <span className="offer-ghost-numeral">{o.price}</span>
+        </Parallax>
+        {/* Icône à gauche du titre sur mobile (gain d'une ligne), au-dessus
+            à partir de `md`. */}
+        <div className="relative flex items-center gap-3 md:flex-col md:items-start md:gap-0">
+          <div className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-gold/30 bg-gold/10 md:mb-4 md:h-12 md:w-12">
+            <Icon className="h-5 w-5 text-gold md:h-6 md:w-6" aria-hidden />
+          </div>
+          <div className="md:contents">
+            <h3 className="font-display text-2xl md:text-3xl">{o.level}</h3>
+            <p className="text-sm text-muted-foreground md:mt-1">{o.range}</p>
+          </div>
+        </div>
+        {/* Le prix et le pack sont côte à côte sur mobile, empilés à partir de
+            `md`. */}
+        <div className="relative mt-3 flex items-center gap-3 md:mt-0 md:flex-col md:items-start md:gap-0">
+          <div className="inline-flex w-fit shrink-0 items-baseline gap-1 rounded-xl bg-gold px-4 py-2 md:mt-6">
+            <span className="font-display text-3xl text-primary-foreground">{o.price}€</span>
+            <span className="text-xs text-primary-foreground/80">/heure</span>
+          </div>
+          <p className="text-xs text-muted-foreground md:mt-3">
+            Pack 10 heures <span className="text-gold-soft">{o.pack} €</span>{" "}
+            <span className="line-through opacity-60">{o.packFull} €</span>
+          </p>
+        </div>
+        <ul className="relative mt-3 flex flex-1 flex-col gap-1.5 text-sm leading-relaxed text-muted-foreground md:mt-7 md:gap-4">
+          {o.points.map((p) => (
+            <li key={p} className="flex gap-3">
+              <span className="mt-1 text-gold">◆</span>
+              <span>{p}</span>
+            </li>
+          ))}
+        </ul>
+        <a
+          href="#rdv"
+          className="tap-scale relative mt-4 rounded-full border border-gold/50 py-3 text-center text-sm tracking-wide text-gold-soft transition hover:bg-gold/10 md:mt-8"
+        >
+          Réserver un cours
+        </a>
+      </div>
+    </article>
+  );
+}
 
 function Index() {
   return (
@@ -256,64 +330,30 @@ function Index() {
         </section>
 
         {/* Offres */}
-        <section id="offres" className="offer-band px-5 py-20 sm:px-8">
+        <section id="offres" className="offer-band px-5 py-10 sm:px-8 md:py-20">
           <div className="mx-auto max-w-6xl">
             <Reveal>
               <SectionHeading eyebrow="Nos formules" title="Offres & Tarifs" />
             </Reveal>
 
-            <div className="mt-14 grid gap-6 md:grid-cols-3">
-              {offers.map((o, i) => {
-                const Icon = o.icon;
-                return (
-                  <Reveal key={o.level} index={i}>
-                    <article
-                      className={`relative flex h-full flex-col rounded-2xl border border-gold/15 bg-white/[0.03] ${
-                        o.featured ? "border-gold/60" : ""
-                      }`}
-                    >
-                      {o.featured && (
-                        <span className="absolute -top-3 left-1/2 z-10 -translate-x-1/2 rounded-full bg-gold px-4 py-1 text-[10px] tracking-[0.2em] text-primary-foreground uppercase">
-                          Le plus demandé
-                        </span>
-                      )}
-                      <div className="relative flex h-full flex-col overflow-hidden rounded-2xl p-8">
-                        <span className="offer-ghost-numeral">{o.price}</span>
-                        <div className="relative mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl border border-gold/30 bg-gold/10">
-                          <Icon className="h-6 w-6 text-gold" aria-hidden />
-                        </div>
-                        <h3 className="relative font-display text-3xl">{o.level}</h3>
-                        <p className="relative mt-1 text-sm text-muted-foreground">{o.range}</p>
-                        <div className="relative mt-6 inline-flex w-fit items-baseline gap-1 rounded-xl bg-gold px-4 py-2">
-                          <span className="font-display text-3xl text-primary-foreground">
-                            {o.price}€
-                          </span>
-                          <span className="text-xs text-primary-foreground/80">/heure</span>
-                        </div>
-                        <p className="relative mt-3 text-xs text-muted-foreground">
-                          Pack 10 heures <span className="text-gold-soft">{o.pack} €</span>{" "}
-                          <span className="line-through opacity-60">{o.packFull} €</span>
-                        </p>
-                        <ul className="relative mt-7 flex flex-1 flex-col gap-4 text-sm leading-relaxed text-muted-foreground">
-                          {o.points.map((p) => (
-                            <li key={p} className="flex gap-3">
-                              <span className="mt-1 text-gold">◆</span>
-                              <span>{p}</span>
-                            </li>
-                          ))}
-                        </ul>
-                        <a
-                          href="#rdv"
-                          className="tap-scale relative mt-8 rounded-full border border-gold/50 py-3 text-center text-sm tracking-wide text-gold-soft transition hover:bg-gold/10"
-                        >
-                          Réserver un cours
-                        </a>
-                      </div>
-                    </article>
-                  </Reveal>
-                );
-              })}
-            </div>
+            {/* Le Reveal est AUTOUR du carrousel, jamais dans `renderItem` :
+                le conteneur interne d'embla porte `overflow: hidden`, qui
+                détourne les animations pilotées par le scroll de tout ce
+                qu'il contient. Un Reveal posé sur une carte ne jouerait
+                jamais sur mobile. La cascade par carte est donc perdue sur
+                la grille de bureau, c'est le prix de cette règle. */}
+            <Reveal className="mt-6 md:mt-14">
+              <MobileCarousel
+                items={offers}
+                label="Nos formules"
+                gridClassName="gap-6 md:grid-cols-3"
+                /* `pt-4` laisse la place à l'étiquette « Le plus demandé »,
+                   qui dépasse de la carte vers le haut et serait rognée par
+                   le carrousel. Inutile (et retiré) dans la grille. */
+                itemClassName="pt-4 md:pt-0"
+                renderItem={(offer) => <OfferCard offer={offer} />}
+              />
+            </Reveal>
           </div>
         </section>
 
