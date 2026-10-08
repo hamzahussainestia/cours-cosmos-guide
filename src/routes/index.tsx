@@ -6,6 +6,7 @@ import { CountUpStat } from "@/components/CountUpStat";
 import { FormulaBackdrop } from "@/components/FormulaBackdrop";
 import { MethodTimeline } from "@/components/MethodTimeline";
 import { DrawPath } from "@/components/motion/DrawPath";
+import { Parallax } from "@/components/motion/Parallax";
 import { Reveal } from "@/components/motion/Reveal";
 import { WAVE_PATH, WAVE_VIEWBOX } from "@/components/motion/wave-path";
 import { SectionHeading } from "@/components/SectionHeading";
@@ -32,6 +33,16 @@ import {
   teacherReason,
   testimonials,
 } from "@/data/home-content";
+
+/*
+ * Arc qui entoure chaque chiffre clé. C'est une ellipse et non un cercle :
+ * un cercle assez large pour contenir « 150+ » déborderait de 25 px au-dessus
+ * et en dessous du chiffre et grossirait la section. L'ellipse reste dans sa
+ * hauteur de ligne. Le tracé n'est pas étiré (pas de `stretch`) : la
+ * proportion vient du viewBox, ce qui garde un trait d'épaisseur constante.
+ */
+const ARC_PATH = "M 3 28 A 61 25 0 1 1 125 28 A 61 25 0 1 1 3 28";
+const ARC_VIEWBOX = "0 0 128 56";
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -175,10 +186,23 @@ function Index() {
             {stats.map((s, i) => (
               <Reveal key={s.label} index={i}>
                 <div className="text-center">
-                  <p className="font-display text-4xl text-gold-gradient sm:text-5xl">
-                    <CountUpStat value={s.value} />
-                  </p>
-                  <p className="mt-2 text-xs tracking-[0.15em] text-muted-foreground uppercase sm:text-sm">
+                  {/* L'arc est posé en absolu derrière le chiffre : il ne
+                      prend aucune place, la hauteur de la section ne bouge
+                      pas. Le nombre monte en JavaScript (CountUpStat),
+                      l'arc se remplit en CSS pendant ce temps. */}
+                  <div className="relative">
+                    <DrawPath
+                      d={ARC_PATH}
+                      viewBox={ARC_VIEWBOX}
+                      strokeWidth={2}
+                      draw
+                      className="pointer-events-none absolute top-1/2 left-1/2 h-14 w-32 -translate-x-1/2 -translate-y-1/2 opacity-60 sm:h-[4.375rem] sm:w-40"
+                    />
+                    <p className="relative font-display text-4xl text-gold-gradient sm:text-5xl">
+                      <CountUpStat value={s.value} />
+                    </p>
+                  </div>
+                  <p className="mt-3 text-xs tracking-[0.15em] text-muted-foreground uppercase sm:text-sm">
                     {s.label}
                   </p>
                 </div>
@@ -188,40 +212,46 @@ function Index() {
         </section>
 
         {/* Guide Parcoursup */}
-        <section id="guide" className="px-5 py-16 sm:px-8">
+        <section id="guide" className="px-5 py-8 sm:px-8 sm:py-16">
           <div className="mx-auto max-w-5xl">
-            <Reveal>
-              <div className="grid gap-8 rounded-2xl border border-border/60 bg-card/40 p-7 sm:p-10 lg:grid-cols-[1.5fr_1fr] lg:items-center">
-                <div>
-                  <p className="text-xs font-semibold tracking-[0.18em] text-gold-soft uppercase">
-                    Guide gratuit &middot; 12 pages
-                  </p>
-                  <h2 className="mt-3 font-display text-3xl text-gold sm:text-4xl">
-                    Parcoursup sans se planter
-                  </h2>
-                  <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
-                    Comment répartir ses dix vœux, les sous-vœux que presque personne
-                    n&apos;utilise, ce que les commissions lisent vraiment dans une lettre de
-                    motivation, et la seule erreur irréversible de la phase d&apos;admission.
-                  </p>
-                  <p className="mt-3 text-sm text-muted-foreground">
-                    Écrit par Hamza, prépa TSI puis école d&apos;ingénieur.{" "}
-                    <span className="text-gold-soft">Accepté partout où il avait demandé.</span>
-                  </p>
+            {/* Le Parallax enveloppe le Reveal : tous deux posent un
+                transform, ils ne peuvent pas partager le même élément. */}
+            <Parallax shift={25}>
+              <Reveal>
+                {/* `guide-card` : incliné de 2° au repos, il se redresse en
+                    entrant dans l'écran (voir styles.css). */}
+                <div className="guide-card grid gap-4 rounded-2xl border border-border/60 bg-card/40 p-5 sm:gap-8 sm:p-10 lg:grid-cols-[1.5fr_1fr] lg:items-center">
+                  <div>
+                    <p className="text-xs font-semibold tracking-[0.18em] text-gold-soft uppercase">
+                      Guide gratuit &middot; 12 pages
+                    </p>
+                    <h2 className="mt-2 font-display text-2xl text-gold sm:mt-3 sm:text-4xl">
+                      Parcoursup sans se planter
+                    </h2>
+                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground sm:mt-4 sm:text-base">
+                      Comment répartir ses dix vœux, les sous-vœux que presque personne
+                      n&apos;utilise, ce que les commissions lisent vraiment dans une lettre de
+                      motivation, et la seule erreur irréversible de la phase d&apos;admission.
+                    </p>
+                    <p className="mt-3 text-sm text-muted-foreground">
+                      Écrit par Hamza, prépa TSI puis école d&apos;ingénieur.{" "}
+                      <span className="text-gold-soft">Accepté partout où il avait demandé.</span>
+                    </p>
+                  </div>
+                  <div>
+                    <Link
+                      to="/guide-parcoursup"
+                      className="inline-flex w-full items-center justify-center rounded-md bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
+                    >
+                      Recevoir le guide
+                    </Link>
+                    <p className="mt-3 text-center text-xs text-muted-foreground">
+                      Gratuit. Ton adresse, et c&apos;est à toi.
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <Link
-                    to="/guide-parcoursup"
-                    className="inline-flex w-full items-center justify-center rounded-md bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
-                  >
-                    Recevoir le guide
-                  </Link>
-                  <p className="mt-3 text-center text-xs text-muted-foreground">
-                    Gratuit. Ton adresse, et c&apos;est à toi.
-                  </p>
-                </div>
-              </div>
-            </Reveal>
+              </Reveal>
+            </Parallax>
           </div>
         </section>
 

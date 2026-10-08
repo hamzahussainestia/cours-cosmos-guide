@@ -268,6 +268,32 @@
   }
 }
 
+@keyframes settle-in {
+  from {
+    rotate: -2deg;
+  }
+  to {
+    rotate: 0deg;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* La carte du guide arrive inclinee et se redresse en entrant.
+       L'inclinaison n'existe QUE dans ce bloc : sans support, ou en
+       mouvement reduit, la carte reste droite. On anime la propriete
+       `rotate` et non `transform`, pour ne rien ecraser. Le raccourci
+       `animation` precede `animation-timeline` et `animation-range`.
+       Phase `entry` jusqu'a 100 % : une carte deja visible au chargement
+       est a l'etat final, droite. Aucune opacite n'est touchee. */
+    .guide-card {
+      animation: settle-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 100%;
+    }
+  }
+}
+
 .prose-legal h2 {
   font-family: var(--font-display);
 }
