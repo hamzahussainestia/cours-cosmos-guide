@@ -23,7 +23,7 @@ export function Reveal({
   children,
   className,
   index = 0,
-  distance = 28,
+  distance = 70,
   as: Tag = "div",
 }: RevealProps) {
   return (

@@ -93,7 +93,10 @@ export function SiteHeader() {
       }`}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3 sm:px-8">
-        <a href="#" className="flex min-w-0 items-center gap-1">
+        {/* `Link to="/"` et non `href="#"` : depuis une sous-page comme le
+            guide Parcoursup, une ancre vide n'allait nulle part et laissait
+            le visiteur coincé. */}
+        <Link to="/" className="flex min-w-0 items-center gap-1">
           {/*
             Le PNG du logo comporte de larges marges transparentes (le motif
             n'occupe qu'environ un tiers de l'image) : on l'affiche donc dans
@@ -109,7 +112,7 @@ export function SiteHeader() {
           <span className="font-script text-3xl leading-[1.4] whitespace-nowrap text-gold sm:text-4xl">
             Coursinus
           </span>
-        </a>
+        </Link>
 
         <nav className="hidden items-center gap-1 xl:flex" aria-label="Navigation principale">
           {navLinks.map((link) => (
