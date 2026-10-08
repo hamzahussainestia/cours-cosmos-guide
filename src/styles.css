@@ -219,6 +219,30 @@
   }
 }
 
+@keyframes parallax-shift {
+  from {
+    transform: translateY(var(--parallax-shift, 40px));
+  }
+  to {
+    transform: translateY(calc(var(--parallax-shift, 40px) * -1));
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* Le raccourci `animation` precede `animation-timeline` et
+       `animation-range`, sinon il les reinitialise. La phase `cover` est
+       voulue ici : le parallaxe accompagne tout le passage de l'element a
+       l'ecran, et il n'applique qu'un transform, jamais d'opacite, donc
+       l'element reste visible a tout moment. */
+    .parallax {
+      animation: parallax-shift linear both;
+      animation-timeline: view();
+      animation-range: cover;
+    }
+  }
+}
+
 .prose-legal h2 {
   font-family: var(--font-display);
 }
