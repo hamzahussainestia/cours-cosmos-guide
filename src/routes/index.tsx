@@ -370,14 +370,14 @@ function Index() {
         </section>
 
         {/* Prise de RDV */}
-        <section id="rdv" className="px-5 py-14 sm:px-8">
+        <section id="rdv" className="px-5 py-6 sm:px-8 sm:py-14">
           <div className="mx-auto max-w-2xl">
             <Reveal>
               <SectionHeading eyebrow="Prendre rendez-vous" title="Réservez votre créneau" />
             </Reveal>
 
             <Reveal index={1}>
-              <p className="mx-auto mt-6 max-w-xl text-center text-sm leading-relaxed text-muted-foreground">
+              <p className="mx-auto mt-3 max-w-xl text-center text-sm leading-snug text-muted-foreground sm:mt-6 sm:leading-relaxed">
                 Un premier échange{" "}
                 <span className="text-gold-soft">gratuit et sans engagement</span> d&apos;environ
                 15-20 minutes, pour comprendre le besoin de l&apos;élève, répondre à vos questions
@@ -387,10 +387,10 @@ function Index() {
             </Reveal>
 
             <Reveal index={1}>
-              <div className="mt-6 flex flex-wrap justify-center gap-3 text-sm">
+              <div className="mt-3 flex flex-wrap justify-center gap-2 text-sm sm:mt-6 sm:gap-3">
                 <a
                   href={`mailto:${CONTACT_EMAIL}`}
-                  className="inline-flex items-center gap-2 rounded-full border border-gold/40 px-4 py-2 text-xs text-gold-soft transition hover:bg-gold/10"
+                  className="inline-flex min-h-11 items-center gap-2 rounded-full border border-gold/40 px-3 py-2 sm:px-4 text-xs text-gold-soft transition hover:bg-gold/10"
                 >
                   <Mail className="h-3.5 w-3.5" />
                   {CONTACT_EMAIL}
@@ -399,7 +399,7 @@ function Index() {
                   href={DISCORD_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-full border border-gold/40 px-4 py-2 text-xs text-gold-soft transition hover:bg-gold/10"
+                  className="inline-flex min-h-11 items-center rounded-full border border-gold/40 px-3 py-2 sm:px-4 text-xs text-gold-soft transition hover:bg-gold/10"
                 >
                   Rejoindre le Discord
                 </a>
@@ -407,7 +407,7 @@ function Index() {
             </Reveal>
 
             <Reveal index={2}>
-              <div className="mt-6">
+              <div className="mt-3 sm:mt-6">
                 <BookingFlow />
               </div>
             </Reveal>
@@ -416,16 +416,19 @@ function Index() {
           {/* Modalités pratiques : c'est au moment de réserver qu'on veut
               savoir si c'est en présentiel, en visio, et à quels horaires. */}
           <Reveal index={2}>
-            <div className="mx-auto mt-14 grid max-w-4xl gap-8 border-t border-gold/10 pt-10 sm:grid-cols-3">
+            <div className="mx-auto mt-6 grid max-w-4xl gap-3 border-t border-gold/10 pt-5 sm:mt-14 sm:grid-cols-3 sm:gap-8 sm:pt-10">
               {modalities.map((m, i) => (
-                <div key={m.title} className="text-center sm:text-left">
-                  {i === 0 && <MapPin className="mx-auto h-5 w-5 text-gold sm:mx-0" aria-hidden />}
-                  {i === 1 && <Monitor className="mx-auto h-5 w-5 text-gold sm:mx-0" aria-hidden />}
-                  {i === 2 && (
-                    <CalendarClock className="mx-auto h-5 w-5 text-gold sm:mx-0" aria-hidden />
-                  )}
-                  <h3 className="mt-3 font-display text-base text-gold-soft">{m.title}</h3>
-                  <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">{m.text}</p>
+                <div
+                  key={m.title}
+                  className="flex flex-wrap items-center gap-x-2.5 text-left sm:block"
+                >
+                  {i === 0 && <MapPin className="h-5 w-5 shrink-0 text-gold" aria-hidden />}
+                  {i === 1 && <Monitor className="h-5 w-5 shrink-0 text-gold" aria-hidden />}
+                  {i === 2 && <CalendarClock className="h-5 w-5 shrink-0 text-gold" aria-hidden />}
+                  <h3 className="font-display text-base text-gold-soft sm:mt-3">{m.title}</h3>
+                  <p className="mt-1 basis-full text-xs leading-snug text-muted-foreground sm:mt-1.5 sm:leading-relaxed">
+                    {m.text}
+                  </p>
                 </div>
               ))}
             </div>
