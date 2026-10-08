@@ -267,12 +267,12 @@
       animation-timeline: view();
       /* La phase `entry` dure la hauteur de l'element : sur une vague de
          22 px, le trace se dessinait en 22 px de defilement, donc de maniere
-         invisible. On demarre au premier contact avec l'ecran et on finit a
-         mi-traversee, ce qui etale le trace sur plusieurs centaines de pixels
-         de scroll quelle que soit la taille de l'element. La borne de fin a
+         invisible. On demarre a mi-entree et on finit quand l element depasse le
+         centre de l ecran : le trace se fait donc pendant que l element monte
+         vers la zone de lecture, et non en bas de l ecran. La borne de fin a
          50 % de `cover` garantit aussi qu'un trace deja visible au chargement
          (la vague du hero) soit complet. */
-      animation-range: entry 0% cover 50%;
+      animation-range: entry 50% cover 60%;
     }
   }
 }
