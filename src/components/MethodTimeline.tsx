@@ -35,7 +35,7 @@ export function MethodTimeline({ steps }: { steps: readonly Step[] }) {
         className="absolute top-0 left-0 h-full w-10 md:left-1/2 md:-translate-x-1/2"
       />
 
-      <div className="flex flex-col gap-6 md:gap-16">
+      <div className="flex flex-col gap-5 md:gap-16">
         {steps.map((s, i) => {
           const isLeft = i % 2 === 0;
           return (

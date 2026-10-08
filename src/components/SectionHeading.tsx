@@ -13,10 +13,10 @@ export function SectionHeading({
   return (
     <div className="text-center">
       <p className="text-xs tracking-[0.35em] text-gold uppercase">{eyebrow}</p>
-      <h2 id={id} className="mt-3 font-display text-4xl sm:text-5xl">
+      <h2 id={id} className="mt-2 font-display text-3xl sm:mt-3 sm:text-5xl">
         {title}
       </h2>
-      <div className="mt-6 flex items-center justify-center" aria-hidden>
+      <div className="mt-4 flex items-center justify-center sm:mt-6" aria-hidden>
         <span className="h-px w-14 bg-gradient-to-r from-transparent to-gold/50 sm:w-20" />
         <DrawPath
           d={WAVE_PATH}

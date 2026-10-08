@@ -259,7 +259,7 @@ function Index() {
           </div>
 
           <Reveal index={3}>
-            <div className="mx-auto mt-8 flex max-w-6xl flex-wrap justify-center gap-3 sm:mt-16">
+            <div className="mx-auto mt-6 flex max-w-6xl flex-wrap justify-center gap-2 sm:mt-16 sm:gap-3">
               {subjects.map((s) => (
                 <span key={s.name} className="chip-outline">
                   {s.name.toUpperCase()}
@@ -270,8 +270,8 @@ function Index() {
         </section>
 
         {/* Chiffres clés */}
-        <section className="bg-card/30 px-5 py-14 sm:px-8">
-          <div className="mx-auto grid max-w-5xl grid-cols-2 gap-8 md:grid-cols-4">
+        <section className="bg-card/30 px-5 py-8 sm:px-8 sm:py-14">
+          <div className="mx-auto grid max-w-5xl grid-cols-2 gap-5 sm:gap-8 md:grid-cols-4">
             {stats.map((s, i) => (
               <Reveal key={s.label} index={i}>
                 <div className="text-center">
@@ -301,7 +301,7 @@ function Index() {
         </section>
 
         {/* Guide Parcoursup */}
-        <section id="guide" className="px-5 py-8 sm:px-8 sm:py-16">
+        <section id="guide" className="px-5 py-6 sm:px-8 sm:py-16">
           <div className="mx-auto max-w-5xl">
             {/* Le Parallax enveloppe le Reveal : tous deux posent un
                 transform, ils ne peuvent pas partager le même élément. */}
@@ -345,7 +345,7 @@ function Index() {
         </section>
 
         {/* Offres */}
-        <section id="offres" className="offer-band px-5 py-10 sm:px-8 md:py-20">
+        <section id="offres" className="offer-band px-5 py-8 sm:px-8 sm:py-10 md:py-20">
           <div className="mx-auto max-w-6xl">
             <Reveal>
               <SectionHeading eyebrow="Nos formules" title="Offres & Tarifs" />
@@ -357,7 +357,7 @@ function Index() {
                 qu'il contient. Un Reveal posé sur une carte ne jouerait
                 jamais sur mobile. La cascade par carte est donc perdue sur
                 la grille de bureau, c'est le prix de cette règle. */}
-            <Reveal className="mt-6 md:mt-14">
+            <Reveal className="mt-5 md:mt-14">
               <MobileCarousel
                 items={offers}
                 label="Nos formules"
@@ -373,12 +373,12 @@ function Index() {
         </section>
 
         {/* Comment ça marche */}
-        <section id="methode" className="px-5 py-10 sm:px-8 sm:py-20">
+        <section id="methode" className="px-5 py-8 sm:px-8 sm:py-20">
           <div className="mx-auto max-w-6xl">
             <Reveal>
               <SectionHeading eyebrow="Notre approche" title="Comment ça marche ?" />
             </Reveal>
-            <div className="mt-8 sm:mt-16">
+            <div className="mt-6 sm:mt-16">
               <MethodTimeline steps={steps} />
             </div>
           </div>
@@ -431,7 +431,7 @@ function Index() {
           {/* Modalités pratiques : c'est au moment de réserver qu'on veut
               savoir si c'est en présentiel, en visio, et à quels horaires. */}
           <Reveal index={2}>
-            <div className="mx-auto mt-6 grid max-w-4xl gap-3 border-t border-gold/10 pt-5 sm:mt-14 sm:grid-cols-3 sm:gap-8 sm:pt-10">
+            <div className="mx-auto mt-5 grid max-w-4xl gap-2.5 border-t border-gold/10 pt-4 sm:mt-14 sm:grid-cols-3 sm:gap-8 sm:pt-10">
               {modalities.map((m, i) => (
                 <div
                   key={m.title}
@@ -521,7 +521,7 @@ function Index() {
               </div>
             </Reveal>
 
-            <div className="mt-5 grid gap-3 sm:mt-14 sm:grid-cols-2 sm:gap-4">
+            <div className="mt-4 grid gap-3 sm:mt-14 sm:grid-cols-2 sm:gap-4">
               {reasons.map((r, i) => {
                 const Icon = r.icon;
                 return (
@@ -552,14 +552,14 @@ function Index() {
         </section>
 
         {/* Témoignages */}
-        <section id="temoignages" className="px-5 py-8 sm:px-8 sm:py-20">
+        <section id="temoignages" className="px-5 py-6 sm:px-8 sm:py-20">
           <div className="mx-auto max-w-6xl">
             <Reveal>
               <SectionHeading eyebrow="Ils nous font confiance" title="Témoignages" />
             </Reveal>
             {/* Le Reveal est AUTOUR du carrousel, jamais dans `renderItem` :
                 `ui/carousel.tsx` garde un `overflow-hidden` interne. */}
-            <Reveal className="mt-6 md:mt-14">
+            <Reveal className="mt-5 md:mt-14">
               <MobileCarousel
                 items={testimonials}
                 label="Témoignages"
@@ -571,16 +571,16 @@ function Index() {
         </section>
 
         {/* FAQ */}
-        <section id="faq" className="px-5 py-8 sm:px-8 sm:py-20">
+        <section id="faq" className="px-5 py-6 sm:px-8 sm:py-20">
           <div className="mx-auto max-w-3xl">
             <Reveal>
               <SectionHeading eyebrow="Questions fréquentes" title="FAQ" />
             </Reveal>
-            <Accordion type="single" collapsible className="mt-6 sm:mt-14">
+            <Accordion type="single" collapsible className="mt-4 sm:mt-14">
               {faqItems.map((item, i) => (
                 <Reveal key={item.question} index={i}>
                   <AccordionItem value={`item-${i}`} className="border-gold/20">
-                    <AccordionTrigger className="font-display text-base text-gold-soft hover:no-underline sm:text-lg">
+                    <AccordionTrigger className="py-3 font-display text-base text-gold-soft hover:no-underline sm:py-4 sm:text-lg">
                       {item.question}
                     </AccordionTrigger>
                     <AccordionContent className="text-sm leading-relaxed text-muted-foreground">
