@@ -37,16 +37,6 @@ import {
   testimonials,
 } from "@/data/home-content";
 
-/*
- * Arc qui entoure chaque chiffre clé. C'est une ellipse et non un cercle :
- * un cercle assez large pour contenir « 150+ » déborderait de 25 px au-dessus
- * et en dessous du chiffre et grossirait la section. L'ellipse reste dans sa
- * hauteur de ligne. Le tracé n'est pas étiré (pas de `stretch`) : la
- * proportion vient du viewBox, ce qui garde un trait d'épaisseur constante.
- */
-const ARC_PATH = "M 3 28 A 61 25 0 1 1 125 28 A 61 25 0 1 1 3 28";
-const ARC_VIEWBOX = "0 0 128 56";
-
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "EducationalOrganization",
@@ -278,23 +268,10 @@ function Index() {
             {stats.map((s, i) => (
               <Reveal key={s.label} index={i}>
                 <div className="text-center">
-                  {/* L'arc est posé en absolu derrière le chiffre : il ne
-                      prend aucune place, la hauteur de la section ne bouge
-                      pas. Le nombre monte en JavaScript (CountUpStat),
-                      l'arc se remplit en CSS pendant ce temps. */}
-                  <div className="relative">
-                    <DrawPath
-                      d={ARC_PATH}
-                      viewBox={ARC_VIEWBOX}
-                      strokeWidth={2}
-                      draw
-                      className="pointer-events-none absolute top-1/2 left-1/2 h-14 w-32 -translate-x-1/2 -translate-y-1/2 opacity-60 sm:h-[4.375rem] sm:w-40"
-                    />
-                    <p className="relative font-display text-4xl text-gold-gradient sm:text-5xl">
-                      <CountUpStat value={s.value} />
-                    </p>
-                  </div>
-                  <p className="mt-3 text-xs tracking-[0.15em] text-muted-foreground uppercase sm:text-sm">
+                  <p className="font-display text-4xl text-gold-gradient sm:text-5xl">
+                    <CountUpStat value={s.value} />
+                  </p>
+                  <p className="mt-2 text-xs tracking-[0.15em] text-muted-foreground uppercase sm:text-sm">
                     {s.label}
                   </p>
                 </div>
