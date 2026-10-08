@@ -436,23 +436,28 @@ function Index() {
         </section>
 
         {/* Matières */}
-        <section id="matieres" className="px-5 py-20 sm:px-8">
+        <section id="matieres" className="px-4 py-6 sm:px-8 sm:py-20">
           <div className="mx-auto max-w-3xl">
             <Reveal>
               <SectionHeading eyebrow="Nos disciplines" title="Matières & filières" />
             </Reveal>
-            <div className="mt-14 grid gap-4 sm:grid-cols-2">
+            <div className="mt-6 grid grid-cols-2 gap-2 sm:mt-14 sm:gap-4">
               {subjects.map((s, i) => {
                 const Icon = s.icon;
                 return (
                   <Reveal key={s.name} index={i}>
-                    <div className="tap-scale flex items-center gap-4 rounded-2xl border-2 border-gold/20 bg-card px-5 py-4 shadow-[0_4px_0_0_color-mix(in_oklab,var(--gold)_45%,black_25%)]">
-                      <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gold">
-                        <Icon className="h-6 w-6 text-primary-foreground" aria-hidden />
+                    <div className="tap-scale flex h-full items-center gap-2 rounded-2xl border-2 border-gold/20 bg-card px-2 py-2.5 shadow-[0_4px_0_0_color-mix(in_oklab,var(--gold)_45%,black_25%)] sm:gap-4 sm:px-5 sm:py-4">
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gold sm:h-12 sm:w-12">
+                        <Icon
+                          className="h-5 w-5 text-primary-foreground sm:h-6 sm:w-6"
+                          aria-hidden
+                        />
                       </span>
                       <div className="min-w-0 text-left">
-                        <p className="font-display text-lg leading-tight">{s.name}</p>
-                        <p className="mt-0.5 text-xs tracking-[0.08em] text-muted-foreground uppercase">
+                        <p className="font-display text-[0.8125rem] leading-tight sm:text-lg">
+                          {s.name}
+                        </p>
+                        <p className="mt-0.5 text-xs tracking-[0.02em] text-muted-foreground uppercase sm:tracking-[0.08em]">
                           {s.levels}
                         </p>
                       </div>
@@ -465,25 +470,25 @@ function Index() {
         </section>
 
         {/* Pourquoi nous choisir */}
-        <section className="px-5 py-20 sm:px-8">
+        <section className="px-5 py-6 sm:px-8 sm:py-20">
           <div className="mx-auto max-w-4xl">
             <Reveal>
               <SectionHeading eyebrow="Notre exigence" title="Pourquoi nous choisir ?" />
             </Reveal>
 
             <Reveal index={1}>
-              <div className="mt-14 text-center">
-                <h3 className="font-display text-3xl text-gold-soft sm:text-4xl">
+              <div className="mt-6 text-center sm:mt-14">
+                <h3 className="font-display text-2xl text-gold-soft sm:text-4xl">
                   {teacherReason.title}
                 </h3>
-                <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
+                <p className="mx-auto mt-2 max-w-2xl text-sm leading-snug text-muted-foreground sm:mt-3 sm:text-base sm:leading-relaxed">
                   {teacherReason.text}
                 </p>
               </div>
             </Reveal>
 
             <Reveal index={2}>
-              <div className="logo-marquee mt-10 py-4">
+              <div className="logo-marquee mt-4 py-2 sm:mt-10 sm:py-4">
                 <div className="logo-marquee__track">
                   {[...schools, ...schools].map((school, i) => (
                     <div
@@ -501,17 +506,28 @@ function Index() {
               </div>
             </Reveal>
 
-            <div className="mt-14 grid gap-4 sm:grid-cols-2">
+            <div className="mt-5 grid gap-3 sm:mt-14 sm:grid-cols-2 sm:gap-4">
               {reasons.map((r, i) => {
                 const Icon = r.icon;
                 return (
                   <Reveal key={r.title} index={i}>
-                    <div className="h-full rounded-2xl border-2 border-gold/20 bg-card px-6 py-6 shadow-[0_4px_0_0_color-mix(in_oklab,var(--gold)_45%,black_25%)]">
-                      <span className="flex h-12 w-12 items-center justify-center rounded-full bg-gold">
-                        <Icon className="h-6 w-6 text-primary-foreground" aria-hidden />
-                      </span>
-                      <h3 className="mt-4 font-display text-xl text-gold-soft">{r.title}</h3>
-                      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{r.text}</p>
+                    <div className="h-full rounded-2xl border-2 border-gold/20 bg-card px-4 py-4 shadow-[0_4px_0_0_color-mix(in_oklab,var(--gold)_45%,black_25%)] sm:px-6 sm:py-6">
+                      {/* Icône à côté du titre sur mobile (gain de hauteur),
+                          au-dessus à partir de `sm`. */}
+                      <div className="flex items-center gap-3 sm:block">
+                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gold sm:h-12 sm:w-12">
+                          <Icon
+                            className="h-5 w-5 text-primary-foreground sm:h-6 sm:w-6"
+                            aria-hidden
+                          />
+                        </span>
+                        <h3 className="font-display text-lg text-gold-soft sm:mt-4 sm:text-xl">
+                          {r.title}
+                        </h3>
+                      </div>
+                      <p className="mt-2 text-sm leading-snug text-muted-foreground sm:leading-relaxed">
+                        {r.text}
+                      </p>
                     </div>
                   </Reveal>
                 );
