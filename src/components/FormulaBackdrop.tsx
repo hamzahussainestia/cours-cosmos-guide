@@ -10,6 +10,8 @@
  * hasard : le rendu serveur et le rendu client doivent coïncider.
  */
 
+import { Parallax } from "@/components/motion/Parallax";
+
 type Figure = "trig" | "atom" | "parab" | "benzene";
 
 type Item = {
@@ -130,53 +132,80 @@ function renderFigure(name: Figure) {
 
 const DRIFT_CLASSES = ["drift-a", "drift-b", "drift-c", "drift-d"];
 
+/**
+ * Trois plans de profondeur. Un `shift` positif fait prendre du retard sur
+ * le scroll : plus il est grand, plus le plan paraît loin. Les formules les
+ * plus petites vont donc au plan le plus profond.
+ */
+const PLANE_SHIFTS = [20, 45, 70] as const;
+
+/** Rang du plan d'un élément : 0 = proche (grand), 2 = lointain (petit). */
+function planeOf(item: Item): number {
+  if ((FIGURES as string[]).includes(item.content)) return 0;
+  const size = item.size ?? 16;
+  if (size >= 21) return 0;
+  if (size >= 17) return 1;
+  return 2;
+}
+
 export function FormulaBackdrop() {
   return (
+    // `overflow-clip` et non `overflow-hidden` : ce dernier établit un
+    // conteneur de défilement, et les `Parallax` ci-dessous (timeline view())
+    // se résoudraient sur lui au lieu de la page, donc ne s'animeraient jamais.
     <div
-      className="pointer-events-none absolute inset-0 hidden overflow-hidden text-gold select-none xl:block"
+      className="pointer-events-none absolute inset-0 hidden overflow-clip text-gold select-none xl:block"
       aria-hidden
     >
-      {ITEMS.map((item, i) => {
-        const positional =
-          item.side === "left"
-            ? { left: "clamp(0.5rem, 3vw, 4rem)" }
-            : { right: "clamp(0.5rem, 3vw, 4rem)" };
+      {PLANE_SHIFTS.map((shift, plane) => (
+        // Le Parallax pose un transform : il devient le bloc conteneur de ses
+        // enfants absolus. Il couvre donc toute la page (`inset-0`) pour que
+        // les positions `top` en % restent celles d'avant.
+        <Parallax key={shift} shift={shift} className="absolute inset-0">
+          {ITEMS.map((item, i) => {
+            if (planeOf(item) !== plane) return null;
+            const positional =
+              item.side === "left"
+                ? { left: "clamp(0.5rem, 3vw, 4rem)" }
+                : { right: "clamp(0.5rem, 3vw, 4rem)" };
 
-        const isFigure = (FIGURES as string[]).includes(item.content);
+            const isFigure = (FIGURES as string[]).includes(item.content);
 
-        return (
-          <div
-            key={i}
-            className="absolute opacity-[0.14]"
-            style={{ top: `${item.top}%`, ...positional }}
-          >
-            <div
-              className={`drift ${DRIFT_CLASSES[i % DRIFT_CLASSES.length]}`}
-              style={{
-                animationDuration: `${16 + (i % 7) * 2.5}s`,
-                animationDelay: `-${(i % 11) * 1.7}s`,
-              }}
-            >
-              <div style={{ transform: `rotate(${item.rotate ?? 0}deg)` }}>
-                {isFigure ? (
-                  renderFigure(item.content as Figure)
-                ) : (
-                  <span
-                    style={{
-                      fontFamily: "Georgia, 'Times New Roman', serif",
-                      fontStyle: "italic",
-                      fontSize: `${item.size ?? 16}px`,
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    {item.content}
-                  </span>
-                )}
+            return (
+              <div
+                key={i}
+                className="absolute opacity-[0.14]"
+                style={{ top: `${item.top}%`, ...positional }}
+              >
+                <div
+                  className={`drift ${DRIFT_CLASSES[i % DRIFT_CLASSES.length]}`}
+                  style={{
+                    animationDuration: `${16 + (i % 7) * 2.5}s`,
+                    animationDelay: `-${(i % 11) * 1.7}s`,
+                  }}
+                >
+                  <div style={{ transform: `rotate(${item.rotate ?? 0}deg)` }}>
+                    {isFigure ? (
+                      renderFigure(item.content as Figure)
+                    ) : (
+                      <span
+                        style={{
+                          fontFamily: "Georgia, 'Times New Roman', serif",
+                          fontStyle: "italic",
+                          fontSize: `${item.size ?? 16}px`,
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {item.content}
+                      </span>
+                    )}
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        );
-      })}
+            );
+          })}
+        </Parallax>
+      ))}
     </div>
   );
 }

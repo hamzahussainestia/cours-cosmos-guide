@@ -87,14 +87,18 @@ function Index() {
 
       <main>
         {/* Hero */}
-        <section className="relative overflow-clip px-5 pt-14 pb-16 sm:px-8 sm:pt-20">
-          <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[1.3fr_0.9fr] lg:items-center">
+        <section className="relative overflow-clip px-5 pt-10 pb-10 sm:px-8 sm:pt-20 sm:pb-16">
+          <div className="mx-auto grid max-w-6xl gap-8 sm:gap-12 lg:grid-cols-[1.3fr_0.9fr] lg:items-center">
             <div>
               <Reveal>
                 <span className="chip-outline">COLLÈGE → PRÉPA</span>
-                <h1 className="hero-title mt-6 font-display">
+              </Reveal>
+              {/* Le titre monte en deux temps : une ligne par Reveal, rangs 0 puis 1. */}
+              <h1 className="hero-title mt-4 font-display sm:mt-6">
+                <Reveal as="span" className="block">
                   Progresser vite.
-                  <br />
+                </Reveal>
+                <Reveal as="span" index={1} className="block">
                   Progresser{" "}
                   <span className="relative inline-block">
                     bien.
@@ -107,15 +111,17 @@ function Index() {
                       draw
                     />
                   </span>
-                </h1>
-                <p className="mt-8 max-w-xl text-base text-muted-foreground sm:text-lg">
+                </Reveal>
+              </h1>
+              <Reveal index={2}>
+                <p className="mt-5 max-w-xl text-base text-muted-foreground sm:mt-8 sm:text-lg">
                   Soutien scolaire et accompagnement académique personnalisé, du collège à la prépa
                   — maths, physique-chimie, sciences de l&apos;ingénieur, avec des profs issus des
                   meilleures écoles.
                 </p>
               </Reveal>
               <Reveal index={2}>
-                <div className="mt-9 flex flex-wrap gap-4">
+                <div className="mt-6 flex flex-wrap gap-3 sm:mt-9 sm:gap-4">
                   <a
                     href="#rdv"
                     className="btn-press rounded-full bg-primary px-7 py-3 text-sm font-medium tracking-wide text-primary-foreground"
@@ -135,25 +141,25 @@ function Index() {
             <Reveal index={2}>
               <div className="stat-card-float">
                 <div className="stat-card-float__primary">
-                  <p className="font-display text-5xl sm:text-6xl">
+                  <p className="font-display text-4xl sm:text-6xl">
                     {stats[0] && <CountUpStat value={stats[0].value} />}
                   </p>
-                  <p className="mt-2 text-sm font-medium text-muted-foreground">
+                  <p className="text-sm font-medium text-muted-foreground sm:mt-2">
                     {stats[0]?.label}
                   </p>
                 </div>
                 <div className="stat-card-float__secondary">
-                  <p className="font-display text-4xl sm:text-5xl">
+                  <p className="font-display text-3xl sm:text-5xl">
                     {stats[1] && <CountUpStat value={stats[1].value} />}
                   </p>
-                  <p className="mt-2 text-sm font-medium opacity-85">{stats[1]?.label}</p>
+                  <p className="text-sm font-medium opacity-85 sm:mt-2">{stats[1]?.label}</p>
                 </div>
               </div>
             </Reveal>
           </div>
 
           <Reveal index={3}>
-            <div className="mx-auto mt-16 flex max-w-6xl flex-wrap justify-center gap-3">
+            <div className="mx-auto mt-8 flex max-w-6xl flex-wrap justify-center gap-3 sm:mt-16">
               {subjects.map((s) => (
                 <span key={s.name} className="chip-outline">
                   {s.name.toUpperCase()}
