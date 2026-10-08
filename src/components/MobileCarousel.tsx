@@ -69,18 +69,17 @@ export function MobileCarousel<T>({
           </CarouselContent>
         </Carousel>
 
-        <div className="mt-5 flex justify-center gap-2" role="tablist" aria-label={label}>
+        <div className="mt-5 flex justify-center gap-2">
           {items.map((_, i) => (
             <button
               key={i}
               type="button"
-              role="tab"
-              aria-selected={i === actif}
+              aria-current={i === actif ? "true" : undefined}
               aria-label={`Élément ${i + 1} sur ${items.length}`}
               onClick={() => api?.scrollTo(i)}
-              /* La cible fait 44 px de haut via le padding ; le point visible
-                 reste petit. On ne sacrifie pas l'accessibilité au style. */
-              className="flex h-11 w-6 items-center justify-center"
+              /* La cible fait 44 x 44 px ; le point visible reste petit.
+                 On ne sacrifie pas l'accessibilité au style. */
+              className="flex h-11 w-11 items-center justify-center"
             >
               <span
                 className={cn(
