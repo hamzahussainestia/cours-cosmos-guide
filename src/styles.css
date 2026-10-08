@@ -320,6 +320,40 @@
   }
 }
 
+/* Repli pour les navigateurs sans animation-timeline. La classe js-reveal
+   n'est posee QUE par le JavaScript, et seulement s'il a constate l'absence
+   de support : sans JavaScript, rien n'est masque et le site reste visible. */
+html.js-reveal .reveal {
+  opacity: 0;
+  transform: translateY(var(--reveal-distance, 28px));
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--reveal-index, 0) * 90ms);
+}
+html.js-reveal .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+html.js-reveal .draw-path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+html.js-reveal .draw-path.is-visible {
+  stroke-dashoffset: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.js-reveal .reveal,
+  html.js-reveal .draw-path {
+    opacity: 1;
+    transform: none;
+    stroke-dashoffset: 0;
+    transition: none;
+  }
+}
+
 .prose-legal h2 {
   font-family: var(--font-display);
 }

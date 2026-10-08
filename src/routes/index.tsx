@@ -9,6 +9,7 @@ import { MobileCarousel } from "@/components/MobileCarousel";
 import { DrawPath } from "@/components/motion/DrawPath";
 import { Parallax } from "@/components/motion/Parallax";
 import { Reveal } from "@/components/motion/Reveal";
+import { useMotionFallback } from "@/components/motion/useMotionFallback";
 import { WAVE_PATH, WAVE_VIEWBOX } from "@/components/motion/wave-path";
 import { SectionHeading } from "@/components/SectionHeading";
 import { SiteFooter } from "@/components/SiteFooter";
@@ -179,6 +180,8 @@ function OfferCard({ offer: o }: { offer: Offer }) {
 }
 
 function Index() {
+  useMotionFallback();
+
   return (
     <div className="relative min-h-screen">
       <FormulaBackdrop />
