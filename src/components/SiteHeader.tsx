@@ -4,7 +4,7 @@ import { ArrowRight, Menu, X } from "lucide-react";
 
 import { navLinks } from "@/data/home-content";
 
-const LOGO_URL = "/coursinus-logo.png";
+const WORDMARK_URL = "/coursinus-wordmark.png";
 
 /**
  * Un lien de navigation : ancre de la page d'accueil, ou route a part entiere.
@@ -97,21 +97,12 @@ export function SiteHeader() {
             guide Parcoursup, une ancre vide n'allait nulle part et laissait
             le visiteur coincé. */}
         <Link to="/" className="flex min-w-0 items-center gap-1">
-          {/*
-            Le PNG du logo comporte de larges marges transparentes (le motif
-            n'occupe qu'environ un tiers de l'image) : on l'affiche donc dans
-            une boîte volontairement grande, puis on rattrape ces marges avec
-            des marges négatives. Le motif paraît deux fois plus gros sans que
-            la barre gagne en hauteur.
-          */}
+          {/* Logo complet (marque + nom) : un seul visuel, cadré au plus juste. */}
           <img
-            src={LOGO_URL}
-            alt="Logo Coursinus"
-            className="-mx-5 -my-6 h-24 w-24 shrink-0 object-contain sm:-mx-6 sm:-my-7 sm:h-28 sm:w-28"
+            src={WORDMARK_URL}
+            alt="Coursinus"
+            className="h-9 w-auto shrink-0 sm:h-11"
           />
-          <span className="font-script text-3xl leading-[1.4] whitespace-nowrap text-gold sm:text-4xl">
-            Coursinus
-          </span>
         </Link>
 
         <nav className="hidden items-center gap-1 xl:flex" aria-label="Navigation principale">
