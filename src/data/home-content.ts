@@ -29,6 +29,7 @@ export const navLinks = [
   { label: "Méthode", href: "#methode" },
   { label: "Matières", href: "#matieres" },
   { label: "Guide Parcoursup", href: "/guide-parcoursup" },
+  { label: "Fiches brevet", href: "/fiches-brevet" },
   { label: "Avis", href: "#temoignages" },
   { label: "FAQ", href: "#faq" },
   { label: "Réserver", href: "#rdv" },

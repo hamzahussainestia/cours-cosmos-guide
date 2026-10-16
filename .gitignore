@@ -41,3 +41,6 @@ dist-ssr
 
 # Espace de travail jetable de l'execution par sous-agents
 .superpowers/
+
+# Fiches payantes : publiees avec wrangler deploy, jamais dans le depot git
+public/telechargement/
