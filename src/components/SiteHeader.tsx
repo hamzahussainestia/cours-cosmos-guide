@@ -120,7 +120,7 @@ export function SiteHeader() {
         <div className="flex items-center gap-2">
           <a
             href="#rdv"
-            className="btn-press hidden shrink-0 rounded-full bg-primary px-4 py-2 text-xs font-medium tracking-[0.1em] text-primary-foreground uppercase sm:inline-block sm:text-sm"
+            className="btn-press hidden shrink-0 rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground sm:inline-block"
           >
             Réserver un RDV
           </a>

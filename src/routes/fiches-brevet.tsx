@@ -110,7 +110,7 @@ function FichesBrevetPage() {
               </p>
               <a
                 href={PACK.url}
-                className="btn-press mt-6 inline-flex w-full items-center justify-center rounded-md bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
+                className="btn-press mt-6 inline-flex w-full items-center justify-center rounded-full bg-primary px-5 py-3.5 text-[15px] font-semibold text-primary-foreground"
               >
                 Acheter le pack complet
               </a>
@@ -167,7 +167,7 @@ function FichesBrevetPage() {
                   </p>
                   <a
                     href={m.url}
-                    className="mt-4 inline-flex items-center justify-center rounded-md border border-gold/50 px-4 py-2.5 text-sm font-semibold text-gold transition hover:bg-gold/10"
+                    className="mt-4 inline-flex items-center justify-center rounded-full border border-gold/40 bg-gold/5 px-4 py-2.5 text-sm font-semibold text-gold transition hover:-translate-y-px hover:border-gold/70 hover:bg-gold/15"
                   >
                     Acheter · 4,99 €
                   </a>
