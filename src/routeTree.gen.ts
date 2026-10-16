@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as FichesBrevetRouteImport } from './routes/fiches-brevet'
 import { Route as GuideParcoursupRouteImport } from './routes/guide-parcoursup'
 import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
 import { Route as PolitiqueConfidentialiteRouteImport } from './routes/politique-confidentialite'
@@ -17,6 +18,11 @@ import { Route as PolitiqueConfidentialiteRouteImport } from './routes/politique
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FichesBrevetRoute = FichesBrevetRouteImport.update({
+  id: '/fiches-brevet',
+  path: '/fiches-brevet',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GuideParcoursupRoute = GuideParcoursupRouteImport.update({
@@ -38,12 +44,14 @@ const PolitiqueConfidentialiteRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/fiches-brevet': typeof FichesBrevetRoute
   '/guide-parcoursup': typeof GuideParcoursupRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/politique-confidentialite': typeof PolitiqueConfidentialiteRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/fiches-brevet': typeof FichesBrevetRoute
   '/guide-parcoursup': typeof GuideParcoursupRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/politique-confidentialite': typeof PolitiqueConfidentialiteRoute
@@ -51,6 +59,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/fiches-brevet': typeof FichesBrevetRoute
   '/guide-parcoursup': typeof GuideParcoursupRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/politique-confidentialite': typeof PolitiqueConfidentialiteRoute
@@ -59,18 +68,21 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/fiches-brevet'
     | '/guide-parcoursup'
     | '/mentions-legales'
     | '/politique-confidentialite'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/fiches-brevet'
     | '/guide-parcoursup'
     | '/mentions-legales'
     | '/politique-confidentialite'
   id:
     | '__root__'
     | '/'
+    | '/fiches-brevet'
     | '/guide-parcoursup'
     | '/mentions-legales'
     | '/politique-confidentialite'
@@ -78,6 +90,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  FichesBrevetRoute: typeof FichesBrevetRoute
   GuideParcoursupRoute: typeof GuideParcoursupRoute
   MentionsLegalesRoute: typeof MentionsLegalesRoute
   PolitiqueConfidentialiteRoute: typeof PolitiqueConfidentialiteRoute
@@ -90,6 +103,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/fiches-brevet': {
+      id: '/fiches-brevet'
+      path: '/fiches-brevet'
+      fullPath: '/fiches-brevet'
+      preLoaderRoute: typeof FichesBrevetRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/guide-parcoursup': {
@@ -118,6 +138,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  FichesBrevetRoute: FichesBrevetRoute,
   GuideParcoursupRoute: GuideParcoursupRoute,
   MentionsLegalesRoute: MentionsLegalesRoute,
   PolitiqueConfidentialiteRoute: PolitiqueConfidentialiteRoute,

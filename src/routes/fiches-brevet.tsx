@@ -18,7 +18,7 @@ export const Route = createFileRoute("/fiches-brevet")({
         content:
           "Tout le programme du brevet en fiches claires, avec schémas, cartes, exercices type brevet corrigés et quiz.",
       },
-      { property: "og:image", content: "https://coursinus.fr/fiches-brevet/pack-couverture.jpg" },
+      { property: "og:image", content: "https://coursinus.fr/fiches-brevet/miniatures/pack.jpg" },
     ],
   }),
   component: FichesBrevetPage,
@@ -33,14 +33,14 @@ const PACK = {
 };
 
 const MATIERES = [
-  { nom: "Mathématiques", fiches: 15, detail: "Arithmétique, calcul littéral, fonctions, Pythagore, Thalès, trigo, statistiques, probabilités, Scratch…", url: "https://buy.stripe.com/5kQ7sN8Or11Y3BU8ONasg0e" },
-  { nom: "Physique-Chimie", fiches: 11, detail: "Atomes et ions, transformations chimiques, pH, mouvements, forces, énergie, électricité, signaux, Univers.", url: "https://buy.stripe.com/4gMcN73u79yua0i8ONasg0f" },
-  { nom: "SVT", fiches: 11, detail: "ADN et chromosomes, reproduction, évolution, immunité, système nerveux, nutrition, Terre, climat, écosystèmes.", url: "https://buy.stripe.com/9B6cN7fcP9yub4mghfasg0g" },
-  { nom: "Technologie", fiches: 6, detail: "Besoin et cahier des charges, chaînes d'énergie et d'information, matériaux, programmation, réseaux, projet.", url: "https://buy.stripe.com/5kQ4gBggT6mi1tM6GFasg0h" },
-  { nom: "Histoire", fiches: 11, detail: "Les deux guerres mondiales, totalitarismes, guerre froide, décolonisation, Europe, Ve République…", url: "https://buy.stripe.com/eVqfZj0hVfWSfkC2qpasg0i" },
-  { nom: "Géographie", fiches: 7, detail: "Aires urbaines, espaces productifs, faible densité, aménagement, outre-mer, UE, la France dans le monde.", url: "https://buy.stripe.com/6oU28t6Gj9yu5K26GFasg0j" },
-  { nom: "EMC", fiches: 4, detail: "Nouveau programme 2026 : Constitution et séparation des pouvoirs, Europe, information, engagement.", url: "https://buy.stripe.com/cNi28t1lZ4eaegyaWVasg0k" },
-  { nom: "Français", fiches: 11, detail: "Grammaire, conjugaison, accords, figures de style, et les méthodes pour la dictée, la rédaction et les questions.", url: "https://buy.stripe.com/28E9AV9Sv2622xQ2qpasg0l" },
+  { nom: "Mathématiques", img: "/fiches-brevet/miniatures/maths.jpg", fiches: 15, detail: "Arithmétique, calcul littéral, fonctions, Pythagore, Thalès, trigo, statistiques, probabilités, Scratch…", url: "https://buy.stripe.com/5kQ7sN8Or11Y3BU8ONasg0e" },
+  { nom: "Physique-Chimie", img: "/fiches-brevet/miniatures/pc.jpg", fiches: 11, detail: "Atomes et ions, transformations chimiques, pH, mouvements, forces, énergie, électricité, signaux, Univers.", url: "https://buy.stripe.com/4gMcN73u79yua0i8ONasg0f" },
+  { nom: "SVT", img: "/fiches-brevet/miniatures/svt.jpg", fiches: 11, detail: "ADN et chromosomes, reproduction, évolution, immunité, système nerveux, nutrition, Terre, climat, écosystèmes.", url: "https://buy.stripe.com/9B6cN7fcP9yub4mghfasg0g" },
+  { nom: "Technologie", img: "/fiches-brevet/miniatures/techno.jpg", fiches: 6, detail: "Besoin et cahier des charges, chaînes d'énergie et d'information, matériaux, programmation, réseaux, projet.", url: "https://buy.stripe.com/5kQ4gBggT6mi1tM6GFasg0h" },
+  { nom: "Histoire", img: "/fiches-brevet/miniatures/histoire.jpg", fiches: 11, detail: "Les deux guerres mondiales, totalitarismes, guerre froide, décolonisation, Europe, Ve République…", url: "https://buy.stripe.com/eVqfZj0hVfWSfkC2qpasg0i" },
+  { nom: "Géographie", img: "/fiches-brevet/miniatures/geo.jpg", fiches: 7, detail: "Aires urbaines, espaces productifs, faible densité, aménagement, outre-mer, UE, la France dans le monde.", url: "https://buy.stripe.com/6oU28t6Gj9yu5K26GFasg0j" },
+  { nom: "EMC", img: "/fiches-brevet/miniatures/emc.jpg", fiches: 4, detail: "Nouveau programme 2026 : Constitution et séparation des pouvoirs, Europe, information, engagement.", url: "https://buy.stripe.com/cNi28t1lZ4eaegyaWVasg0k" },
+  { nom: "Français", img: "/fiches-brevet/miniatures/francais.jpg", fiches: 11, detail: "Grammaire, conjugaison, accords, figures de style, et les méthodes pour la dictée, la rédaction et les questions.", url: "https://buy.stripe.com/28E9AV9Sv2622xQ2qpasg0l" },
 ];
 
 const APERCUS = [
@@ -89,6 +89,11 @@ function FichesBrevetPage() {
 
             {/* ------------------------------------------------ carte pack */}
             <div className="rounded-xl border border-gold/40 bg-card/60 p-6 shadow-sm sm:p-8">
+              <img
+                src="/fiches-brevet/miniatures/pack.jpg"
+                alt="Les 8 matières du pack complet de fiches de révision du brevet"
+                className="-mx-2 mb-5 w-[calc(100%+1rem)] rounded-lg"
+              />
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-gold-soft">
                 Le plus avantageux
               </p>
@@ -140,12 +145,19 @@ function FichesBrevetPage() {
           <div className="mx-auto max-w-5xl">
             <h2 className="font-display text-2xl text-gold sm:text-3xl">Ou par matière</h2>
             <p className="mt-2 text-sm text-muted-foreground">4,99 € la matière.</p>
-            <div className="mt-6 grid gap-4 sm:grid-cols-2">
+            <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {MATIERES.map((m) => (
                 <div
                   key={m.nom}
-                  className="flex flex-col rounded-xl border border-border/60 bg-card/60 p-5"
+                  className="flex flex-col overflow-hidden rounded-xl border border-border/60 bg-card/60"
                 >
+                  <img
+                    src={m.img}
+                    alt={`Fiches de révision brevet : ${m.nom}`}
+                    loading="lazy"
+                    className="aspect-[4/3] w-full object-cover"
+                  />
+                  <div className="flex flex-1 flex-col p-5">
                   <div className="flex items-baseline justify-between gap-3">
                     <h3 className="font-display text-xl text-foreground">{m.nom}</h3>
                     <span className="text-xs text-muted-foreground">{m.fiches} fiches</span>
@@ -159,6 +171,7 @@ function FichesBrevetPage() {
                   >
                     Acheter · 4,99 €
                   </a>
+                  </div>
                 </div>
               ))}
             </div>
