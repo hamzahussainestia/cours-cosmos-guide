@@ -14,6 +14,8 @@ import { Route as FichesBrevetRouteImport } from './routes/fiches-brevet'
 import { Route as GuideParcoursupRouteImport } from './routes/guide-parcoursup'
 import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
 import { Route as PolitiqueConfidentialiteRouteImport } from './routes/politique-confidentialite'
+import { Route as FichesIndexRouteImport } from './routes/fiches.index'
+import { Route as FichesSlugRouteImport } from './routes/fiches.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -41,6 +43,16 @@ const PolitiqueConfidentialiteRoute =
     path: '/politique-confidentialite',
     getParentRoute: () => rootRouteImport,
   } as any)
+const FichesIndexRoute = FichesIndexRouteImport.update({
+  id: '/fiches/',
+  path: '/fiches/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FichesSlugRoute = FichesSlugRouteImport.update({
+  id: '/fiches/$slug',
+  path: '/fiches/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -48,6 +60,8 @@ export interface FileRoutesByFullPath {
   '/guide-parcoursup': typeof GuideParcoursupRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/politique-confidentialite': typeof PolitiqueConfidentialiteRoute
+  '/fiches/$slug': typeof FichesSlugRoute
+  '/fiches/': typeof FichesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -55,6 +69,8 @@ export interface FileRoutesByTo {
   '/guide-parcoursup': typeof GuideParcoursupRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/politique-confidentialite': typeof PolitiqueConfidentialiteRoute
+  '/fiches/$slug': typeof FichesSlugRoute
+  '/fiches': typeof FichesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -63,6 +79,8 @@ export interface FileRoutesById {
   '/guide-parcoursup': typeof GuideParcoursupRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/politique-confidentialite': typeof PolitiqueConfidentialiteRoute
+  '/fiches/$slug': typeof FichesSlugRoute
+  '/fiches/': typeof FichesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -72,6 +90,8 @@ export interface FileRouteTypes {
     | '/guide-parcoursup'
     | '/mentions-legales'
     | '/politique-confidentialite'
+    | '/fiches/$slug'
+    | '/fiches/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -79,6 +99,8 @@ export interface FileRouteTypes {
     | '/guide-parcoursup'
     | '/mentions-legales'
     | '/politique-confidentialite'
+    | '/fiches/$slug'
+    | '/fiches'
   id:
     | '__root__'
     | '/'
@@ -86,6 +108,8 @@ export interface FileRouteTypes {
     | '/guide-parcoursup'
     | '/mentions-legales'
     | '/politique-confidentialite'
+    | '/fiches/$slug'
+    | '/fiches/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -94,6 +118,8 @@ export interface RootRouteChildren {
   GuideParcoursupRoute: typeof GuideParcoursupRoute
   MentionsLegalesRoute: typeof MentionsLegalesRoute
   PolitiqueConfidentialiteRoute: typeof PolitiqueConfidentialiteRoute
+  FichesSlugRoute: typeof FichesSlugRoute
+  FichesIndexRoute: typeof FichesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -133,6 +159,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PolitiqueConfidentialiteRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/fiches/': {
+      id: '/fiches/'
+      path: '/fiches'
+      fullPath: '/fiches/'
+      preLoaderRoute: typeof FichesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/fiches/$slug': {
+      id: '/fiches/$slug'
+      path: '/fiches/$slug'
+      fullPath: '/fiches/$slug'
+      preLoaderRoute: typeof FichesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -142,6 +182,8 @@ const rootRouteChildren: RootRouteChildren = {
   GuideParcoursupRoute: GuideParcoursupRoute,
   MentionsLegalesRoute: MentionsLegalesRoute,
   PolitiqueConfidentialiteRoute: PolitiqueConfidentialiteRoute,
+  FichesSlugRoute: FichesSlugRoute,
+  FichesIndexRoute: FichesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
