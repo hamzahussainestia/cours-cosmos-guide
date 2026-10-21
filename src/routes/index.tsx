@@ -20,6 +20,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { fichesDuNiveau, trouverFiche } from "@/data/fiches";
 import {
   CONTACT_EMAIL,
   DISCORD_URL,
@@ -36,6 +37,18 @@ import {
   teacherReason,
   testimonials,
 } from "@/data/home-content";
+
+/* Vitrine du bloc « Nouveau » : tirée du catalogue, jamais recopiée. */
+const BREVET_PACK = trouverFiche("pack-brevet-3e");
+const BREVET_PRIX_MATIERE = fichesDuNiveau("3e").find((f) => !f.pack && f.prix)?.prix ?? "4,99 €";
+const FICHES_VITRINE = [
+  "maths-brevet-3e",
+  "physique-chimie-brevet-3e",
+  "svt-brevet-3e",
+  "histoire-brevet-3e",
+]
+  .map((slug) => trouverFiche(slug))
+  .filter((f): f is NonNullable<typeof f> & { img: string } => Boolean(f?.img));
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -277,6 +290,58 @@ function Index() {
                 </div>
               </Reveal>
             ))}
+          </div>
+        </section>
+
+        {/* Nouveau : les fiches d'Azma */}
+        <section id="fiches" className="px-5 py-6 sm:px-8 sm:py-16">
+          <div className="mx-auto max-w-5xl">
+            <Reveal>
+              <div className="card-lux grid gap-6 rounded-2xl border-gold/40 p-5 sm:gap-10 sm:p-10 lg:grid-cols-[1.3fr_1fr] lg:items-center">
+                <div>
+                  <div className="flex flex-wrap items-center gap-3">
+                    <span className="inline-flex items-center rounded-full bg-gold px-3 py-1 text-xs font-bold tracking-[0.15em] text-primary-foreground uppercase">
+                      Nouveau
+                    </span>
+                    <span className="text-xs font-semibold tracking-[0.18em] text-gold-soft uppercase">
+                      Fiches de révision &middot; PDF
+                    </span>
+                  </div>
+                  <h2 className="mt-3 font-display text-2xl text-gold sm:mt-4 sm:text-4xl">
+                    Les fiches d&apos;Azma
+                  </h2>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground sm:mt-4 sm:text-base">
+                    Tout le programme du brevet en {BREVET_PACK?.fiches ?? 76} fiches claires :
+                    schémas, cartes, exercices type brevet corrigés et quiz. À lire sur ton
+                    téléphone ou à imprimer, dès {BREVET_PRIX_MATIERE} la matière. La seconde et la
+                    première arrivent bientôt.
+                  </p>
+                  <Link
+                    to="/fiches"
+                    className="btn-press mt-5 inline-flex rounded-full bg-primary px-7 py-3 text-sm font-semibold text-primary-foreground sm:mt-7"
+                  >
+                    Découvrir les fiches
+                  </Link>
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  {FICHES_VITRINE.map((f) => (
+                    <Link
+                      key={f.slug}
+                      to="/fiches/$slug"
+                      params={{ slug: f.slug }}
+                      className="overflow-hidden rounded-xl border border-border/60"
+                    >
+                      <img
+                        src={f.img}
+                        alt={`Fiches de révision brevet : ${f.matiere}`}
+                        loading="lazy"
+                        className="aspect-[4/3] w-full object-cover"
+                      />
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
           </div>
         </section>
 
