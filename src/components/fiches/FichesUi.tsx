@@ -23,8 +23,8 @@ export function FicheVisuel({
         src={fiche.img}
         alt={
           fiche.pack
-            ? "Les 8 matières du pack complet de fiches de révision du brevet"
-            : `Fiches de révision brevet : ${fiche.matiere}`
+            ? `Les 8 matières du pack complet de fiches de révision ${NIVEAU_INFO[fiche.niveau].long}`
+            : `Fiches de révision ${fiche.matiere} ${NIVEAU_INFO[fiche.niveau].long}`
         }
         loading={eager ? "eager" : "lazy"}
         className={cn("aspect-[4/3] w-full object-cover", className)}

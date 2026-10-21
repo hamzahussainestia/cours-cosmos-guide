@@ -20,7 +20,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { fichesDuNiveau, trouverFiche } from "@/data/fiches";
+import { fichesDuNiveau, NIVEAU_INFO, trouverFiche } from "@/data/fiches";
 import {
   CONTACT_EMAIL,
   DISCORD_URL,
@@ -41,12 +41,10 @@ import {
 /* Vitrine du bloc « Nouveau » : tirée du catalogue, jamais recopiée. */
 const BREVET_PACK = trouverFiche("pack-brevet-3e");
 const BREVET_PRIX_MATIERE = fichesDuNiveau("3e").find((f) => !f.pack && f.prix)?.prix ?? "4,99 €";
-const FICHES_VITRINE = [
-  "maths-brevet-3e",
-  "physique-chimie-brevet-3e",
-  "svt-brevet-3e",
-  "histoire-brevet-3e",
-]
+const PACK_2DE = trouverFiche("pack-seconde");
+/* Deux visuels de brevet et deux de seconde : le bloc montre les deux niveaux
+   en vente d'un coup d'œil. */
+const FICHES_VITRINE = ["maths-brevet-3e", "histoire-brevet-3e", "maths-seconde", "svt-seconde"]
   .map((slug) => trouverFiche(slug))
   .filter((f): f is NonNullable<typeof f> & { img: string } => Boolean(f?.img));
 
@@ -311,10 +309,11 @@ function Index() {
                     Les fiches d&apos;Azma
                   </h2>
                   <p className="mt-3 text-sm leading-relaxed text-muted-foreground sm:mt-4 sm:text-base">
-                    Tout le programme du brevet en {BREVET_PACK?.fiches ?? 76} fiches claires :
-                    schémas, cartes, exercices type brevet corrigés et quiz. À lire sur ton
-                    téléphone ou à imprimer, dès {BREVET_PRIX_MATIERE} la matière. La seconde et la
-                    première arrivent bientôt.
+                    Tout le programme en fiches claires : schémas, cartes, exercices corrigés et
+                    quiz. {BREVET_PACK?.fiches ?? 76} fiches pour le brevet
+                    {PACK_2DE?.fiches ? `, ${PACK_2DE.fiches} pour la seconde` : ""}, à lire sur ton
+                    téléphone ou à imprimer, dès {BREVET_PRIX_MATIERE} la matière. La première
+                    arrive bientôt.
                   </p>
                   <Link
                     to="/fiches"
@@ -333,7 +332,7 @@ function Index() {
                     >
                       <img
                         src={f.img}
-                        alt={`Fiches de révision brevet : ${f.matiere}`}
+                        alt={`Fiches de révision ${f.matiere} ${NIVEAU_INFO[f.niveau].long}`}
                         loading="lazy"
                         className="aspect-[4/3] w-full object-cover"
                       />

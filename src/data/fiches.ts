@@ -4,11 +4,13 @@
  * Source unique pour la page /fiches, les pages produit /fiches/<slug> et le
  * bloc « Nouveau » de l'accueil.
  *
- * Règle : rien n'est inventé. Les liens Stripe, prix et nombres de fiches de la
- * 3e sont recopiés tels quels de l'ancienne page /fiches-brevet. Pour la 2de et
- * la 1re, aucun lien, prix ni nombre n'existe encore : ces champs restent
- * absents et l'interface affiche « Bientôt disponible ».
+ * Règle : rien n'est inventé. Les liens Stripe et prix sont recopiés tels quels
+ * de ce que Coursinus a fourni. Les nombres de fiches et les chapitres viennent
+ * de `chapitres.ts`, releve directement dans le sommaire des PDF. La 1re n'a
+ * pas encore de lien de paiement : l'interface affiche « Bientôt disponible ».
  */
+
+import { CHAPITRES } from "./chapitres";
 
 export type Niveau = "3e" | "2de" | "1re";
 
@@ -23,9 +25,11 @@ export type Fiche = {
   /** Forme avec préposition, pour les phrases : « de maths », « d'EMC ». */
   de: string;
   pack: boolean;
-  /** Miniature. Absente tant que le visuel n'existe pas (2de et 1re). */
+  /** Miniature. Absente tant que le visuel n'existe pas. */
   img?: string;
   fiches?: number;
+  /** Chapitres couverts, dans l'ordre du PDF. Vide pour les packs. */
+  chapitres: readonly string[];
   prix?: string;
   ancienPrix?: string;
   reduction?: string;
@@ -53,7 +57,64 @@ export const POINTS_BREVET: readonly string[] = [
   "Les pièges classiques signalés, pour ne pas perdre de points",
 ];
 
+/* Les fiches du lycée suivent le même principe, mais ne parlent pas du brevet :
+   les arguments sont donc reformulés plutôt que réutilisés tels quels. */
+const POINTS_LYCEE: readonly string[] = [
+  "Tout le programme de l'année, chapitre par chapitre",
+  "Des schémas et des exemples dans chaque fiche",
+  "Un exercice corrigé et un quiz par chapitre",
+  "Les pièges classiques signalés, pour ne pas perdre de points",
+];
+
+export function pointsDuNiveau(niveau: Niveau): readonly string[] {
+  return niveau === "3e" ? POINTS_BREVET : POINTS_LYCEE;
+}
+
 const MINIATURES = "/fiches-brevet/miniatures";
+
+/**
+ * Visuels de couverture de la 2de et de la 1re, dans public/fiches/visuels.
+ * La liste est explicite : une fiche sans visuel garde son cartouche de
+ * remplacement plutôt que de pointer vers une image absente.
+ */
+const VISUELS = "/fiches/visuels";
+
+const AVEC_VISUEL: ReadonlySet<string> = new Set([
+  "pack-seconde",
+  "maths-seconde",
+  "physique-chimie-seconde",
+  "svt-seconde",
+  "ses-seconde",
+  "snt-seconde",
+  "histoire-geographie-seconde",
+  "emc-seconde",
+  "francais-seconde",
+  "maths-premiere",
+  "physique-chimie-premiere",
+  "enseignement-scientifique-premiere",
+  "histoire-geographie-premiere",
+  "emc-premiere",
+  "francais-premiere",
+]);
+
+function visuelDe(slug: string): string | undefined {
+  return AVEC_VISUEL.has(slug) ? `${VISUELS}/${slug}.webp` : undefined;
+}
+
+/**
+ * Échantillons gratuits : quatre pages de maths par niveau. Ce sont des
+ * extraits, jamais les packs vendus — ceux-là ne sont pas dans public/.
+ */
+export const ECHANTILLON_MATHS: Record<Niveau, string> = {
+  "3e": "/fiches/echantillon-maths-3e.pdf",
+  "2de": "/fiches/echantillon-maths-2nde.pdf",
+  "1re": "/fiches/echantillon-maths-1re.pdf",
+};
+
+/** Chapitres d'une fiche. Un pack n'en a pas : il regroupe les matières. */
+function chapitresDe(slug: string): readonly string[] {
+  return CHAPITRES[slug] ?? [];
+}
 
 /* ----------------------------------------------------------------- 3e */
 
@@ -182,6 +243,7 @@ const fichesBrevet: Fiche[] = BREVET.map((b) => ({
   pack: false,
   img: b.img,
   fiches: b.fiches,
+  chapitres: chapitresDe(b.slug),
   prix: PRIX_MATIERE_BREVET,
   detail: b.detail,
   paragraphes: [`${b.fiches} fiches ${b.de} pour le brevet : ${b.detail}`, PARAGRAPHE_FORMAT],
@@ -198,6 +260,7 @@ const packBrevet: Fiche = {
   pack: true,
   img: `${MINIATURES}/pack.jpg`,
   fiches: 76,
+  chapitres: [],
   prix: "19,99 €",
   ancienPrix: "39,92 €",
   reduction: "-50 %",
@@ -247,7 +310,10 @@ const PACK_BIENTOT: MatiereBientot = {
   de: "du pack complet",
 };
 
-/** Fiche « bientôt » : aucun prix, lien ni nombre de fiches n'existe encore. */
+/**
+ * Fiche « bientôt » : les fiches sont écrites (d'où le visuel, le nombre de
+ * fiches et les chapitres), mais aucun lien de paiement n'existe encore.
+ */
 function bientot(
   niveau: Exclude<Niveau, "3e">,
   suffixe: string,
@@ -256,39 +322,43 @@ function bientot(
 ): Fiche {
   const { long, classe } = NIVEAU_INFO[niveau];
   const niveauMinuscule = long.toLowerCase();
+  const slug = `${m.cle}-${suffixe}`;
+  const chapitres = chapitresDe(slug);
+  const img = visuelDe(slug);
   return {
-    slug: `${m.cle}-${suffixe}`,
+    slug,
     niveau,
     matiere: m.matiere,
     de: m.de,
     pack,
+    ...(img ? { img } : {}),
+    ...(chapitres.length ? { fiches: chapitres.length } : {}),
+    chapitres,
     detail: pack
       ? `Toutes les matières de ${niveauMinuscule} réunies dans un seul pack.`
-      : `Les fiches ${m.de} pour ${classe}, en préparation.`,
+      : `Les fiches ${m.de} pour ${classe}, bientôt en vente.`,
     paragraphes: pack
       ? [
           `Le pack complet de ${niveauMinuscule} réunira les fiches des 8 matières dans un seul achat.`,
           "Il est en préparation : le prix et la date de sortie seront annoncés ici.",
         ]
       : [
-          `Les fiches ${m.de} pour ${classe} sont en préparation.`,
-          "Elles suivront le même principe que celles du brevet : le programme chapitre par chapitre, à lire sur téléphone ou à imprimer.",
-          "Le prix et la date de sortie seront annoncés ici.",
+          chapitres.length
+            ? `${chapitres.length} fiches ${m.de} pour ${classe}, déjà écrites : le programme chapitre par chapitre.`
+            : `Les fiches ${m.de} pour ${classe} sont en préparation.`,
+          "Même principe que celles du brevet : des schémas, les pièges signalés, à lire sur téléphone ou à imprimer.",
+          "Le prix et la date de mise en vente seront annoncés ici.",
         ],
     seoTitle: pack
       ? `Pack complet fiches de révision ${long} — bientôt — Coursinus`
       : `Fiches de révision ${m.matiere} ${long} — bientôt — Coursinus`,
     seoDescription: pack
       ? `Le pack complet de fiches de révision de ${niveauMinuscule} arrive bientôt chez Coursinus : toutes les matières réunies.`
-      : `Les fiches de révision ${m.de} pour ${classe} arrivent bientôt chez Coursinus : le programme chapitre par chapitre, en PDF.`,
+      : `${chapitres.length ? `${chapitres.length} fiches` : "Les fiches"} de révision ${m.de} pour ${classe}, bientôt chez Coursinus : le programme chapitre par chapitre, en PDF.`,
   };
 }
 
-/**
- * Liens de paiement Stripe de la seconde, fournis par Coursinus.
- * Le prix et le nombre de fiches ne sont pas encore connus : ils restent
- * absents plutôt qu'inventés, et Stripe affiche le montant au paiement.
- */
+/** Liens de paiement Stripe de la seconde, fournis par Coursinus. */
 const STRIPE_2DE: Record<string, string> = {
   pack: "https://buy.stripe.com/bJe5kFe8L2623BU8ONasg0u",
   maths: "https://buy.stripe.com/bJebJ3fcP9yuegy9SRasg0p",
@@ -309,33 +379,47 @@ function enVente2de(m: MatiereBientot, pack = false): Fiche {
   const { long, classe } = NIVEAU_INFO["2de"];
   const niveauMinuscule = long.toLowerCase();
   const lien = STRIPE_2DE[m.cle];
+  const slug = `${m.cle}-seconde`;
+  const chapitres = chapitresDe(slug);
+  const img = visuelDe(slug);
+  /* Le pack ne porte pas de chapitres : son total est la somme des matières. */
+  const nombre = pack ? TOTAL_FICHES_2DE : chapitres.length;
   return {
-    slug: `${m.cle}-seconde`,
+    slug,
     niveau: "2de",
     matiere: m.matiere,
     de: m.de,
     pack,
+    ...(img ? { img } : {}),
+    ...(nombre ? { fiches: nombre } : {}),
+    chapitres,
     /* Le lien n'est ajouté que s'il existe : sans lui, la fiche retombe
        automatiquement sur l'affichage « Bientôt disponible ». */
     ...(lien ? { url: lien } : {}),
     prix: pack ? PRIX_PACK_2DE : PRIX_MATIERE_2DE,
     detail: pack
-      ? `Toutes les matières de ${niveauMinuscule} réunies dans un seul pack.`
-      : `Les fiches ${m.de} pour ${classe}, en PDF.`,
+      ? `Les ${TOTAL_FICHES_2DE} fiches des 8 matières de ${niveauMinuscule}, plus chaque matière à part.`
+      : `${nombre} fiches ${m.de} pour ${classe}, chapitre par chapitre.`,
     paragraphes: pack
       ? [
-          `Le pack complet de ${niveauMinuscule} réunit les fiches des 8 matières dans un seul achat.`,
+          `Les ${TOTAL_FICHES_2DE} fiches des 8 matières de ${niveauMinuscule} dans un seul achat, plus chaque matière en fichier séparé.`,
           PARAGRAPHE_FORMAT,
         ]
-      : [`Les fiches ${m.de} pour ${classe}, chapitre par chapitre.`, PARAGRAPHE_FORMAT],
+      : [`${nombre} fiches ${m.de} pour ${classe}, chapitre par chapitre.`, PARAGRAPHE_FORMAT],
     seoTitle: pack
-      ? `Pack complet fiches de révision ${long} — Coursinus`
+      ? `Pack complet fiches de révision ${long} (${TOTAL_FICHES_2DE} fiches) — Coursinus`
       : `Fiches de révision ${m.matiere} ${long} — Coursinus`,
     seoDescription: pack
-      ? `Le pack complet de fiches de révision de ${niveauMinuscule} : toutes les matières réunies, en PDF.`
-      : `Les fiches de révision ${m.de} pour ${classe} : le programme chapitre par chapitre, en PDF.`,
+      ? `Pack complet seconde : ${TOTAL_FICHES_2DE} fiches de révision dans les 8 matières, plus chaque matière en fichier séparé. ${PRIX_PACK_2DE}.`
+      : `${nombre} fiches de révision ${m.de} pour ${classe} : le programme chapitre par chapitre. PDF à ${PRIX_MATIERE_2DE}.`,
   };
 }
+
+/** Total du pack de seconde : la somme réelle des fiches des 8 matières. */
+const TOTAL_FICHES_2DE = MATIERES_2DE.reduce(
+  (total, m) => total + chapitresDe(`${m.cle}-seconde`).length,
+  0,
+);
 
 const fiches2de: Fiche[] = [
   enVente2de(PACK_BIENTOT, true),

@@ -19,6 +19,18 @@ const DELAI_REPORT_MS = 3000;
 
 const CLE_STOCKAGE = "coursinus:newsletter-popup";
 
+/**
+ * Évènement qui ouvre la fenêtre à la demande. La fenêtre vit dans la racine
+ * du site : un bouton de page passe par cet évènement plutôt que de remonter
+ * un état à travers tout l'arbre.
+ */
+const EVENEMENT_OUVERTURE = "coursinus:ouvrir-newsletter";
+
+/** Ouvre la fenêtre d'inscription, même si le visiteur l'a déjà vue. */
+export function ouvrirNewsletter(): void {
+  window.dispatchEvent(new Event(EVENEMENT_OUVERTURE));
+}
+
 const NIVEAUX = ["3e", "2de", "1re"] as const;
 type Niveau = (typeof NIVEAUX)[number];
 type Profil = "parent" | "eleve";
@@ -104,6 +116,8 @@ export function NewsletterPopup() {
 
     let minuteur: ReturnType<typeof setTimeout>;
     const afficher = () => {
+      // Le visiteur a pu l'ouvrir lui-même entre-temps : on ne la rouvre pas.
+      if (dejaVue()) return;
       // Ne jamais voler le focus à quelqu'un qui remplit déjà un formulaire
       // (par exemple la demande de rendez-vous) : on retente un peu plus tard.
       if (champActif()) {
@@ -119,6 +133,17 @@ export function NewsletterPopup() {
     // on retranche le temps déjà écoulé.
     minuteur = setTimeout(afficher, Math.max(0, DELAI_MS - performance.now()));
     return () => clearTimeout(minuteur);
+  }, []);
+
+  // Ouverture à la demande, depuis le bouton « Les recevoir par mail » : ici on
+  // ignore `dejaVue`, puisque c'est le visiteur lui-même qui la réclame.
+  useEffect(() => {
+    const ouvrir = () => {
+      setEnvoye(false);
+      setOuverte(true);
+    };
+    window.addEventListener(EVENEMENT_OUVERTURE, ouvrir);
+    return () => window.removeEventListener(EVENEMENT_OUVERTURE, ouvrir);
   }, []);
 
   function fermer(): void {

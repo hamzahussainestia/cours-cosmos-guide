@@ -8,7 +8,7 @@ import {
   estEnVente,
   fichesDuNiveau,
   NIVEAU_INFO,
-  POINTS_BREVET,
+  pointsDuNiveau,
   prixNumerique,
   trouverFiche,
   type Fiche,
@@ -157,7 +157,7 @@ function FicheProduitPage() {
 
               {enVente ? (
                 <ul className="mt-6 space-y-2.5">
-                  {POINTS_BREVET.map((p) => (
+                  {pointsDuNiveau(fiche.niveau).map((p) => (
                     <li key={p} className="flex gap-3 text-sm leading-relaxed text-foreground">
                       <span className="mt-0.5 text-gold">✓</span>
                       <span>{p}</span>
@@ -177,6 +177,32 @@ function FicheProduitPage() {
               </div>
             </div>
           </div>
+
+          {fiche.chapitres.length > 0 ? (
+            <section className="mt-16" aria-labelledby="chapitres">
+              <h2 id="chapitres" className="font-display text-xl text-gold sm:text-2xl">
+                Les {fiche.chapitres.length} chapitres couverts
+              </h2>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Une fiche par chapitre, dans l&apos;ordre du programme.
+              </p>
+              {/* Deux colonnes dès le format tablette : une liste de 25 lignes
+                  sur une seule colonne repoussait tout le reste de la page. */}
+              <ol className="mt-5 grid gap-x-8 gap-y-1 sm:grid-cols-2">
+                {fiche.chapitres.map((c, i) => (
+                  <li
+                    key={c}
+                    className="flex gap-3 border-b border-border/40 py-2 text-sm leading-relaxed text-foreground"
+                  >
+                    <span className="w-6 shrink-0 text-right tabular-nums text-gold-soft">
+                      {i + 1}
+                    </span>
+                    <span>{c}</span>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          ) : null}
 
           <section className="mt-16" aria-labelledby="autres-fiches">
             <h2 id="autres-fiches" className="font-display text-xl text-gold sm:text-2xl">
