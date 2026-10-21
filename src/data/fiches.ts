@@ -313,7 +313,3 @@ export function estEnVente(fiche: Fiche): fiche is Fiche & { url: string; prix: 
 export function prixNumerique(prix: string): string {
   return prix.replace(/[^\d,]/g, "").replace(",", ".");
 }
-
-export function cheminFiche(fiche: Fiche): string {
-  return `/fiches/${fiche.slug}`;
-}

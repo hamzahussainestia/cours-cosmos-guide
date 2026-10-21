@@ -115,7 +115,9 @@ export function NewsletterPopup() {
       marquerVue();
       setOuverte(true);
     };
-    minuteur = setTimeout(afficher, DELAI_MS);
+    // Le délai court depuis l'arrivée sur la page, pas depuis l'hydratation :
+    // on retranche le temps déjà écoulé.
+    minuteur = setTimeout(afficher, Math.max(0, DELAI_MS - performance.now()));
     return () => clearTimeout(minuteur);
   }, []);
 
