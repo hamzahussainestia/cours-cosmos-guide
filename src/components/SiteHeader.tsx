@@ -98,11 +98,7 @@ export function SiteHeader() {
             le visiteur coincé. */}
         <Link to="/" className="flex min-w-0 items-center gap-1">
           {/* Logo complet (marque + nom) : un seul visuel, cadré au plus juste. */}
-          <img
-            src={WORDMARK_URL}
-            alt="Coursinus"
-            className="h-9 w-auto shrink-0 sm:h-11"
-          />
+          <img src={WORDMARK_URL} alt="Coursinus" className="h-9 w-auto shrink-0 sm:h-11" />
         </Link>
 
         <nav className="hidden items-center gap-1 xl:flex" aria-label="Navigation principale">
