@@ -301,7 +301,10 @@ const STRIPE_2DE: Record<string, string> = {
   francais: "https://buy.stripe.com/aFa28t9SvbGC8We3utasg0n",
 };
 
-/** Fiche de seconde en vente : comme une fiche brevet, sans prix affiché. */
+const PRIX_MATIERE_2DE = "5,99 €";
+const PRIX_PACK_2DE = "24,99 €";
+
+/** Fiche de seconde en vente. */
 function enVente2de(m: MatiereBientot, pack = false): Fiche {
   const { long, classe } = NIVEAU_INFO["2de"];
   const niveauMinuscule = long.toLowerCase();
@@ -315,6 +318,7 @@ function enVente2de(m: MatiereBientot, pack = false): Fiche {
     /* Le lien n'est ajouté que s'il existe : sans lui, la fiche retombe
        automatiquement sur l'affichage « Bientôt disponible ». */
     ...(lien ? { url: lien } : {}),
+    prix: pack ? PRIX_PACK_2DE : PRIX_MATIERE_2DE,
     detail: pack
       ? `Toutes les matières de ${niveauMinuscule} réunies dans un seul pack.`
       : `Les fiches ${m.de} pour ${classe}, en PDF.`,
