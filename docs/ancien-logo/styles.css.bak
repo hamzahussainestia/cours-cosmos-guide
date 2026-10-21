@@ -1,0 +1,691 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Design system definition.
+ *
+ * The @theme inline block maps CSS custom properties to Tailwind utility
+ * classes (e.g. --color-primary -> bg-primary, text-primary).
+ *
+ * The :root and .dark blocks define the actual color values using oklch.
+ * All colors MUST use oklch format.
+ *
+ * To add a new semantic color:
+ * 1. Add the variable to :root (light value) and .dark (dark value)
+ * 2. Register it in @theme inline as --color-<name>: var(--<name>)
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@theme {
+  --font-display: "Bricolage Grotesque", system-ui, sans-serif;
+  --font-sans: "Public Sans", system-ui, sans-serif;
+  /* Réservé au logotype « Coursinus » (en-tête et pied de page). */
+  --font-script: "Parisienne", "Segoe Script", cursive;
+}
+
+:root {
+  --radius: 0.9rem;
+  --background: oklch(0.18 0.075 264);
+  --foreground: oklch(0.95 0.015 90);
+  --card: oklch(0.225 0.07 264);
+  --card-foreground: oklch(0.95 0.015 90);
+  --popover: oklch(0.225 0.07 264);
+  --popover-foreground: oklch(0.95 0.015 90);
+  --primary: oklch(0.8 0.12 86);
+  --primary-foreground: oklch(0.16 0.06 264);
+  --secondary: oklch(0.27 0.065 264);
+  --secondary-foreground: oklch(0.95 0.015 90);
+  --muted: oklch(0.27 0.06 264);
+  --muted-foreground: oklch(0.74 0.025 90);
+  --accent: oklch(0.85 0.08 88);
+  --accent-foreground: oklch(0.16 0.06 264);
+  --destructive: oklch(0.6 0.2 27);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.8 0.12 86 / 22%);
+  --input: oklch(0.8 0.12 86 / 22%);
+  --ring: oklch(0.8 0.12 86);
+  --gold: oklch(0.8 0.12 86);
+  --gold-soft: oklch(0.88 0.07 88);
+  --gradient-gold: linear-gradient(
+    120deg,
+    oklch(0.72 0.1 80),
+    oklch(0.9 0.08 90),
+    oklch(0.78 0.12 84)
+  );
+  --gradient-night:
+    radial-gradient(ellipse at 18% -10%, oklch(0.27 0.09 264) 0%, transparent 60%),
+    radial-gradient(ellipse at 88% 0%, oklch(0.25 0.08 268) 0%, transparent 55%);
+  --shadow-gold: 0 24px 55px -26px oklch(0.8 0.12 86 / 45%);
+  --shadow-deep: 0 28px 70px -38px oklch(0.05 0.05 264 / 85%);
+  --chart-1: oklch(0.8 0.12 86);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.225 0.07 264);
+  --sidebar-foreground: oklch(0.95 0.015 90);
+  --sidebar-primary: oklch(0.8 0.12 86);
+  --sidebar-primary-foreground: oklch(0.16 0.06 264);
+  --sidebar-accent: oklch(0.27 0.065 264);
+  --sidebar-accent-foreground: oklch(0.95 0.015 90);
+  --sidebar-border: oklch(0.8 0.12 86 / 22%);
+  --sidebar-ring: oklch(0.8 0.12 86);
+}
+
+@theme inline {
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    background-image: var(--gradient-night);
+    background-attachment: fixed;
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+  }
+}
+
+@utility text-gold-gradient {
+  background-image: var(--gradient-gold);
+  background-clip: text;
+  color: transparent;
+}
+
+@utility rule-gold {
+  height: 1px;
+  background-image: linear-gradient(to right, transparent, var(--gold), transparent);
+}
+
+@utility card-lux {
+  position: relative;
+  border: 1px solid var(--border);
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--card) 92%, transparent),
+    color-mix(in oklab, var(--background) 92%, transparent)
+  );
+  box-shadow: var(--shadow-deep);
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.45s ease,
+    border-color 0.45s ease;
+
+  &:hover {
+    transform: translateY(-10px);
+    border-color: var(--gold);
+    box-shadow:
+      var(--shadow-gold),
+      0 0 0 1px color-mix(in oklab, var(--gold) 45%, transparent),
+      0 0 46px -12px color-mix(in oklab, var(--gold) 70%, transparent);
+  }
+}
+
+/* ---------------------------------------------------------------------
+   Couche de mouvement
+   ---------------------------------------------------------------------
+   Regle absolue : l'etat par defaut est VISIBLE. Les animations ne sont
+   ajoutees qu'a l'interieur du bloc @supports. Un navigateur qui ignore
+   animation-timeline affiche le site complet, simplement sans animation.
+   Poser opacity: 0 en dehors de ce bloc rendrait la page blanche.
+   --------------------------------------------------------------------- */
+
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    /* Amplitude volontairement franche : a 28px le mouvement passait
+       inapercu et le client ne voyait aucune animation. */
+    transform: translateY(var(--reveal-distance, 70px)) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* ATTENTION : le raccourci `animation` doit imperativement preceder
+       `animation-timeline` et `animation-range`, sinon il les reinitialise
+       et toute l'animation casse en silence. */
+    .reveal {
+      animation: reveal-in linear both;
+      animation-timeline: view();
+      /* La cascade decale le depart dans le scroll plutot que dans le temps :
+         animation-delay n'a pas de sens sur une timeline de vue.
+         Phase `entry` et non `cover` : `entry` atteint 100 % des qu'un
+         element est entierement entre dans l'ecran, donc tout ce qui est
+         deja visible au chargement est a l'etat final. Avec `cover`, le
+         hero restait transparent au premier affichage. La borne de fin est
+         fixe a 100 % pour qu'aucun rang, si eleve soit-il, ne puisse
+         rester fige a mi-animation. */
+      animation-range: entry calc(var(--reveal-index, 0) * 6%) entry 100%;
+    }
+  }
+}
+
+@keyframes parallax-shift {
+  from {
+    transform: translateY(calc(var(--parallax-shift, 40px) * -1));
+  }
+  to {
+    transform: translateY(var(--parallax-shift, 40px));
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* Le raccourci `animation` precede `animation-timeline` et
+       `animation-range`, sinon il les reinitialise. La phase `cover` est
+       voulue ici : le parallaxe accompagne tout le passage de l'element a
+       l'ecran, et il n'applique qu'un transform, jamais d'opacite, donc
+       l'element reste visible a tout moment. */
+    .parallax {
+      animation: parallax-shift linear both;
+      animation-timeline: view();
+      animation-range: cover;
+    }
+  }
+}
+
+@keyframes draw-in {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .draw-path {
+      /* Pose le pointille ICI et nulle part ailleurs : sans support, le
+         trace n'a pas de dasharray et s'affiche donc entier. Le raccourci
+         `animation` precede `animation-timeline` et `animation-range`.
+         Phase `entry` jusqu'a 100 % : un trace deja visible au chargement
+         est a l'etat final, alors que `cover` le laisserait inacheve. */
+      stroke-dasharray: 1;
+      animation: draw-in linear both;
+      animation-timeline: view();
+      /* La phase `entry` dure la hauteur de l'element : sur une vague de
+         22 px, le trace se dessinait en 22 px de defilement, donc de maniere
+         invisible. On demarre a mi-entree et on finit quand l element depasse le
+         centre de l ecran : le trace se fait donc pendant que l element monte
+         vers la zone de lecture, et non en bas de l ecran. La borne de fin a
+         50 % de `cover` garantit aussi qu'un trace deja visible au chargement
+         (la vague du hero) soit complet. */
+      animation-range: entry 50% cover 60%;
+    }
+  }
+}
+
+@keyframes settle-in {
+  from {
+    rotate: -2deg;
+  }
+  to {
+    rotate: 0deg;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* La carte du guide arrive inclinee et se redresse en entrant.
+       L'inclinaison n'existe QUE dans ce bloc : sans support, ou en
+       mouvement reduit, la carte reste droite. On anime la propriete
+       `rotate` et non `transform`, pour ne rien ecraser. Le raccourci
+       `animation` precede `animation-timeline` et `animation-range`.
+       Phase `entry` jusqu'a 100 % : une carte deja visible au chargement
+       est a l'etat final, droite. Aucune opacite n'est touchee. */
+    .guide-card {
+      animation: settle-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 100%;
+    }
+  }
+}
+
+@keyframes step-light {
+  from {
+    opacity: 0.35;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* Chaque etape s'allume quand elle entre a l'ecran, avec un depart
+       decale selon son rang (`--step-index`). L'opacite de depart est 0,35
+       et non 0 : l'etape reste lisible meme pendant l'animation. Phase
+       `entry` aux deux bornes et non `cover` : une etape deja visible au
+       chargement est a l'etat final. Le raccourci `animation` precede
+       `animation-timeline` et `animation-range`. */
+    .step-lit {
+      animation: step-light linear both;
+      animation-timeline: view();
+      animation-range: entry calc(var(--step-index, 0) * 12%) entry
+        calc(40% + var(--step-index, 0) * 12%);
+    }
+  }
+}
+
+/* Repli pour les navigateurs sans animation-timeline. La classe js-reveal
+   n'est posee QUE par le JavaScript, et seulement s'il a constate l'absence
+   de support : sans JavaScript, rien n'est masque et le site reste visible. */
+html.js-reveal .reveal {
+  opacity: 0;
+  transform: translateY(var(--reveal-distance, 70px)) scale(0.94);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--reveal-index, 0) * 90ms);
+}
+html.js-reveal .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+html.js-reveal .draw-path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+html.js-reveal .draw-path.is-visible {
+  stroke-dashoffset: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.js-reveal .reveal,
+  html.js-reveal .draw-path {
+    opacity: 1;
+    transform: none;
+    stroke-dashoffset: 0;
+    transition: none;
+  }
+}
+
+.prose-legal h2 {
+  font-family: var(--font-display);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-lux:hover {
+    transform: none;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/*
+ * Mention typographique d'une école : initiales en display doré, nom en
+ * petites capitales espacées. Toutes les écoles reçoivent exactement le même
+ * traitement — c'est ce qui distingue une citation composée par Coursinus
+ * d'une reproduction de logotypes.
+ */
+.school-mark {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0 0.25rem;
+  opacity: 0.75;
+  transition: opacity 0.35s ease;
+}
+
+.school-mark:hover {
+  opacity: 1;
+}
+
+.school-mark__initials {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: var(--gold);
+}
+
+.school-mark__name {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--muted-foreground);
+}
+
+/* Bandeau de logos d'écoles qui défile en continu. */
+.logo-marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+
+.logo-marquee__track {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  gap: 3.5rem;
+  animation: logo-scroll 34s linear infinite;
+}
+
+.logo-marquee:hover .logo-marquee__track {
+  animation-play-state: paused;
+}
+
+@keyframes logo-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-marquee__track {
+    animation: none;
+  }
+}
+
+#lovable-badge {
+  display: none !important;
+}
+
+.chip-outline {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 2px solid var(--gold);
+  color: var(--gold-soft);
+  padding: 0.3rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+/* Sous `sm`, la pastille reste compacte : six pastilles empilees pesaient
+   un quart d'ecran. Les valeurs d'origine reviennent a partir de `sm`. */
+@media (min-width: 640px) {
+  .chip-outline {
+    padding: 0.55rem 1.1rem;
+  }
+}
+
+.hero-title {
+  font-size: clamp(2.5rem, 5vw + 1rem, 5.5rem);
+  line-height: 0.98;
+  letter-spacing: -0.01em;
+}
+
+.stat-card-float {
+  position: relative;
+  height: 21rem;
+}
+
+.stat-card-float__primary,
+.stat-card-float__secondary {
+  position: absolute;
+  border-radius: 1.25rem;
+  padding: 1.75rem;
+}
+
+.stat-card-float__primary {
+  top: 0;
+  left: 5%;
+  width: 68%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--foreground);
+  transform: rotate(-3deg);
+  box-shadow: var(--shadow-deep);
+}
+
+.stat-card-float__secondary {
+  bottom: 0;
+  right: 2%;
+  width: 56%;
+  background: var(--gold);
+  color: var(--primary-foreground);
+  transform: rotate(4deg);
+  box-shadow: var(--shadow-gold);
+}
+
+@media (max-width: 640px) {
+  .stat-card-float {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  /* Chaque carte devient une ligne compacte : chiffre et libelle cote a cote. */
+  .stat-card-float__primary,
+  .stat-card-float__secondary {
+    position: static;
+    width: 100%;
+    transform: none;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem 1.25rem;
+  }
+}
+
+.offer-band {
+  background: var(--card);
+}
+
+.offer-ghost-numeral {
+  position: absolute;
+  top: -0.9rem;
+  right: -0.5rem;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 9rem;
+  line-height: 1;
+  color: color-mix(in oklab, var(--foreground) 8%, var(--card));
+  pointer-events: none;
+  user-select: none;
+}
+
+@media (max-width: 640px) {
+  .offer-ghost-numeral {
+    font-size: 6rem;
+  }
+}
+
+/*
+ * Bouton "pressable" façon Duolingo : une bordure basse pleine simule une
+ * carte en relief ; au clic, le bouton s'enfonce dedans (translateY +
+ * la bordure disparaît). Réservé aux CTA pleins (bg-primary / bg-gold).
+ */
+@utility btn-press {
+  position: relative;
+  transform: translateY(0);
+  box-shadow: 0 4px 0 0 color-mix(in oklab, var(--gold) 55%, black 30%);
+  transition:
+    transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.12s ease,
+    filter 0.15s ease;
+
+  &:hover {
+    filter: brightness(1.05);
+  }
+
+  &:active {
+    transform: translateY(4px);
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--gold) 55%, black 30%);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: filter 0.15s ease;
+    box-shadow: none;
+
+    &:active {
+      transform: none;
+    }
+  }
+}
+
+/* Version plus légère pour les cartes cliquables (pas de bordure pleine). */
+@utility tap-scale {
+  transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  &:active {
+    transform: scale(0.97);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    &:active {
+      transform: none;
+    }
+  }
+}
+
+/*
+ * Dérive lente du filigrane de formules. Quatre trajectoires différentes,
+ * jouées en aller-retour (alternate) pour qu'il n'y ait jamais de saut ;
+ * la durée et le décalage sont répartis par le composant.
+ */
+.drift {
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-timing-function: ease-in-out;
+}
+
+.drift-a {
+  animation-name: drift-a;
+}
+.drift-b {
+  animation-name: drift-b;
+}
+.drift-c {
+  animation-name: drift-c;
+}
+.drift-d {
+  animation-name: drift-d;
+}
+
+@keyframes drift-a {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(20px, -26px, 0);
+  }
+}
+
+@keyframes drift-b {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-18px, -16px, 0);
+  }
+}
+
+@keyframes drift-c {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(12px, 24px, 0);
+  }
+}
+
+@keyframes drift-d {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-14px, 20px, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drift {
+    animation: none;
+  }
+}
+
+@keyframes count-pop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

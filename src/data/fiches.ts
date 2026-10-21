@@ -41,7 +41,7 @@ export type Fiche = {
 
 export const NIVEAU_INFO: Record<Niveau, { long: string; classe: string; enVente: boolean }> = {
   "3e": { long: "Brevet 3e", classe: "la classe de 3e", enVente: true },
-  "2de": { long: "Seconde", classe: "la classe de seconde", enVente: false },
+  "2de": { long: "Seconde", classe: "la classe de seconde", enVente: true },
   "1re": { long: "Première", classe: "la classe de première", enVente: false },
 };
 
@@ -284,9 +284,58 @@ function bientot(
   };
 }
 
+/**
+ * Liens de paiement Stripe de la seconde, fournis par Coursinus.
+ * Le prix et le nombre de fiches ne sont pas encore connus : ils restent
+ * absents plutôt qu'inventés, et Stripe affiche le montant au paiement.
+ */
+const STRIPE_2DE: Record<string, string> = {
+  pack: "https://buy.stripe.com/bJe5kFe8L2623BU8ONasg0u",
+  maths: "https://buy.stripe.com/bJebJ3fcP9yuegy9SRasg0p",
+  "physique-chimie": "https://buy.stripe.com/5kQeVf7Knh0W2xQ0ihasg0q",
+  svt: "https://buy.stripe.com/bJedRb7Knh0WegyaWVasg0t",
+  ses: "https://buy.stripe.com/5kQaEZ8Or2620pI6GFasg0r",
+  snt: "https://buy.stripe.com/8x2dRb6GjcKGa0i5CBasg0s",
+  "histoire-geographie": "https://buy.stripe.com/28E14pggT4eab4m9SRasg0o",
+  emc: "https://buy.stripe.com/8x24gBe8L9yu6O66GFasg0m",
+  francais: "https://buy.stripe.com/aFa28t9SvbGC8We3utasg0n",
+};
+
+/** Fiche de seconde en vente : comme une fiche brevet, sans prix affiché. */
+function enVente2de(m: MatiereBientot, pack = false): Fiche {
+  const { long, classe } = NIVEAU_INFO["2de"];
+  const niveauMinuscule = long.toLowerCase();
+  const lien = STRIPE_2DE[m.cle];
+  return {
+    slug: `${m.cle}-seconde`,
+    niveau: "2de",
+    matiere: m.matiere,
+    de: m.de,
+    pack,
+    /* Le lien n'est ajouté que s'il existe : sans lui, la fiche retombe
+       automatiquement sur l'affichage « Bientôt disponible ». */
+    ...(lien ? { url: lien } : {}),
+    detail: pack
+      ? `Toutes les matières de ${niveauMinuscule} réunies dans un seul pack.`
+      : `Les fiches ${m.de} pour ${classe}, en PDF.`,
+    paragraphes: pack
+      ? [
+          `Le pack complet de ${niveauMinuscule} réunit les fiches des 8 matières dans un seul achat.`,
+          PARAGRAPHE_FORMAT,
+        ]
+      : [`Les fiches ${m.de} pour ${classe}, chapitre par chapitre.`, PARAGRAPHE_FORMAT],
+    seoTitle: pack
+      ? `Pack complet fiches de révision ${long} — Coursinus`
+      : `Fiches de révision ${m.matiere} ${long} — Coursinus`,
+    seoDescription: pack
+      ? `Le pack complet de fiches de révision de ${niveauMinuscule} : toutes les matières réunies, en PDF.`
+      : `Les fiches de révision ${m.de} pour ${classe} : le programme chapitre par chapitre, en PDF.`,
+  };
+}
+
 const fiches2de: Fiche[] = [
-  bientot("2de", "seconde", PACK_BIENTOT, true),
-  ...MATIERES_2DE.map((m) => bientot("2de", "seconde", m)),
+  enVente2de(PACK_BIENTOT, true),
+  ...MATIERES_2DE.map((m) => enVente2de(m)),
 ];
 
 /* La première n'a volontairement pas de pack complet. */
